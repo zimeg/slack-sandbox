@@ -1,0 +1,19 @@
+name: Post Slack message
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Send message into channel
+      id: slack
+      uses: slackapi/slack-github-action@v1.22.0
+      with:
+          channel-id: 'C040KHFGMPY'
+          slack-message: "hello <@channel>"
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
