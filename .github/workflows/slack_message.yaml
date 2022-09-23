@@ -16,4 +16,5 @@ jobs:
           channel-id: 'C040KHFGMPY'
           slack-message: "hello <@channel>"
       env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+
