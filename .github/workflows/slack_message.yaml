@@ -11,7 +11,7 @@ jobs:
     steps:
     - name: Send message into channel
       id: slack
-      uses: slackapi/slack-github-action@v1.22.0
+      uses: slackapi/slack-github-action@v1.23.0
       with:
           channel-id: 'C040KHFGMPY'
           slack-message: "hello <!channel>"
