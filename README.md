@@ -2,7 +2,7 @@
 
 a repo for experimenting with and testing various APIs across various samples.
 
-## Available Apps
+## 🐌 available apps
 
 at the moment, this is a simple repo with only a few experiments. that might
 soon change, and hopefully this message will too... but until then, we have:
