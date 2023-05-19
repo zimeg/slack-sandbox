@@ -24,8 +24,8 @@ structure like so (with this repo being called `sandbox`):
 
 ```
  | sandbox/
- | - py.bolt.snaek
- | - py.sdk.sdkai
+ | - py.bolt.snaek/
+ | - py.sdk.sdkai/
  | tools/
  | - bolt-python/
  | - python-slack-sdk/
