@@ -1,0 +1,17 @@
+aiofiles==23.1.0
+certifi==2022.9.24
+click==8.1.3
+dotenv==0.0.5
+h11==0.14.0
+html5tagger==1.3.0
+httptools==0.5.0
+multidict==6.0.4
+python-dotenv==1.0.0
+sanic==23.3.0
+sanic-routing==22.8.0
+-e ../../tools/bolt-python
+tracerite==1.1.0
+ujson==5.7.0
+uvicorn==0.22.0
+uvloop==0.17.0
+websockets==11.0.2

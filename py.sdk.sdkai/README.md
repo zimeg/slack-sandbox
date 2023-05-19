@@ -8,8 +8,9 @@ A Python app that interfaces with the [SDK][SDK].
 
 1. Make sure Python 3.10.6 is installed with `python3 --version`
 2. Ensure a local SDK is cloned to `../../tools/python-slack-sdk`
-3. Instantiate the virtual environment with `source .venv/bin/activate`
-4. Install all dependencies with `pip3 install`
+3. Create a virtual environment with `python3 -m venv .venv`
+4. Instantiate the virtual environment with `source .venv/bin/activate`
+5. Install all dependencies with `pip3 install -r requirements.txt`
 
 ### Creating an app for testing
 
