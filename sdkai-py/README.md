@@ -16,6 +16,11 @@ A Python app that interfaces with the [SDK][SDK].
 1. [Create a new app][apps] using the `manifest.json`
 2. Add tokens and other variables to the `.env` file
 
+## Samples and snippets
+
+Small scripts meant for testing various functionalities can be found in the
+`./snippets` directory. Specifics of each file can be found there too.
+
 <!-- a collection of links -->
 [SDK]: https://github.com/slackapi/python-slack-sdk
 [apps]: https://api.slack.com/apps

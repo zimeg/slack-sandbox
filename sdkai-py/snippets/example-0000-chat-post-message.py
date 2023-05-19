@@ -1,3 +1,6 @@
+# https://github.com/slackapi/python-slack-sdk#sending-a-message-to-slack
+# scopes: chat:write
+
 import os
 from dotenv import load_dotenv
 
