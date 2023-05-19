@@ -1,2 +1,5 @@
 # Hide secret variables
 .env
+
+# Development artifacts
+.venv
