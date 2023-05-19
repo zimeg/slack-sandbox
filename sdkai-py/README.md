@@ -13,7 +13,7 @@ A Python app that interfaces with the [SDK][SDK].
 
 ### Creating an app for testing
 
-1. [Create a new app][apps] using the `manifest.json`
+1. [Create a new app][apps] using the `manifest.yaml`
 2. Add tokens and other variables to the `.env` file
 
 ## Samples and snippets
