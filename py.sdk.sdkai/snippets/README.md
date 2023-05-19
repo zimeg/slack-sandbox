@@ -1,4 +1,4 @@
-# Python SDK snippets
+# 🗃️ Python SDK snippets
 
 Herein lies brief descriptions of different scripts and snippets.
 
@@ -12,7 +12,7 @@ noted in each file.
 
 For a quick perusal of what's available in each file, keep reading!
 
-Any file can be run with `python <filename>`.
+Any file can be run with `python3 <filename>`.
 
 ### Random examples
 

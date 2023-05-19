@@ -1,16 +1,20 @@
-# Slack Sandbox
+# 🏖️ Slack sandbox
 
-a repo for experimenting with and testing various APIs across various samples.
+A repo for experimenting with and testing various APIs across various samples.
 
-## 🐌 available apps
+## 🐌 Experimental apps and such
 
-at the moment, this is a simple repo with only a few experiments. that might
-soon change, and hopefully this message will too... but until then, we have:
+At the moment, this is repo contains a few apps and scripts in different
+languages on various frameworks or libraries or sdks or whatever else.
 
 * [Slack Send Github Action][gh_action]: `.github/workflows`
+* [Bolt for Python][bolt_python]: `py.bolt.snaek`
+* [Python Slack SDK][sdk_python]: `py.sdk.sdkai`
 
-each subdirectory will have more information on getting started and references
-to related documentation. be warned that the apps might not make much sense.
+Each subdirectory will have more information on getting started and references
+to related documentation. Be warned that the apps might not make much sense.
 
 <!-- links -->
 [gh_action]: https://github.com/slackapi/slack-github-action
+[bolt_python]: https://github.com/slackapi/bolt-python
+[sdk_python]: https://github.com/slackapi/python-slack-sdk
