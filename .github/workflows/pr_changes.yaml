@@ -15,7 +15,7 @@ jobs:
         id: var
         with:
           script: |
-            core.setOutput('pr_title', '${{ github.event.pull_request.title }}'.replaceAll(/[/"]/g, '\''));
+            core.setOutput('pr_title', '${{ github.event.pull_request.title }}'.replaceAll(/[/"]/g, '\"'));
   notify:
     needs: [variables]
     runs-on: ubuntu-latest
