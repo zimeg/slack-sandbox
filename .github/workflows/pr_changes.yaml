@@ -1,4 +1,4 @@
-name: Notify of a change to PRs
+name: Notify of changes to a PR
 on:
   pull_request:
     branches:
