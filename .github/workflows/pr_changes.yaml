@@ -28,7 +28,7 @@ jobs:
           {
             "repository": "${{ github.repository }}",
             "pull_request_username": "${{ github.event.pull_request.user.login }}",
-            "pull_request_title": "${{ github.event.pull_request.title }}",
+            "pull_request_title": "${{ needs.variables.outputs.pr_title }}",
             "pull_request_url": "${{ github.event.pull_request.html_url }}"
           }
       env:
