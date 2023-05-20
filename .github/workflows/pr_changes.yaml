@@ -5,9 +5,20 @@ on:
       - main
 
 jobs:
-  deploy:
+  variables:
+    outputs:
+      pr_title: ${{ steps.var.outputs.pr_title}}
     runs-on: ubuntu-latest
-
+    steps:
+      - name: Setting global variables
+        uses: actions/github-script@v6
+        id: var
+        with:
+          script: |
+            core.setOutput('pr_title', '${{ github.event.pull_request.title }}'.replaceAll(/[/"]/g, '\''));
+  notify:
+    needs: [variables]
+    runs-on: ubuntu-latest
     steps:
     - name: Send message into channel
       id: slack
