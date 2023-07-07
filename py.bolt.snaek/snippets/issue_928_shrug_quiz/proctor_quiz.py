@@ -23,7 +23,7 @@ def create_quiz(body: dict, client: WebClient, logger: Logger):
     except Exception as e:
         logger.error(e)
 
-def handle_block_action(ack: Ack, body: dict, client: WebClient, logger: Logger):
+def handle_quiz_answer(ack: Ack, body: dict, client: WebClient, logger: Logger):
     ack()
 
     user_id = body["user"]["id"]
