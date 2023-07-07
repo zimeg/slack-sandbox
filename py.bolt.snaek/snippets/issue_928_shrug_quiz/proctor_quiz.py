@@ -6,10 +6,10 @@ from slack_bolt import Ack
 from slack_sdk import WebClient
 
 def create_quiz(body: dict, client: WebClient, logger: Logger):
-    channel_id = body["event"]["channel"]
+    user_id = body["event"]["user"]
     try:
         client.chat_postMessage(
-                channel=channel_id,
+                channel=user_id,
                 blocks=quiz_blocks,
                 text="New Question!",
                 metadata={
