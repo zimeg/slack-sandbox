@@ -1,0 +1,6 @@
+# Secret tokens
+.env
+
+# Build artifacts
+.gradle
+build

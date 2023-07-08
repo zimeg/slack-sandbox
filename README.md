@@ -8,6 +8,7 @@ At the moment, this is repo contains a few apps and scripts in different
 languages on various frameworks or libraries or sdks or whatever else.
 
 * [Slack Send Github Action][gh_action]: `.github/workflows`
+* [Java Slack SDK][sdk_java]: `java.sdk.gibra`
 * [Bolt for Javascript][bolt_js_future] – Automation: `js.bolt.squid`
 * [Bolt for Python][bolt_python]: `py.bolt.snaek`
 * [Python Slack SDK][sdk_python]: `py.sdk.sdkai`
@@ -34,6 +35,7 @@ structure like so (with this repo being called `sandbox`):
 
 <!-- links -->
 [gh_action]: https://github.com/slackapi/slack-github-action
+[sdk_java]: https://github.com/slackapi/java-slack-sdk
 [bolt_js_future]: https://github.com/slackapi/bolt-js/tree/next-gen
 [bolt_python]: https://github.com/slackapi/bolt-python
 [sdk_python]: https://github.com/slackapi/python-slack-sdk

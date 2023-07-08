@@ -1,0 +1,21 @@
+plugins {
+    id("application")
+}
+repositories {
+    mavenCentral()
+    // https://slack.dev/java-slack-sdk/guides/web-api-client-setup#build-from-source
+    // mavenLocal()
+}
+dependencies {
+    implementation("com.slack.api:slack-api-client:1.30.0")
+    implementation("io.github.cdimascio:dotenv-java:3.0.0")
+    implementation("ch.qos.logback:logback-classic:1.4.8")
+}
+application {
+    mainClass = "App"
+}
+run {
+    if (project.hasProperty('args')) {
+        args project.args.split(',')
+    }
+}

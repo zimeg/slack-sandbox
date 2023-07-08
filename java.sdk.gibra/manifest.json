@@ -1,0 +1,29 @@
+{
+    "display_information": {
+        "name": "gibra",
+        "description": "the curious coffee caller",
+        "background_color": "#57434f",
+        "long_description": "an app that interfaces with the java sdk to perform various actions including (but not limited to) uploading files, making coffee, dashing dreams, triaging issues, and compiling code. or maybe that's me and my computer..."
+    },
+    "features": {
+        "bot_user": {
+            "display_name": "gibra",
+            "always_online": false
+        }
+    },
+    "oauth_config": {
+        "scopes": {
+            "bot": [
+                "chat:write",
+                "files:read",
+                "files:write",
+                "channels:history"
+            ]
+        }
+    },
+    "settings": {
+        "org_deploy_enabled": false,
+        "socket_mode_enabled": false,
+        "token_rotation_enabled": false
+    }
+}
