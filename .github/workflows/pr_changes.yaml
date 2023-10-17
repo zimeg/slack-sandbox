@@ -5,19 +5,7 @@ on:
       - main
 
 jobs:
-  variables:
-    outputs:
-      pr_title: ${{ steps.var.outputs.pr_title}}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Setting global variables
-        uses: actions/github-script@v6
-        id: var
-        with:
-          script: |
-            core.setOutput('pr_title', '${{ github.event.pull_request.title }}'.replaceAll(/[/"]/g, '\"'));
   notify:
-    needs: [variables]
     runs-on: ubuntu-latest
     steps:
     - name: Send message into channel
@@ -28,7 +16,7 @@ jobs:
           {
             "repository": "${{ github.repository }}",
             "pull_request_username": "${{ github.event.pull_request.user.login }}",
-            "pull_request_title": "${{ needs.variables.outputs.pr_title }}",
+            "pull_request_title": "${{ github.event.pull_request.title.replace('\"', '\\\"') }}",
             "pull_request_url": "${{ github.event.pull_request.html_url }}"
           }
       env:
