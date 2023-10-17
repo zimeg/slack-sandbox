@@ -1,4 +1,5 @@
 # https://github.com/slackapi/python-slack-sdk/issues/1369
+# https://github.com/slackapi/python-slack-sdk/pull/1374
 # scopes: chat:write
 
 import os
@@ -7,14 +8,21 @@ from dotenv import load_dotenv
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 
-from slack_sdk.models.blocks import ImageBlock
+from slack_sdk.models.blocks import ImageBlock, PlainTextObject
 
 load_dotenv()
 
 client = WebClient(token=os.environ['SLACK_BOT_TOKEN'])
 
 try:
-    img = ImageBlock(image_url="https://i.pinimg.com/originals/4a/31/63/4a31635b0653dac546d069447cf12261.jpg", alt_text="a pokey and pixelated cactus", title="Cactus art")
+    img = ImageBlock(
+            image_url="https://i.pinimg.com/originals/4a/31/63/4a31635b0653dac546d069447cf12261.jpg",
+            alt_text="a pokey and pixelated cactus",
+            # title="Cactus art",
+            # title=PlainTextObject(text="Cactus"),
+            title={"type": "plain_text", "text": "Cactus art :cactus:", "emoji": True},
+    )
+
     print(img.title)
     response = client.chat_postMessage(channel='#slack-sandbox-noisy', text="Cactus", blocks=[img])
 

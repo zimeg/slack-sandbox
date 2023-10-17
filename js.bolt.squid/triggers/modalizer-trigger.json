@@ -1,0 +1,15 @@
+{
+  "type": "shortcut",
+  "name": "Open a modal",
+  "description": "View a pronounced and informative view",
+  "workflow": "#/workflows/modalizer_workflow",
+  "shortcut": {},
+  "inputs": {
+    "interactivityPointer": {
+      "value": "{{data.interactivity}}"
+    },
+    "channel": {
+      "value": "{{data.channel_id}}"
+    }
+  }
+}

@@ -1,0 +1,5 @@
+eventlet~=0.33
+flask-socketio~=5.3.0
+python-dotenv==1.0.0
+slack_bolt==1.18.0
+websocket-client==1.6.2
