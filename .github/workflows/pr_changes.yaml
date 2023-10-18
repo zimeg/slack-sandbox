@@ -10,7 +10,7 @@ jobs:
     steps:
     - name: Send message into channel
       id: slack
-      uses: slackapi/slack-github-action@v1.24.0
+      uses: slackapi/slack-github-action@main
       with:
         payload: |
           {
