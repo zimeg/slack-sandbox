@@ -1,0 +1,30 @@
+name: Share failures of a branch
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  brancher:
+    name: Merged tests
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
+    steps:
+      - name: Mock a test failure
+        id: test
+        run: exit 1
+      - name: Send message into channel
+        id: slack
+        if: failure()
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          payload: |
+            {
+              "repository": "${{ github.repository }}",
+              "pull_request_username": "${{ github.event.pull_request.user.login }}",
+              "pull_request_title": ${{ toJSON(github.event.pull_request.title) }},
+              "pull_request_branch": "${{ github.event.pull_request.head.ref }}",
+              "pull_request_url": "${{ github.event.pull_request.html_url }}"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
