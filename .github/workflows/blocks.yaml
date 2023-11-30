@@ -1,0 +1,29 @@
+name: Notify of changes to a PR
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Send message into channel
+      uses: slackapi/slack-github-action@v1.24.0
+      with:
+        payload: |
+          {
+            "text": "Text: GitHub Action build result: ${{ job.status }}",
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "Block: GitHub Action build result: ${{ job.status }}"
+                }
+              }
+            ]
+          }
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_INCOMING_WEBHOOK_URL }}
+        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
