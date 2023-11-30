@@ -2,6 +2,8 @@ name: Share failures of a branch
 on:
   pull_request:
     types: [closed]
+    branches:
+      - main
 
 jobs:
   brancher:
