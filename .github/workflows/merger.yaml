@@ -9,8 +9,12 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true
     steps:
+      - name: Mock a test failure
+        id: test
+        run: exit 1
       - name: Send message into channel
         id: slack
+        if: failure()
         uses: slackapi/slack-github-action@v1.24.0
         with:
           payload: |
