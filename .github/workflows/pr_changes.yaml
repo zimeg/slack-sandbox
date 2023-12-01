@@ -1,0 +1,23 @@
+name: Notify of changes to a PR
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Send message into channel
+      id: slack
+      uses: slackapi/slack-github-action@v1.24.0
+      with:
+        payload: |
+          {
+            "repository": "${{ github.repository }}",
+            "pull_request_username": "${{ github.event.pull_request.user.login }}",
+            "pull_request_title": ${{ toJSON(github.event.pull_request.title) }},
+            "pull_request_url": "${{ github.event.pull_request.html_url }}"
+          }
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
