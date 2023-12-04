@@ -1,20 +1,15 @@
 import { AllMiddlewareArgs, SlackEventMiddlewareArgs } from "@slack/bolt";
 
 export default async ({
-    client,
-    context,
-    event,
-    message,
-}: AllMiddlewareArgs & SlackEventMiddlewareArgs<"message">) => {
-    const { channel } = event;
-    const { text } = message as any;
-    if (context.botUserId && text.indexOf(`<@${context.botUserId}>`) != -1) {
-        return;
-    }
+    client
+}: SlackEventMiddlewareArgs<"message"> & AllMiddlewareArgs) => {
+    console.log("-someone sent a greeting-");
+
     const result = await client.chat.postMessage({
-        channel,
+        channel: "C04CRUE6MU3",
         text: "howdy!",
     });
+
     if (!result.ok) {
         console.error("Failed to return a greeting!");
     }

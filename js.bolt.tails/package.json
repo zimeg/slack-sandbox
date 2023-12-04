@@ -14,7 +14,7 @@
   "author": "Ethan Zimbelman",
   "license": "MIT",
   "dependencies": {
-    "@slack/bolt": "^3.13.1",
+    "@slack/bolt": "file:../../tools/bolt-js",
     "dotenv": "^16.0.3"
   },
   "devDependencies": {
