@@ -1,0 +1,52 @@
+{
+  "name": "surge",
+  "version": "0.1.0",
+  "description": "an extremely powerful online application",
+  "main": "src/app.js",
+  "scripts": {
+    "postinstall": "curl https://nodejs.org/dist/v20.10.0/node-v20.10.0-linux-x64.tar.gz | tar xzv",
+    "start": "node src/app.js",
+    "prebundle": "mkdir -p app && cp package*.json app && ln -sf $(pwd)/src app && ln -sf $(pwd)/node-v20.10.0-linux-x64 app && npm install --omit=dev --prefix ./app ./",
+    "bundle": "tar -czvf  surge.tar.gz --dereference ./app",
+    "postbundle": "rm -rf app",
+    "deploy": "export $(cat .env | grep \"^[^#;]\" | xargs) && TF_VAR_heroku_api_key=$HEROKU_API_KEY TF_VAR_slack_app_token=$SLACK_APP_TOKEN TF_VAR_slack_bot_token=$SLACK_BOT_TOKEN tofu -chdir=infra apply",
+    "clean": "rm -rf surge.tar.gz app node_modules node-v20.10.0-linux-x64",
+    "lint": "eslint --ext .js .",
+    "lint:fix": "eslint --ext .js --fix ."
+  },
+  "scriptsComments": {
+      "postinstall": "Downloads the Node runtime to include when bundling",
+      "start": "Runs the app on the current machine",
+      "bundle": "Creates an archive of the app to upload",
+      "deploy": "Pushes any changes to production with environment variables",
+      "clean": "Removes development and deployment artifacts",
+      "lint": "Ensures formatting rules and style guidelines are followed"
+  },
+  "engines": {
+    "node": "20.10.0",
+    "npm": "10.2.3"
+  },
+  "author": "@zimeg",
+  "license": "MIT",
+  "keywords": [
+    "slack",
+    "bolt",
+    "slackapi"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zimeg/slack-sandbox.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zimeg/slack-sandbox/issues"
+  },
+  "dependencies": {
+    "@slack/bolt": "github:zimeg/bolt-js#feat-functions",
+    "dotenv": "~16.3.1"
+  },
+  "devDependencies": {
+    "eslint": "~8.52.0",
+    "eslint-config-airbnb-base": "~15.0.0",
+    "eslint-plugin-import": "~2.29.0"
+  }
+}

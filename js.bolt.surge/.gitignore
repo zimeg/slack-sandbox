@@ -1,0 +1,15 @@
+# Secrets and stuff
+.env
+
+# Deployment keys
+.terraform
+tofu.auto.tfvars.json
+terraform.tfstate
+
+# Build artifacts
+node_modules
+*.tar.gz
+node-v20.10.0-linux-x64
+
+# Development tools
+.slack/apps.dev.json
