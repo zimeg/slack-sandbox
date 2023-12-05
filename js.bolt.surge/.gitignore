@@ -4,7 +4,7 @@
 # Deployment keys
 .terraform
 tofu.auto.tfvars.json
-terraform.tfstate
+terraform.tfstate*
 
 # Build artifacts
 node_modules

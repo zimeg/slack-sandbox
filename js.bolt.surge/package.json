@@ -9,7 +9,8 @@
     "prebundle": "mkdir -p app && cp package*.json app && ln -sf $(pwd)/src app && ln -sf $(pwd)/node-v20.10.0-linux-x64 app && npm install --omit=dev --prefix ./app ./",
     "bundle": "tar -czvf  surge.tar.gz --dereference ./app",
     "postbundle": "rm -rf app",
-    "deploy": "export $(cat .env | grep \"^[^#;]\" | xargs) && TF_VAR_heroku_api_key=$HEROKU_API_KEY TF_VAR_slack_app_token=$SLACK_APP_TOKEN TF_VAR_slack_bot_token=$SLACK_BOT_TOKEN tofu -chdir=infra apply",
+    "deploy": "export $(cat .env | grep \"^[^#;]\" | xargs) && TF_VAR_heroku_api_key=$HEROKU_API_KEY TF_VAR_slack_app_token=$SLACK_APP_TOKEN TF_VAR_slack_bot_token=$SLACK_BOT_TOKEN tofu -chdir=infra apply -auto-approve",
+    "production": "npm run bundle && npm run deploy",
     "clean": "rm -rf surge.tar.gz app node_modules node-v20.10.0-linux-x64",
     "lint": "eslint --ext .js .",
     "lint:fix": "eslint --ext .js --fix ."

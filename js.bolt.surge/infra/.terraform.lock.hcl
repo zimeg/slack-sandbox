@@ -1,11 +1,11 @@
 # This file is maintained automatically by "tofu init".
 # Manual edits may be lost in future updates.
 
-provider "registry.terraform.io/heroku/heroku" {
+provider "registry.opentofu.org/heroku/heroku" {
   version     = "5.2.7"
   constraints = "~> 5.2"
   hashes = [
-    "h1:uwHIqporlA/jQlLNtiULK/E+eabLW0rtLYTxC0Ev+ww=",
+    "h1:l4JsWgO3za3oX0oBXB9RMYbyI6+7ofDyrkhf+rRMWAI=",
     "zh:1d3628497d81ade016ea81e110e75e7920482cb5fab67a538ba79eb6c84aa37e",
     "zh:275ca156d33588321f92b1071ef0efa5122dd2ee1f5b49adf30c95ab87aff6e9",
     "zh:32bc7f760bff07316ced43f5ed0a529a34ea5499613524f5b4481cc6e500cd95",
