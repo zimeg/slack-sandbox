@@ -4,6 +4,7 @@
   "description": "an extremely powerful online application",
   "main": "src/app.js",
   "scripts": {
+    "preinstall": "cd infra && tofu init",
     "postinstall": "curl https://nodejs.org/dist/v20.10.0/node-v20.10.0-linux-x64.tar.gz | tar xzv",
     "start": "node src/app.js",
     "prebundle": "mkdir -p app && cp package*.json app && ln -sf $(pwd)/src app && ln -sf $(pwd)/node-v20.10.0-linux-x64 app && npm install --omit=dev --prefix ./app ./",
