@@ -11,10 +11,16 @@ jobs:
     steps:
     - name: Send message into channel
       id: slack
-      uses: slackapi/slack-github-action@v1.23.0
+      uses: slackapi/slack-github-action@v1.24.0
       with:
-          channel-id: 'C040KHFGMPY'
+          channel-id: 'C04CRUE6MU3'
           slack-message: "hello <!channel>"
       env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
 
+    - name: Respond with affection
+      run: |
+        curl -X POST -H "Authorization: Bearer ${{ secrets.SLACK_BOT_TOKEN }}" \
+          -H "Content-type: application/json" \
+          --data '{"channel":"C04CRUE6MU3","timestamp":"${{ steps.slack.outputs.ts }}","name":"heart"}' \
+          https://slack.com/api/reactions.add
