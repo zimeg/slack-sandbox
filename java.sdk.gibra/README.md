@@ -31,6 +31,8 @@ mvn install -Dmaven.test.skip=true
 
 ### Running the snippets
 
+Prepare a packaged shell by running `nix-shell`.
+
 The `main` method can be run using `gradle run` from the root directory. Without
 other arguments, this will list snippets available to execute.
 
