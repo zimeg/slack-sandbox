@@ -1,0 +1,33 @@
+name: Renew the license
+
+on:
+  schedule:
+    - cron: '0 8 1 1 *'
+  workflow_dispatch:
+
+jobs:
+  licensure:
+    name: Extension for the year
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout this repo
+      uses: actions/checkout@v4
+    - name: Configure git credentials
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+    - name: Increment the latter year
+      run: |
+        git pull
+        git checkout -b update-license-year || git checkout update-license-year
+        sed -i -E "s/(2[0-9]{3})(-2[0-9]{3})?/\1-$(date +'%Y')/" LICENSE
+    - name: Commit to open source
+      run: |
+        git add LICENSE
+        git commit -m "chore(license): update end year to include $(date +'%Y')"
+        git push -u origin update-license-year
+        gh pr create \
+          --title "chore(license): update end year to include $(date +'%Y')" \
+          --body ":tada:"
+      env:
+        GH_TOKEN: ${{ github.token }}
