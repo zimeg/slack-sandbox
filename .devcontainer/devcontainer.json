@@ -1,0 +1,5 @@
+{
+    "name": "Development with the Slack CLI",
+    "dockerFile": "Dockerfile",
+    "remoteUser": "slackdev"
+}
