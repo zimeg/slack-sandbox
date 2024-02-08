@@ -1,7 +1,8 @@
 # 🗄️ .devcontainer
 
 A [development container][container] provides a predefined environment with
-some tools needed for development, which can be useful in remote settings.
+some tools needed for development, which can be useful in remote settings such
+as [Codespaces][codespaces].
 
 This specific container packages [the Slack CLI][cli] with a few languages and
 runtimes.
@@ -44,6 +45,7 @@ Modifications to an editor might be possibile with additions to the
 
 <!-- a collection of links -->
 [cli]: https://api.slack.com/automation/cli
+[codespaces]: https://github.com/features/codespaces
 [container]: https://containers.dev/
 [deno]: https://deno.com/
 [java]: https://openjdk.org/
