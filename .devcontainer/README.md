@@ -28,17 +28,17 @@ Modifications to an editor might be possibile with additions to the
 
 ```json
 {
-	"customizations": {
-		"vscode": {
-			"extensions": [
+    "customizations": {
+        "vscode": {
+            "extensions": [
                 "denoland.vscode-deno",
                 "vscodevim.vim"
             ],
-			"settings": { 
-				"terminal.integrated.shell.linux": "/bin/bash"
-			}
-		}
-	}
+            "settings": {
+                "terminal.integrated.shell.linux": "/bin/bash"
+            }
+        }
+    }
 }
 ```
 
