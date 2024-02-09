@@ -2,5 +2,6 @@
 .env
 
 # Build and development
+.slack/apps.dev.json
 dist/
 node_modules/
