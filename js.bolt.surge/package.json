@@ -1,6 +1,6 @@
 {
   "name": "surge",
-  "version": "0.1.0",
+  "version": "2024.02.11",
   "description": "an extremely powerful online application",
   "main": "src/app.js",
   "scripts": {
@@ -17,12 +17,12 @@
     "lint:fix": "eslint --ext .js --fix ."
   },
   "scriptsComments": {
-      "postinstall": "Downloads the Node runtime to include when bundling",
-      "start": "Runs the app on the current machine",
-      "bundle": "Creates an archive of the app to upload",
-      "deploy": "Pushes any changes to production with environment variables",
-      "clean": "Removes development and deployment artifacts",
-      "lint": "Ensures formatting rules and style guidelines are followed"
+    "postinstall": "Downloads the Node runtime to include when bundling",
+    "start": "Runs the app on the current machine",
+    "bundle": "Creates an archive of the app to upload",
+    "deploy": "Pushes any changes to production with environment variables",
+    "clean": "Removes development and deployment artifacts",
+    "lint": "Ensures formatting rules and style guidelines are followed"
   },
   "engines": {
     "node": "20.10.0",
@@ -43,10 +43,11 @@
     "url": "https://github.com/zimeg/slack-sandbox/issues"
   },
   "dependencies": {
-    "@slack/bolt": "github:zimeg/bolt-js#feat-functions",
+    "@slack/bolt": "^3.17.1-customFunctionBeta.0",
     "dotenv": "~16.3.1"
   },
   "devDependencies": {
+    "@slack/cli-hooks": "^1.0.0",
     "eslint": "~8.52.0",
     "eslint-config-airbnb-base": "~15.0.0",
     "eslint-plugin-import": "~2.29.0"
