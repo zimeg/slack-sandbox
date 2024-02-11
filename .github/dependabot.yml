@@ -25,7 +25,7 @@ updates:
       prefix: "java.sdk.gibra(chore)"
     labels:
       - "dependencies"
-      - "proj:java.sdk.griba"
+      - "proj:java.sdk.gibra"
   - package-ecosystem: "npm"
     directory: "js.bolt.surge"
     schedule:
