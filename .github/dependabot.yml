@@ -1,0 +1,73 @@
+version: 2
+updates:
+  - package-ecosystem: "devcontainers"
+    directory: ".devcontainer"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "devcontainer(chore)"
+    labels:
+      - "dependencies"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "actions(chore)"
+    labels:
+      - "dependencies"
+      - "proj:actions"
+  - package-ecosystem: "gradle"
+    directory: "java.sdk.gibra"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "java.sdk.gibra(chore)"
+    labels:
+      - "dependencies"
+      - "proj:java.sdk.griba"
+  - package-ecosystem: "npm"
+    directory: "js.bolt.surge"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "js.bolt.surge(chore)"
+    labels:
+      - "dependencies"
+      - "proj:js.bolt.surge"
+  - package-ecosystem: "terraform"
+    directory: "js.bolt.surge/infra"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "js.bolt.surge(chore)"
+    labels:
+      - "dependencies"
+      - "proj:js.bolt.surge"
+  - package-ecosystem: "npm"
+    directory: "js.bolt.tails"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "js.bolt.tails(chore)"
+    labels:
+      - "dependencies"
+      - "proj:js.bolt.tails"
+  - package-ecosystem: "pip"
+    directory: "py.bolt.snaek"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "py.bolt.snaek(chore)"
+    labels:
+      - "dependencies"
+      - "proj:py.bolt.snaek"
+  - package-ecosystem: "pip"
+    directory: "py.sdk.sdkai"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "py.sdk.sdkai(chore)"
+    labels:
+      - "dependencies"
+      - "proj:py.sdk.sdkai"
