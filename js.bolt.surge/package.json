@@ -43,7 +43,7 @@
     "url": "https://github.com/zimeg/slack-sandbox/issues"
   },
   "dependencies": {
-    "@slack/bolt": "^3.17.1-customFunctionBeta.0",
+    "@slack/bolt": "^4.0.0-nextGen.9",
     "dotenv": "~16.3.1"
   },
   "devDependencies": {
