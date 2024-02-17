@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- feat: collect app environment tokens from the slack cli 2024-02-17
 - chore: set slack package versions for custom functions 2024-02-11
 - fix: initialize the infrastructure during preinstalls 2023-12-06
 - feat: prepare the deploy hook with a production script 2023-12-05
