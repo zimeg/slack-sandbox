@@ -57,6 +57,7 @@ Store the tokens needed to run your app in a secret place:
 1. Rename `.env.example` to `.env` and edit that new file
 2. Create an app token with `connections:write` scopes under *Basic Information*
 3. Gather the bot token from the *OAuth & Permissions* page
+4. Export these variables into your current shell environment
 
 #### Calling useful commands
 

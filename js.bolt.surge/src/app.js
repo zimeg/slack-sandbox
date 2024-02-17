@@ -1,7 +1,4 @@
 const { App, LogLevel } = require('@slack/bolt');
-const { config } = require('dotenv');
-
-config();
 
 const app = new App({
   token: process.env.SLACK_BOT_TOKEN,

@@ -1,6 +1,6 @@
 {
   "name": "surge",
-  "version": "2024.02.11",
+  "version": "2024.02.17",
   "description": "an extremely powerful online application",
   "main": "src/app.js",
   "scripts": {
@@ -43,8 +43,7 @@
     "url": "https://github.com/zimeg/slack-sandbox/issues"
   },
   "dependencies": {
-    "@slack/bolt": "^3.17.1-customFunctionBeta.0",
-    "dotenv": "~16.3.1"
+    "@slack/bolt": "^3.17.1-customFunctionBeta.0"
   },
   "devDependencies": {
     "@slack/cli-hooks": "^1.0.0",
