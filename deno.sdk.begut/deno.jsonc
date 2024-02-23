@@ -28,6 +28,7 @@
   },
   "lock": false,
   "tasks": {
-    "test": "deno fmt --check && deno lint && deno test --allow-read --allow-none"
+    "test": "deno fmt --check && deno lint && deno test --allow-read --allow-none",
+    "update": "deno run --allow-read --allow-net --allow-write https://deno.land/x/udd/main.ts import_map.json"
   }
 }
