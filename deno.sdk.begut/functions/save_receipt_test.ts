@@ -3,8 +3,8 @@ import {
   assertEquals,
   assertExists,
   assertStringIncludes,
-} from "https://deno.land/std@0.153.0/testing/asserts.ts";
-import * as mf from "mock_fetch";
+} from "testing/asserts.ts";
+import * as mf from "mock-fetch/mod.ts";
 import SaveReceipt from "./save_receipt.ts";
 
 const { createContext } = SlackFunctionTester("save_receipt_function");

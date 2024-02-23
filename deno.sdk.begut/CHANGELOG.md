@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- fix(test): import all testing dependencies from the import map 2024-02-22
 - chore(deps): bump versions of the slack sdks to latest releases 2024-02-22
 - feat(category): include an expense category related to travels 2024-02-22
 - feat: submit receipts across various categories with a workflow 2024-02-07
