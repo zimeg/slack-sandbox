@@ -1,0 +1,39 @@
+name: Synchronize certain samples
+
+on:
+  push:
+    paths:
+      - 'deno.sdk.begut/**'
+      - 'js.bolt.surge/**'
+      - 'js.bolt.tails/**'
+      - 'py.bolt.snaek/**'
+  workflow_dispatch:
+
+jobs:
+  synchronize:
+    name: Update remote branches
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        folder:
+          - deno.sdk.begut
+          - js.bolt.surge
+          - js.bolt.tails
+          - py.bolt.snaek
+    steps:
+      - name: Checkout this repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Update ${{ matrix.folder }}
+        if: >-
+          github.event_name == 'push' && (
+          contains(github.event.head_commit.modified, matrix.folder) ||
+          contains(github.event.head_commit.added, matrix.folder) ||
+          contains(github.event.head_commit.removed, matrix.folder)
+          ) || github.event_name == 'workflow_dispatch'
+        run: |
+          git subtree split --prefix=${{ matrix.folder }} -b ${{ matrix.folder }}
+          git push https://x-access-token:${{ secrets.SANDBOX_ACCESS_TOKEN }}@github.com/${{ env.TARGET_REPO }} ${{ matrix.folder }}:refs/heads/${{ matrix.folder }} --force
+        env:
+          TARGET_REPO: 'zimeg/slacks'
