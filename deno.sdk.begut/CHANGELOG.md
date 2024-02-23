@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- feat(category): include an expense category related to travels 2024-02-22
 - feat: submit receipts across various categories with a workflow 2024-02-07
 
 <!-- a collection of links -->

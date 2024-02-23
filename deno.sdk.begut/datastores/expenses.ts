@@ -19,6 +19,7 @@ export const expenseCategories: {
   "🏠 rent": "rent",
   "🍽️ restaurant": "restaurant",
   "🚲 transportation": "transportation",
+  "✈️ travel": "travel",
   "🍫 treats": "treats",
   "🔌 utilities": "utilities",
 };
