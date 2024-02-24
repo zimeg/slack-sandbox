@@ -49,5 +49,10 @@ jobs:
           git rebase main
           rsync -av --delete --exclude=".git" ../sandbox/${{ matrix.folder }}/ .
           git add .
-          git commit -m "chore(sync): update sample with the latest upstream changes"
+          if [ -z "$COMMIT_MESSAGE" ]; then
+            COMMIT_MESSAGE="chore(sync): update sample with the latest upstream changes"
+          fi
+          git commit -m "$COMMIT_MESSAGE"
           git push origin HEAD
+        env:
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
