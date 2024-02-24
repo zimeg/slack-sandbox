@@ -46,6 +46,7 @@ jobs:
         run: |
           cd samples
           git checkout -b ${{ matrix.folder }} --force
+          git rebase main
           rsync -av ../sandbox/${{ matrix.folder }}/ .
           git add .
           git commit -m "chore(sync): update sample with the latest upstream changes"
