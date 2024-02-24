@@ -47,4 +47,4 @@ jobs:
           cp ../sandbox/LICENSE .
           git add .
           git commit -m "chore(sync): update sample with the latest upstream changes"
-          git push origin HEAD
+          git push origin HEAD --force
