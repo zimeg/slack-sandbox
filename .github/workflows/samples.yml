@@ -48,6 +48,7 @@ jobs:
           git checkout -b ${{ matrix.folder }} --force
           git rebase main
           rsync -av --delete --exclude=".git" ../sandbox/${{ matrix.folder }}/ .
+          cp ../sandbox/LICENSE .
           git add .
           if [ -z "$COMMIT_MESSAGE" ]; then
             COMMIT_MESSAGE="chore(sync): update sample with the latest upstream changes"
