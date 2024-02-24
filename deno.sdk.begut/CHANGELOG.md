@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- docs(feat): replace sandbox cloning instruction with slack create 2024-02-24
 - docs(fix): reference the conventional commits page in changelog 2024-02-22
 - build(deps): create a new deno task to update all depenendencies 2024-02-22
 - fix(test): import all testing dependencies from the import map 2024-02-22

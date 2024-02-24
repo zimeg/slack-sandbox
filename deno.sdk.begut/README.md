@@ -21,11 +21,11 @@ The Slack CLI is a tool that makes managing Slack apps easier.
 
 ### Deploying to a team
 
-Clone the entire sandbox and navigate to this directory, then deploy the app:
+Clone the application code and navigate to this directory, then deploy the app:
 
 ```sh
-$ git clone https://github.com/zimeg/slack-sandbox
-$ cd slack-sandbox/deno.sdk.begut
+$ slack create begut -t zimeg/slacks -b deno.sdk.begut
+$ cd begut
 $ slack deploy
 ```
 
