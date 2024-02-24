@@ -14,6 +14,8 @@ jobs:
     name: Update remote branches
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
+      max-parallel: 1
       matrix:
         folder:
           - deno.sdk.begut
@@ -37,12 +39,6 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
       - name: Update ${{ matrix.folder }}
-        if: >-
-          github.event_name == 'push' && (
-          contains(github.event.head_commit.modified, matrix.folder) ||
-          contains(github.event.head_commit.added, matrix.folder) ||
-          contains(github.event.head_commit.removed, matrix.folder)
-          ) || github.event_name == 'workflow_dispatch'
         run: |
           cd samples
           git checkout -b ${{ matrix.folder }} --force
@@ -50,10 +46,5 @@ jobs:
           rsync -av --delete --exclude=".git" ../sandbox/${{ matrix.folder }}/ .
           cp ../sandbox/LICENSE .
           git add .
-          if [ -z "$COMMIT_MESSAGE" ]; then
-            COMMIT_MESSAGE="chore(sync): update sample with the latest upstream changes"
-          fi
-          git commit -m "$COMMIT_MESSAGE"
+          git commit -m "chore(sync): update sample with the latest upstream changes"
           git push origin HEAD
-        env:
-          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
