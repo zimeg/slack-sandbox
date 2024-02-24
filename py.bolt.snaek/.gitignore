@@ -1,6 +1,4 @@
-# Hide secret variables
-.env
-
 # Development artifacts
-.venv
 __pycache__
+.slack/apps.dev.json
+.venv

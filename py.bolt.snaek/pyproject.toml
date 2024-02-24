@@ -1,0 +1,17 @@
+[project]
+name = "py.bolt.snaek"
+description = "a strange and slithery app with some superb powers"
+version = "2024.02.24"
+requires-python = ">=3.8"
+dependencies = [
+  "slack-bolt==1.18.1",
+  "slack-cli-hooks==0.0.0.dev2",
+  "slack-sdk==3.27.0",
+]
+readme = "README.md"
+license = {text = "MIT License"}
+
+[project.urls]
+Repository = "https://github.com/zimeg/slack-sandbox.git"
+Issues = "https://github.com/zimeg/slack-sandbox/issues"
+Changelog = "https://github.com/zimeg/slack-sandbox/blob/main/py.bolt.snaek/CHANGELOG.md"
