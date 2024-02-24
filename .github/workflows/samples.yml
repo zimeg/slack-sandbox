@@ -25,6 +25,17 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          path: sandbox
+      - name: Checkout sample repo
+        uses: actions/checkout@v4
+        with:
+          repository: zimeg/slacks
+          path: samples
+          token: ${{ secrets.SANDBOX_ACCESS_TOKEN }}
+      - name: Configure git credentials
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
       - name: Update ${{ matrix.folder }}
         if: >-
           github.event_name == 'push' && (
@@ -33,7 +44,9 @@ jobs:
           contains(github.event.head_commit.removed, matrix.folder)
           ) || github.event_name == 'workflow_dispatch'
         run: |
-          git subtree split --prefix=${{ matrix.folder }} -b ${{ matrix.folder }}
-          git push https://x-access-token:${{ secrets.SANDBOX_ACCESS_TOKEN }}@github.com/${{ env.TARGET_REPO }} ${{ matrix.folder }}:refs/heads/${{ matrix.folder }} --force
-        env:
-          TARGET_REPO: 'zimeg/slacks'
+          cd samples
+          git checkout -b ${{ matrix.folder }} --force
+          rsync -av ../sandbox/${{ matrix.folder }}/ .
+          git add .
+          git commit -m "chore(sync): update sample with the latest upstream changes"
+          git push origin HEAD
