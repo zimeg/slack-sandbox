@@ -10,7 +10,7 @@ Showcasing some features of Slack automations from the sights of a satellite.
 Development with the [Slack CLI][cli] is encouraged but requires customization:
 
 ```sh
-$ slack create surge --template zimeg/slack-sample-example --branch surge
+$ slack create surge -t zimeg/slacks -b js.bolt.surge
 $ cd surge
 $ slack run     # Local development
 $ slack deploy  # Push to production
@@ -35,7 +35,7 @@ Setup without the Slack CLI can also be accomplished in a few more steps.
 Prepare the project and dependencies with the following commands:
 
 ```sh
-$ git clone --single-branch --branch surge https://github.com/zimeg/slack-sample-example surge
+$ git clone --single-branch --branch js.bolt.surge https://github.com/zimeg/slacks surge
 $ cd surge
 $ npm install
 ```
