@@ -1,4 +1,5 @@
 # Development artifacts
 __pycache__
+.direnv
 .slack/apps.dev.json
 .venv

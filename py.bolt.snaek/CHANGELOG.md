@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- build: prepare a development environment using a simple nix flake 2024-02-24
 - feat: respond to simple greetings in a slithery way via a CLI run 2024-02-24
 
 <!-- a collection of links -->
