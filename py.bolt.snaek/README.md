@@ -9,7 +9,7 @@ Made with [Bolt for Python][bolt] and your own language model.
 Responses are received for any message involving this app, whether that be from
 a mention, DM, or threaded reply.
 
-Conversations might begin bland but maybe you say something interesting!
+https://github.com/zimeg/slack-sandbox/assets/18134219/57d4b11d-83fa-45c0-92e9-53c4c6d2e1d5
 
 ## Getting started
 
