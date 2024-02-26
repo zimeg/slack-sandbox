@@ -1,8 +1,8 @@
 from slack_bolt import App
 
 from database.manager import Database
-from events.app_mention import app_mention_wrapper
-from events.message import message_wrapper
+from .app_mention import app_mention_wrapper
+from .message import message_wrapper
 
 
 def register(app: App, db: Database):

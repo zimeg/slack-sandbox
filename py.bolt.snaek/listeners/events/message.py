@@ -4,7 +4,7 @@ from slack_bolt import BoltContext
 from slack_sdk import WebClient
 
 from database.manager import Database
-from events.app_mention import app_mention_check
+from .app_mention import app_mention_check
 
 
 def message_wrapper(db: Database):
