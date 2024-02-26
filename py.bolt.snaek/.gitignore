@@ -1,3 +1,6 @@
+# Data remnants
+caduceus.db
+
 # Development artifacts
 __pycache__
 .direnv
