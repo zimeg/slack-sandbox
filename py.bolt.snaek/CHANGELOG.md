@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- feat: generate conversational responses using large language models 2024-02-26
 - chore: bump the required python version to at least 3.11 2024-02-25
 - fix: import local modules without specifying the module path name 2024-02-25
 - feat: thread responses to any message involving this scalable app 2024-02-25

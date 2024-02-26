@@ -1,5 +1,7 @@
 import sqlite3
 
+from handlers import messaging
+
 
 class Database:
     def __init__(self, path: str):
@@ -22,7 +24,7 @@ class Database:
 
     # Returns if the thread is currently being followed
     def threads_following_check(self, event) -> (bool, str):
-        thread_ts = self._get_event_thread_ts(event)
+        thread_ts = messaging.get_event_thread_ts(event)
         channel_id = event['channel']
         enterprise_id = self._get_event_enterprise_id(event)
         team_id = event['team']
@@ -42,7 +44,7 @@ class Database:
 
     # Marks the provided thread as one to follow
     def threads_following_watch(self, event):
-        thread_ts = self._get_event_thread_ts(event)
+        thread_ts = messaging.get_event_thread_ts(event)
         channel_id = event['channel']
         enterprise_id = self._get_event_enterprise_id(event)
         team_id = event['team']
@@ -64,10 +66,3 @@ class Database:
             return event['enterprise']['id']
         else:
             return None
-
-    # Determines the timestamp for a parent message
-    def _get_event_thread_ts(self, event) -> str:
-        if event.get('thread_ts', False):
-            return event['thread_ts']
-        else:
-            return event['ts']

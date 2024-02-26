@@ -6,3 +6,6 @@ __pycache__
 .direnv
 .slack/apps.dev.json
 .venv
+
+# Environment variables
+.env

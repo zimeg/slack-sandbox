@@ -4,6 +4,7 @@ from slack_bolt import BoltContext
 from slack_sdk import WebClient
 
 from database.manager import Database
+from models.respond import response_generate
 from .app_mention import app_mention_check
 
 
@@ -23,9 +24,5 @@ def message_wrapper(db: Database):
                 db.threads_following_watch(event)
         elif not is_following or is_app_mention:
             return
-        client.chat_postMessage(
-            channel=event['channel'],
-            thread_ts=thread_ts,
-            text="how interesting...",
-        )
+        response_generate(client, event, logger)
     return message_callback

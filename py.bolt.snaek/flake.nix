@@ -18,6 +18,7 @@
       {
         devShell = pkgs.mkShell {
           buildInputs = [
+            pkgs.ollama
             pythonEnv
           ];
           shellHook = ''
