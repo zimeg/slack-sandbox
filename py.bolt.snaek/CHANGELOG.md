@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- build: download and unpack the slack cli for ease in development 2024-02-29
 - build: install latest python dependencies using a flake environment 2024-02-29
 - docs: demonstrate a live response to a prompt using moving pictures 2024-02-26
 - feat: generate conversational responses using large language models 2024-02-26
