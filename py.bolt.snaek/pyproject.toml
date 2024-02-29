@@ -1,8 +1,8 @@
 [project]
 name = "py.bolt.snaek"
 description = "a strange and slithery app with some superb powers"
-version = "2024.02.26"
-requires-python = ">=3.11"
+version = "2024.02.28"
+requires-python = ">=3.12"
 dependencies = [
   "requests==2.31.0",
   "slack-bolt==1.18.1",

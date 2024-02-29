@@ -10,20 +10,20 @@
         pkgs = import nixpkgs {
           inherit system;
         };
-        pythonEnv = pkgs.python3.withPackages (ps: with ps; [
-          pip
-          virtualenv
-        ]);
       in
       {
         devShell = pkgs.mkShell {
+          venvDir = ".venv";
           buildInputs = [
             pkgs.ollama
-            pythonEnv
+            pkgs.python312Packages.python
+            pkgs.python312Packages.venvShellHook
           ];
+          postVenvCreation = ''
+            pip install -r requirements.txt
+          '';
           shellHook = ''
             source .venv/bin/activate
-            pip install -r requirements.txt
           '';
         };
       });

@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- build: install latest python dependencies using a flake environment 2024-02-29
 - docs: demonstrate a live response to a prompt using moving pictures 2024-02-26
 - feat: generate conversational responses using large language models 2024-02-26
 - chore: bump the required python version to at least 3.11 2024-02-25
