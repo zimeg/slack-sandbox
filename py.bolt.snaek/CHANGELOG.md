@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- fix: continue updating the same response after being rate limited 2024-03-03
 - build: download and unpack the slack cli for ease in development 2024-02-29
 - build: install latest python dependencies using a flake environment 2024-02-29
 - docs: demonstrate a live response to a prompt using moving pictures 2024-02-26

@@ -32,6 +32,7 @@ def put_message(
         return message_ts
     except SlackApiError as e:
         logger.error("An error occured with the Slack API", exc_info=e)
+        return message_ts
 
 
 def get_event_thread_ts(event) -> str:
