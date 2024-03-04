@@ -28,7 +28,16 @@ $ ollama serve
 The prepared model is `mistral` and other available models can be found from
 [the Ollama library][models].
 
-Update the `OLLAMA_MODEL` environment variable with any model you'd like!
+Update the `OLLAMA_MODEL` environment variable with any model name you'd like!
+
+#### Customizing system prompts
+
+Custom models can be configured and created from the `models/Modelfile` file.
+Generate a new model with:
+
+```sh
+$ ollama create snaek --file models/Modelfile
+```
 
 #### Configuring networks
 

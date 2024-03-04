@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- feat: configure system prompts for more clear and concise replies 2024-03-03
 - feat: retain context of the thread when generating new responses 2024-03-03
 - fix: continue updating the same response after being rate limited 2024-03-03
 - build: download and unpack the slack cli for ease in development 2024-02-29
