@@ -10,15 +10,15 @@ from handlers import messaging
 
 def response_generate(client: WebClient, event, logger: Logger):
     url = f'{os.getenv("OLLAMA_CLIENT", "http://localhost:11434")}/api/chat'
+    thread = messaging.get_message_thread(
+        client=client,
+        event=event,
+        logger=logger,
+    )
     try:
         data = {
             "model": os.getenv("OLLAMA_MODEL", "mistral"),
-            "messages": [
-                {
-                    "role": "user",
-                    "content": event['text'],
-                },
-            ]
+            "messages": thread,
         }
         response = requests.post(url, data=json.dumps(data), stream=True)
         _response_generate_stream(client, event, response, logger)

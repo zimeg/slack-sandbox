@@ -35,6 +35,24 @@ def put_message(
         return message_ts
 
 
+def get_message_thread(client: WebClient, event, logger: Logger):
+    try:
+        return [
+            {
+                "role": "assistant" if "bot_id" in message else "user",
+                "content": message['text'],
+            }
+            for data in client.conversations_replies(
+                channel=event['channel'],
+                ts=get_event_thread_ts(event),
+            )
+            for message in data['messages']
+        ]
+    except SlackApiError as e:
+        logger.error("An error occured with the Slack API", exc_info=e)
+        return [{"role": "user", "content": event['text']}]
+
+
 def get_event_thread_ts(event) -> str:
     if event.get('thread_ts', False):
         return event['thread_ts']
