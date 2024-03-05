@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- feat: swap the custom base model from mistral to the medium llama 2024-03-04
 - chore: upgrade the locked version of ollama to version 0.1.27 2024-03-04
 - feat: configure system prompts for more clear and concise replies 2024-03-03
 - feat: retain context of the thread when generating new responses 2024-03-03

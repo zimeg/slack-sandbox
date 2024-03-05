@@ -1,4 +1,4 @@
-FROM mistral
+FROM llama2:13b
 
 PARAMETER mirostat 2
 PARAMETER mirostat_eta 0.2
