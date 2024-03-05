@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- test: perform static analysis of type annotations for some safety 2024-03-05
 - fix!: remove stored enterprise ids in events from chat messages 2024-03-05
 - feat: swap the custom base model from mistral to the medium llama 2024-03-04
 - chore: upgrade the locked version of ollama to version 0.1.27 2024-03-04

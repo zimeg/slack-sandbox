@@ -4,5 +4,5 @@ from database.manager import Database
 from listeners import events
 
 
-def register_listeners(app: App, db: Database):
+def register_listeners(app: App, db: Database) -> None:
     events.register(app, db)
