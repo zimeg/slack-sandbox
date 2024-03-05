@@ -1,7 +1,10 @@
 from logging import Logger
+from typing import List
 
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
+
+from shared.types import ChatEvent, ModelMessage
 
 
 def put_message(
@@ -12,7 +15,7 @@ def put_message(
     content: str,
     logger: Logger,
     metadata: dict | None = None,
-) -> str:
+) -> str | None:
     try:
         if message_ts is None:
             response = client.chat_postMessage(
@@ -35,7 +38,11 @@ def put_message(
         return message_ts
 
 
-def get_message_thread(client: WebClient, event, logger: Logger):
+def get_message_thread(
+    client: WebClient,
+    event: ChatEvent,
+    logger: Logger
+) -> List[ModelMessage]:
     try:
         return [
             {
@@ -53,8 +60,7 @@ def get_message_thread(client: WebClient, event, logger: Logger):
         return [{"role": "user", "content": event['text']}]
 
 
-def get_event_thread_ts(event) -> str:
-    if event.get('thread_ts', False):
-        return event['thread_ts']
-    else:
-        return event['ts']
+def get_event_thread_ts(event: ChatEvent) -> str:
+    return (
+        event['thread_ts'] if event['thread_ts'] is not None else event['ts']
+    )

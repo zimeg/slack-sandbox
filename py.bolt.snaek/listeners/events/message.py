@@ -1,20 +1,24 @@
 from logging import Logger
+from typing import Callable
 
 from slack_bolt import BoltContext
 from slack_sdk import WebClient
 
+from .app_mention import app_mention_check
 from database.manager import Database
 from models.respond import response_generate
-from .app_mention import app_mention_check
+from shared.types import ChatEvent
 
 
-def message_wrapper(db: Database):
+def message_wrapper(
+    db: Database,
+) -> Callable[[WebClient, BoltContext, ChatEvent, Logger], None]:
     def message_callback(
         client: WebClient,
         context: BoltContext,
-        event,
+        event: ChatEvent,
         logger: Logger,
-    ):
+    ) -> None:
         if event.get('subtype', False):
             return
         is_app_mention = app_mention_check(context, event)

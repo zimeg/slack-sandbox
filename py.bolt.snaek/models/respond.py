@@ -6,9 +6,14 @@ import requests
 from slack_sdk import WebClient
 
 from handlers import messaging
+from shared.types import ChatEvent
 
 
-def response_generate(client: WebClient, event, logger: Logger):
+def response_generate(
+    client: WebClient,
+    event: ChatEvent,
+    logger: Logger,
+) -> None:
     url = f'{os.getenv("OLLAMA_CLIENT", "http://localhost:11434")}/api/chat'
     thread = messaging.get_message_thread(
         client=client,
@@ -34,10 +39,10 @@ def response_generate(client: WebClient, event, logger: Logger):
 
 def _response_generate_stream(
     client: WebClient,
-    event,
+    event: ChatEvent,
     response: requests.models.Response,
     logger: Logger,
-):
+) -> None:
     channel_id = event['channel']
     content = ""
     message_ts = None

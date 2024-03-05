@@ -33,6 +33,7 @@
         devShell = pkgs.mkShell {
           venvDir = ".venv";
           buildInputs = [
+            pkgs.gnumake
             pkgs.ollama
             pkgs.python312Packages.python
             pkgs.python312Packages.venvShellHook

@@ -1,15 +1,17 @@
 import sqlite3
+from typing import Tuple
 
 from handlers import messaging
+from shared.types import ChatEvent
 
 
 class Database:
-    def __init__(self, path: str):
+    def __init__(self, path: str) -> None:
         self.connection = sqlite3.connect(path, check_same_thread=False)
         self.create_tables()
 
     # Prepares places to persist data
-    def create_tables(self):
+    def create_tables(self) -> None:
         cursor = self.connection.cursor()
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS threads (
@@ -22,7 +24,7 @@ class Database:
         self.connection.commit()
 
     # Returns if the thread is currently being followed
-    def threads_following_check(self, event) -> (bool, str):
+    def threads_following_check(self, event: ChatEvent) -> Tuple[bool, str]:
         thread_ts = messaging.get_event_thread_ts(event)
         channel_id = event['channel']
         team_id = event['team']
@@ -40,7 +42,7 @@ class Database:
         return exists, thread_ts
 
     # Marks the provided thread as one to follow
-    def threads_following_watch(self, event):
+    def threads_following_watch(self, event: ChatEvent) -> None:
         thread_ts = messaging.get_event_thread_ts(event)
         channel_id = event['channel']
         team_id = event['team']
@@ -53,5 +55,5 @@ class Database:
         self.connection.commit()
 
     # Ends the open connections
-    def close(self):
+    def close(self) -> None:
         self.connection.close()
