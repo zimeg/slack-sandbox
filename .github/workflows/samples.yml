@@ -33,6 +33,7 @@ jobs:
   synchronize:
     name: Update remote branches
     if: github.ref == 'refs/heads/main'
+    needs: test
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
