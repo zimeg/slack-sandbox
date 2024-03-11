@@ -1,4 +1,4 @@
-mypy==1.8.0
+mypy==1.9.0
 requests==2.31.0
 slack-bolt==1.18.1
 slack_cli_hooks==0.0.0.dev2
