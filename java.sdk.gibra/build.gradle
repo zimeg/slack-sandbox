@@ -9,7 +9,7 @@ repositories {
 dependencies {
     implementation("com.slack.api:slack-api-client:1.38.1")
     implementation("io.github.cdimascio:dotenv-java:3.0.0")
-    implementation("ch.qos.logback:logback-classic:1.4.14")
+    implementation("ch.qos.logback:logback-classic:1.5.3")
 }
 application {
     mainClass = "App"
