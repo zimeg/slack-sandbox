@@ -3,4 +3,4 @@ requests==2.31.0
 slack-bolt==1.18.1
 slack_cli_hooks==0.0.0.dev2
 slack_sdk==3.27.0
-types_requests==2.31.0.20240218
+types_requests==2.31.0.20240311
