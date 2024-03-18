@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- build: install and manage python dependencies with the nix flake 2024-03-17
 - fix: check if a thread timestamp exists without causing key error 2024-03-07
 - test: perform static analysis of type annotations for some safety 2024-03-05
 - fix!: remove stored enterprise ids in events from chat messages 2024-03-05

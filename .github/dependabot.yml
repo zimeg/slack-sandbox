@@ -54,15 +54,6 @@ updates:
       - "dependencies"
       - "proj:js.bolt.tails"
   - package-ecosystem: "pip"
-    directory: "py.bolt.snaek"
-    schedule:
-      interval: "weekly"
-    commit-message:
-      prefix: "py.bolt.snaek(chore)"
-    labels:
-      - "dependencies"
-      - "proj:py.bolt.snaek"
-  - package-ecosystem: "pip"
     directory: "py.sdk.sdkai"
     schedule:
       interval: "weekly"

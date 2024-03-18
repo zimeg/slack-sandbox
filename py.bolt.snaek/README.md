@@ -60,7 +60,7 @@ $ slack create snaek -t zimeg/slacks -b py.bolt.snaek
 $ cd snaek
 $ python3 -m venv .venv
 $ source .venv/bin/activate
-$ pip install -r requirements.txt
+$ pip install .
 ```
 
 #### Starting in Socket Mode
