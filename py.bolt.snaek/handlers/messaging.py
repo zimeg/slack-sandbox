@@ -61,6 +61,7 @@ def get_message_thread(
 
 
 def get_event_thread_ts(event: ChatEvent) -> str:
-    return (
-        event['thread_ts'] if event['thread_ts'] is not None else event['ts']
-    )
+    thread_ts = event.get('thread_ts')
+    if thread_ts is None:
+        return event['ts']
+    return thread_ts

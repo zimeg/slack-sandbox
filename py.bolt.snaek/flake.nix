@@ -10,6 +10,25 @@
         pkgs = import nixpkgs {
           inherit system;
         };
+        pythonEnv = pkgs.python3.withPackages (ps: with ps; [
+          mypy
+          requests
+          slack-bolt
+          slack-sdk
+          types-requests
+          (buildPythonPackage rec {
+            pname = "slack_cli_hooks";
+            version = "0.0.0.dev2";
+            src = pkgs.fetchFromGitHub {
+              owner = "slackapi";
+              repo = "python-slack-hooks";
+              rev = "v0.0.0.dev2";
+              sha256 = "sha256-wpsJXgEOD0nIfxRhly36Ea2IaIFQ15cDCfR1/gjkV1U=";
+            };
+            format = "pyproject";
+            buildInputs = [ setuptools slack-bolt ];
+          })
+        ]);
         slackcli = pkgs.stdenv.mkDerivation {
           name = "slackcli";
           src = if pkgs.stdenv.isDarwin then
@@ -31,19 +50,13 @@
       in
       {
         devShell = pkgs.mkShell {
-          venvDir = ".venv";
           buildInputs = [
             pkgs.gnumake
             pkgs.ollama
-            pkgs.python312Packages.python
-            pkgs.python312Packages.venvShellHook
+            pythonEnv
             slackcli
           ];
-          postVenvCreation = ''
-            pip install -r requirements.txt
-          '';
           shellHook = ''
-            source .venv/bin/activate
             export SLACK_CONFIG_DIR="$HOME/.config/slack"
             mkdir -p $SLACK_CONFIG_DIR
           '';

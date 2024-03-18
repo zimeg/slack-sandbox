@@ -1,4 +1,4 @@
 .PHONY: test
 
 test:
-	mypy app.py
+	python3 -m mypy app.py
