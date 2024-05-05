@@ -11,6 +11,9 @@ The [Slack GitHub Action][slack] is used within the `message.yml` workflow and
 others for sharing updates about the repository.
 
 A manifest to describe the bot posting messages can be found in `manifest.json`.
+An icon below:
+
+<img src="./saga.jpg" title="saga reigns action" alt="the sagittarius" width="400" height="400" />
 
 ## Credentials
 
