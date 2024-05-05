@@ -1,6 +1,7 @@
 name: Share an update
 
 on:
+  pull_request:
   push:
     branches: [ main ]
 
