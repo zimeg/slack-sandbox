@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- build: install versions of development tooling using a nix flake 2024-05-04
 - docs(feat): replace sandbox cloning instruction with slack create 2024-02-24
 - docs(fix): reference the conventional commits page in changelog 2024-02-22
 - build(deps): create a new deno task to update all depenendencies 2024-02-22
