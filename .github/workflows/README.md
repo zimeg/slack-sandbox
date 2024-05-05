@@ -1,5 +1,7 @@
 # 🐙 workflows
 
+> and actions.
+
 The service known as [GitHub Actions][action] provides computing close to code.
 
 This repository and projects within make use of Actions for general upkeep and
