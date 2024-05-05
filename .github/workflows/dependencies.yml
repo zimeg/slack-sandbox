@@ -1,4 +1,5 @@
 name: Update dependencies
+
 on: pull_request
 
 permissions:
@@ -18,16 +19,26 @@ jobs:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
       - name: Merge requests from the kind dependabot
         if: steps.metadata.outputs.update-type == 'version-update:semver-patch' || steps.metadata.outputs.update-type == 'version-update:semver-minor'
-        run: gh pr merge --auto --merge "$PR_URL"
+        run: gh pr merge --auto --squash "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Send a notification of completion
-        id: slack
+        id: slack-success
         uses: slackapi/slack-github-action@v1.25.0
         with:
           channel-id: ${{ env.SLACK_CHANNEL_ID }}
-          slack-message: "${{ matrix.folder }}(chore): dependencies have been updated"
+          slack-message: "${{ steps.metadata.outputs.directory }}(chore): dependencies have been updated"
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
+          SLACK_CHANNEL_ID: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
+      - name: Send a notification of failure
+        if: failure()
+        id: slack-failure
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          channel-id: ${{ env.SLACK_CHANNEL_ID }}
+          slack-message: "${{ steps.metadata.outputs.directory }}(chore): failed to update dependencies"
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
           SLACK_CHANNEL_ID: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
