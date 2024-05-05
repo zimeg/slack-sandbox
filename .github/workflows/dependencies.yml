@@ -1,0 +1,33 @@
+name: Update dependencies
+on: pull_request
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  dependabot:
+    name: Merge automatic pull requests
+    runs-on: ubuntu-latest
+    if: github.actor == 'dependabot[bot]'
+    steps:
+      - name: Collect update metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v2
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+      - name: Merge requests from the kind dependabot
+        if: steps.metadata.outputs.update-type == 'version-update:semver-patch' || steps.metadata.outputs.update-type == 'version-update:semver-minor'
+        run: gh pr merge --auto --merge "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Send a notification of completion
+        id: slack
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          channel-id: ${{ env.SLACK_CHANNEL_ID }}
+          slack-message: "${{ matrix.folder }}(chore): dependencies have been updated"
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
+          SLACK_CHANNEL_ID: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
