@@ -14,8 +14,8 @@ A manifest to describe the bot posting messages can be found in `manifest.json`.
 
 ## Credentials
 
-Tokens required for workflows to succeeded are listed in `.env.example`. These
-tokens should be added at the repository level.
+Tokens required for workflows are listed in `.env.example`. These tokens should
+be added at the repository level.
 
 [action]: https://github.com/features/actions
 [slack]: https://github.com/slackapi/slack-github-action
