@@ -18,12 +18,12 @@
           types-requests
           (buildPythonPackage rec {
             pname = "slack_cli_hooks";
-            version = "0.0.0.dev2";
+            version = "0.0.1";
             src = pkgs.fetchFromGitHub {
               owner = "slackapi";
               repo = "python-slack-hooks";
-              rev = "v0.0.0.dev2";
-              sha256 = "sha256-wpsJXgEOD0nIfxRhly36Ea2IaIFQ15cDCfR1/gjkV1U=";
+              rev = "0.0.1";
+              sha256 = "sha256-jImmdHuEEqUmGctxZqP8Zh71/RwZi1Z7c2ZAPUdpeDM=";
             };
             format = "pyproject";
             buildInputs = [ setuptools slack-bolt ];
@@ -33,13 +33,13 @@
           name = "slackcli";
           src = if pkgs.stdenv.isDarwin then
             pkgs.fetchurl {
-              url = "https://downloads.slack-edge.com/slack-cli/slack_cli_2.18.0_macOS_64-bit.tar.gz";
-              sha256 = "185vg56k6x614sl7ar8c7gr176mp5ylyh0hp0qav9x8kfsc8ifhj";
+              url = "https://downloads.slack-edge.com/slack-cli/slack_cli_2.23.0_macOS_64-bit.tar.gz";
+              sha256 = "04p01cf1qhra3y50v3ld08amli3xvxz4c5kjnr1jngjf9nb2zmki";
             }
           else
             pkgs.fetchurl {
-              url = "https://downloads.slack-edge.com/slack-cli/slack_cli_2.18.0_linux_64-bit.tar.gz";
-              sha256 = "1gnmncflxgqxim14g454f63lh9iqz6djv07vy8ms020wjgh3x713";
+              url = "https://downloads.slack-edge.com/slack-cli/slack_cli_2.23.0_linux_64-bit.tar.gz";
+              sha256 = "0andhpk39dgpg7341jr4s2qpg4l75hixh8ipcn9dm5zf8g9vj33y";
             };
           unpackPhase = "tar -xzf $src";
           installPhase = ''
