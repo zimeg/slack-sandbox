@@ -54,7 +54,7 @@ jobs:
         uses: slackapi/slack-github-action@v1.25.0
         with:
           channel-id: ${{ env.SLACK_CHANNEL_ID }}
-        slack-message: "${{ matrix.folder }}(chore): downstream now mirrors changes"
+          slack-message: "${{ matrix.folder }}(chore): downstream now mirrors changes"
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
           SLACK_CHANNEL_ID: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
