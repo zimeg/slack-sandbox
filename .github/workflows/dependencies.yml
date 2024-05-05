@@ -25,7 +25,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Send a notification of completion
         id: slack-success
-        uses: slackapi/slack-github-action@v1.25.0
+        uses: slackapi/slack-github-action@v1.26.0
         with:
           channel-id: ${{ env.SLACK_CHANNEL_ID }}
           slack-message: "${{ steps.metadata.outputs.directory }}(chore): dependencies have been updated"
@@ -35,7 +35,7 @@ jobs:
       - name: Send a notification of failure
         if: failure()
         id: slack-failure
-        uses: slackapi/slack-github-action@v1.25.0
+        uses: slackapi/slack-github-action@v1.26.0
         with:
           channel-id: ${{ env.SLACK_CHANNEL_ID }}
           slack-message: "${{ steps.metadata.outputs.directory }}(chore): failed to update dependencies"
