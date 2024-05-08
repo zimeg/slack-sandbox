@@ -11,6 +11,10 @@
   },
   "author": "@zimeg",
   "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0 <21.0.0",
+    "npm": ">=10.0.0 <11.0.0"
+  },
   "dependencies": {
     "@slack/bolt": "^3.18.0"
   },
