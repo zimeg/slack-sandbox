@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- build: include a start script with a local run using the cli 2024-05-08
 - build: fix the major node and npm versions to the active lts 2024-05-08
 - build: develop in socket mode with support from the slack cli 2024-02-08
 - feat: respond to app mention events separately from messages 2023-12-04

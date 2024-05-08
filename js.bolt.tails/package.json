@@ -1,13 +1,13 @@
 {
   "name": "js.bolt.tails",
-  "version": "2024.02.08",
+  "version": "2024.05.08",
   "description": "a Slack app that does various types of things",
   "main": "dist/app.js",
   "scripts": {
     "build": "tsc",
-    "watch": "npx nodemon --watch 'src' --ext 'ts' --exec npm run build",
     "refresh": "rm -rf node_modules && npm install --save",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "slack run",
+    "watch": "npx nodemon --watch 'src' --ext 'ts' --exec npm run build"
   },
   "author": "@zimeg",
   "license": "MIT",
