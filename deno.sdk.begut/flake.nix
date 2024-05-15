@@ -1,34 +1,19 @@
 {
-  description = "a strange and slithery Slack app";
+  description = "a kind creation for currencies";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-deno.url = "github:NixOS/nixpkgs/b2eca02a0ab4d255c111706f85bb4eb1f2b3b958"; # 1.42.4
     flake-utils.url = "github:numtide/flake-utils";
   };
-  outputs = { self, nixpkgs, flake-utils, ... }:
+  outputs = { self, nixpkgs, nixpkgs-deno, flake-utils, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs {
           inherit system;
         };
-        pythonEnv = pkgs.python3.withPackages (ps: with ps; [
-          mypy
-          requests
-          slack-bolt
-          slack-sdk
-          types-requests
-          (buildPythonPackage rec {
-            pname = "slack_cli_hooks";
-            version = "0.0.1";
-            src = pkgs.fetchFromGitHub {
-              owner = "slackapi";
-              repo = "python-slack-hooks";
-              rev = "0.0.1";
-              sha256 = "sha256-jImmdHuEEqUmGctxZqP8Zh71/RwZi1Z7c2ZAPUdpeDM=";
-            };
-            format = "pyproject";
-            buildInputs = [ setuptools slack-bolt ];
-          })
-        ]);
+        denopkgs = import nixpkgs-deno {
+          inherit system;
+        };
         slackcli = pkgs.stdenv.mkDerivation {
           name = "slackcli";
           src = if pkgs.stdenv.isDarwin then
@@ -51,9 +36,7 @@
       {
         devShell = pkgs.mkShell {
           buildInputs = [
-            pkgs.gnumake
-            pkgs.ollama
-            pythonEnv
+            denopkgs.deno
             slackcli
           ];
           shellHook = ''

@@ -1,24 +1,28 @@
 {
   "name": "js.bolt.tails",
-  "version": "2024.02.08",
+  "version": "2024.05.08",
   "description": "a Slack app that does various types of things",
   "main": "dist/app.js",
   "scripts": {
     "build": "tsc",
-    "watch": "npx nodemon --watch 'src' --ext 'ts' --exec npm run build",
     "refresh": "rm -rf node_modules && npm install --save",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "slack run",
+    "watch": "npx nodemon --watch 'src' --ext 'ts' --exec npm run build"
   },
   "author": "@zimeg",
   "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0 <21.0.0",
+    "npm": ">=10.0.0 <11.0.0"
+  },
   "dependencies": {
-    "@slack/bolt": "^3.13.1"
+    "@slack/bolt": "^3.18.0"
   },
   "devDependencies": {
-    "@slack/cli-hooks": "^1.0.0",
-    "@types/node": "^18.15.11",
-    "nodemon": "^2.0.22",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.0.3"
+    "@slack/cli-hooks": "^1.1.0",
+    "@types/node": "^20.12.11",
+    "nodemon": "^3.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
   }
 }
