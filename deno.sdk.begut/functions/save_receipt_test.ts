@@ -3,7 +3,7 @@ import {
   assertEquals,
   assertExists,
   assertStringIncludes,
-} from "testing/asserts.ts";
+} from "assert/mod.ts";
 import * as mf from "mock-fetch/mod.ts";
 import SaveReceipt from "./save_receipt.ts";
 

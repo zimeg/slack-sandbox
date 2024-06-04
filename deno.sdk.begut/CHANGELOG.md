@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- chore(deps): replace a deprecated testing module with std assert 2024-06-04
 - build: install versions of development tooling using a nix flake 2024-05-04
 - docs(feat): replace sandbox cloning instruction with slack create 2024-02-24
 - docs(fix): reference the conventional commits page in changelog 2024-02-22
@@ -16,6 +17,5 @@ versioned with [calendar versioning][calver].
 - feat(category): include an expense category related to travels 2024-02-22
 - feat: submit receipts across various categories with a workflow 2024-02-07
 
-<!-- a collection of links -->
 [calver]: https://calver.org
 [commits]: https://www.conventionalcommits.org/en/v1.0.0/
