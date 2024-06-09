@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- chore(deps): bump versions of slack tooling to latest releases 2024-06-08
 - feat(cateogry): include an expense category related to clothing 2024-06-08
 - feat(cateogry): include an expense category related to gaming 2024-06-04
 - chore(deps): replace a deprecated testing module with std assert 2024-06-04

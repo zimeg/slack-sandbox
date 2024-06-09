@@ -5,7 +5,7 @@
     nixpkgs-deno.url = "github:NixOS/nixpkgs/b2eca02a0ab4d255c111706f85bb4eb1f2b3b958"; # 1.42.4
     flake-utils.url = "github:numtide/flake-utils";
   };
-  outputs = { self, nixpkgs, nixpkgs-deno, flake-utils, ... }:
+  outputs = { nixpkgs, nixpkgs-deno, flake-utils, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs {
@@ -16,16 +16,18 @@
         };
         slackcli = pkgs.stdenv.mkDerivation {
           name = "slackcli";
-          src = if pkgs.stdenv.isDarwin then
-            pkgs.fetchurl {
-              url = "https://downloads.slack-edge.com/slack-cli/slack_cli_2.23.0_macOS_64-bit.tar.gz";
-              sha256 = "04p01cf1qhra3y50v3ld08amli3xvxz4c5kjnr1jngjf9nb2zmki";
-            }
-          else
-            pkgs.fetchurl {
-              url = "https://downloads.slack-edge.com/slack-cli/slack_cli_2.23.0_linux_64-bit.tar.gz";
-              sha256 = "0andhpk39dgpg7341jr4s2qpg4l75hixh8ipcn9dm5zf8g9vj33y";
-            };
+          src =
+            if pkgs.stdenv.isDarwin then
+              pkgs.fetchurl
+                {
+                  url = "https://downloads.slack-edge.com/slack-cli/slack_cli_2.25.0_macOS_64-bit.tar.gz";
+                  sha256 = "0ghis7vw8qbnr07scxnivfimvznbimlv07j062996cipsyq1akbs";
+                }
+            else
+              pkgs.fetchurl {
+                url = "https://downloads.slack-edge.com/slack-cli/slack_cli_2.25.0_linux_64-bit.tar.gz";
+                sha256 = "135a6ccqr14fyfa72dgk1s0l06b8598ns2ln1rzdbgc3ahnigyy4";
+              };
           unpackPhase = "tar -xzf $src";
           installPhase = ''
             mkdir -p $out/bin
