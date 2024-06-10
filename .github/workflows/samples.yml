@@ -3,10 +3,10 @@ name: Synchronize certain samples
 on:
   push:
     paths:
-      - 'deno.sdk.begut/**'
-      - 'js.bolt.surge/**'
-      - 'js.bolt.tails/**'
-      - 'py.bolt.snaek/**'
+      - "deno.sdk.begut/**"
+      - "js.bolt.surge/**"
+      - "js.bolt.tails/**"
+      - "py.bolt.snaek/**"
   workflow_dispatch:
 
 jobs:
@@ -42,13 +42,12 @@ jobs:
       - name: Update ${{ matrix.folder }}
         run: |
           cd samples
-          git checkout -b ${{ matrix.folder }} --force
-          git rebase main
+          git checkout --orphan ${{ matrix.folder }}
           rsync -av --delete --exclude=".git" ../sandbox/${{ matrix.folder }}/ .
           cp ../sandbox/LICENSE .
           git add .
           git commit -m "chore(sync): update sample with the latest upstream changes"
-          git push origin HEAD --force
+          git push -u origin ${{ matrix.folder }} --force
       - name: Send a notification of completion
         id: slack
         uses: slackapi/slack-github-action@v1.26.0
