@@ -7,20 +7,14 @@ const app = new App({
   logLevel: LogLevel.DEBUG,
 });
 
-app.function('sample_function', async ({ inputs, complete, fail }) => {
-  try {
-    const { sample_input } = inputs;
-    complete({ outputs: { sample_output: sample_input } });
-  } catch (error) {
-    console.error(error);
-    fail({ error });
-  }
+app.message('hello', async ({ say }) => {
+  await say('howdy');
 });
 
 (async () => {
   try {
-    await app.start(process.env.PORT || 3000);
-    console.log('⚡️ Bolt app is running! ⚡️');
+    await app.start();
+    console.log('⚡️ Bolt app is running!');
   } catch (error) {
     console.error('Failed to start app', error);
   }

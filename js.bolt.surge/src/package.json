@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "start": "echo '<3'"
+  },
+  "engines": {
+    "node": "20.12.2"
+  },
+  "dependencies": {
+    "@slack/bolt": "3.19.0"
+  }
+}

@@ -45,6 +45,15 @@ updates:
       - "dependencies"
       - "proj:js.bolt.surge"
   - package-ecosystem: "npm"
+    directory: "js.bolt.surge/src"
+    schedule:
+      interval: "daily"
+    commit-message:
+      prefix: "js.bolt.surge(chore)"
+    labels:
+      - "dependencies"
+      - "proj:js.bolt.surge"
+  - package-ecosystem: "npm"
     directory: "js.bolt.tails"
     schedule:
       interval: "daily"

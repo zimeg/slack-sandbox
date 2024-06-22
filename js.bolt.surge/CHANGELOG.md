@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- build: unbundle node runtimes from packaged deployments 2024-06-22
 - docs: update remote branch for cloning this sample app 2024-02-24
 - feat: collect app environment tokens from the slack cli 2024-02-17
 - chore: set slack package versions for custom functions 2024-02-11
@@ -14,6 +15,5 @@ versioned with [calendar versioning][calver].
 - feat: prepare the deploy hook with a production script 2023-12-05
 - feat: introduce this app for a hurried deploy to heroku 2023-12-05
 
-<!-- a collection of links -->
 [calver]: https://calver.org
 [commits]: https://www.conventionalcommits.org/en/v1.0.0/
