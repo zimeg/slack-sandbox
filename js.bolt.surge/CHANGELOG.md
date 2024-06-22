@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- feat: package a production app with an icon and install 2024-06-22
 - build: unbundle node runtimes from packaged deployments 2024-06-22
 - docs: update remote branch for cloning this sample app 2024-02-24
 - feat: collect app environment tokens from the slack cli 2024-02-17
