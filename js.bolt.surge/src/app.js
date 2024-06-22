@@ -1,10 +1,10 @@
-const { App, LogLevel } = require("@slack/bolt");
+import bolt from "@slack/bolt";
 
-const app = new App({
+const app = new bolt.App({
   token: process.env.SLACK_BOT_TOKEN,
   socketMode: true,
   appToken: process.env.SLACK_APP_TOKEN,
-  logLevel: LogLevel.DEBUG,
+  logLevel: bolt.LogLevel.DEBUG,
 });
 
 app.message("hello", async ({ say }) => {
