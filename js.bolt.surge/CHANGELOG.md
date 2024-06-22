@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- chore: replace eslint lintings with the biome lintings 2024-06-22
 - feat: package a production app with an icon and install 2024-06-22
 - build: unbundle node runtimes from packaged deployments 2024-06-22
 - docs: update remote branch for cloning this sample app 2024-02-24

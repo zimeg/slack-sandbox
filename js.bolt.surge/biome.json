@@ -1,0 +1,21 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "files": {
+    "ignoreUnknown": true
+  },
+  "formatter": {
+    "ignore": ["/nix/store/*", ".direnv", "*.json"],
+    "indentStyle": "space"
+  },
+  "linter": {
+    "enabled": true,
+    "ignore": ["/nix/store/*", ".direnv", "*.json"],
+    "rules": {
+      "recommended": false
+    }
+  },
+  "organizeImports": {
+    "enabled": true,
+    "ignore": ["/nix/store/*", ".direnv", "*.json"]
+  }
+}
