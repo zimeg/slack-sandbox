@@ -1,6 +1,7 @@
 {
   "hooks": {
     "get-hooks": "npx -p @slack/bolt slack-cli-get-hooks",
+    "start": "npx nodemon src/app.js",
     "deploy": "npm run deploy"
   }
 }
