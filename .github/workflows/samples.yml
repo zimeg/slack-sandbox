@@ -44,6 +44,7 @@ jobs:
           cd samples
           git checkout --orphan ${{ matrix.folder }}
           rsync -av --delete --exclude=".git" ../sandbox/${{ matrix.folder }}/ .
+          rm -f .slack/apps.json
           cp ../sandbox/LICENSE .
           git add .
           git commit -m "chore(sync): update sample with the latest upstream changes"
