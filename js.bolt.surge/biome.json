@@ -4,18 +4,22 @@
     "ignoreUnknown": true
   },
   "formatter": {
-    "ignore": ["/nix/store/*", ".direnv", "*.json"],
+    "ignore": ["*.json"],
     "indentStyle": "space"
   },
   "linter": {
     "enabled": true,
-    "ignore": ["/nix/store/*", ".direnv", "*.json"],
+    "ignore": ["*.json"],
     "rules": {
       "recommended": false
     }
   },
   "organizeImports": {
     "enabled": true,
-    "ignore": ["/nix/store/*", ".direnv", "*.json"]
+    "ignore": ["*.json"]
+  },
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git"
   }
 }

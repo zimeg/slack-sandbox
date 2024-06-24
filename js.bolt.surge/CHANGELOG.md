@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- style: lint and format files not found in the gitignore 2024-06-23
 - refactor: convert commonjs imports to esmodule imports 2024-06-22
 - build: reload after changes for restarting socket mode 2024-06-22
 - chore: replace eslint lintings with the biome lintings 2024-06-22
