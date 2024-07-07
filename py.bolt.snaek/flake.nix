@@ -11,11 +11,12 @@
           inherit system;
         };
         pythonEnv = pkgs.python3.withPackages (ps: with ps; [
-          mypy
-          requests
-          slack-bolt
-          slack-sdk
-          types-requests
+          mypy # https://github.com/python/mypy
+          requests # https://github.com/psf/requests
+          slack-bolt # http://github.com/slackapi/bolt-python
+          slack-sdk # https://github.com/slackapi/python-slack-sdk
+          types-requests # https://github.com/python/typeshed/tree/main/stubs/requests/requests
+          # https://github.com/slackapi/python-slack-hooks
           (buildPythonPackage {
             pname = "slack_cli_hooks";
             version = "0.0.2";
@@ -29,6 +30,7 @@
             buildInputs = [ setuptools slack-bolt ];
           })
         ]);
+        # https://api.slack.com/automation/cli
         slackcli = pkgs.stdenv.mkDerivation {
           name = "slackcli";
           src =
@@ -53,9 +55,11 @@
       {
         devShell = pkgs.mkShell {
           buildInputs = [
-            pkgs.gnumake
-            pkgs.ruff
-            pkgs.ollama
+            pkgs.curl # https://github.com/curl/curl
+            pkgs.gnumake # https://github.com/mirror/make
+            pkgs.ruff # http://github.com/astral-sh/ruff
+            pkgs.ollama # http://github.com/ollama/ollama
+            pkgs.yajsv # https://github.com/neilpa/yajsv
             pythonEnv
             slackcli
           ];

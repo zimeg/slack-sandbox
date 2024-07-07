@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- build: validate json schema of the same slack project app manifest 2024-07-07
 - fix: remove the outgoing domains from slack app project manifests 2024-07-07
 - build: lint and format code according to ruff opinionated choices 2024-07-07
 - chore: bump versions of application dependencies and other tooling 2024-07-07
