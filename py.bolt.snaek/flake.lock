@@ -34,10 +34,27 @@
         "type": "github"
       }
     },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1712449641,
+        "narHash": "sha256-U9DDWMexN6o5Td2DznEgguh8TRIUnIl9levmit43GcI=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "600b15aea1b36eeb43833a50b0e96579147099ff",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "flake-utils": "flake-utils",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "zimeg": "zimeg"
       }
     },
     "systems": {
@@ -52,6 +69,24 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "zimeg": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1720380831,
+        "narHash": "sha256-MSYo2eEI4mIwBHtuoQPc1mIN3/zKB41DxvzUZjBo7do=",
+        "owner": "zimeg",
+        "repo": "nur-packages",
+        "rev": "06826416ab34d4976e4b9959b2c30e98c9c70d76",
+        "type": "github"
+      },
+      "original": {
+        "owner": "zimeg",
+        "repo": "nur-packages",
         "type": "github"
       }
     }

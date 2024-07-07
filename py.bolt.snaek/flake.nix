@@ -3,8 +3,9 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
+    zimeg.url = "github:zimeg/nur-packages";
   };
-  outputs = { nixpkgs, flake-utils, ... }:
+  outputs = { nixpkgs, flake-utils, zimeg, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs {
@@ -62,6 +63,7 @@
             pkgs.yajsv # https://github.com/neilpa/yajsv
             pythonEnv
             slackcli
+            zimeg.packages.${system}.jurigged # https://github.com/breuleux/jurigged
           ];
           shellHook = ''
             export SLACK_CONFIG_DIR="$HOME/.config/slack"
