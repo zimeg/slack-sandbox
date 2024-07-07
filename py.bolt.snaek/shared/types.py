@@ -1,11 +1,9 @@
-from typing import TypedDict, Literal, Optional
+from typing import Literal, Optional, TypedDict
 
 
 class ChatEvent(TypedDict):
     channel: str
-    channel_type: Optional[
-        Literal["channel", "group", "im", "mpim"]  # Message events
-    ]
+    channel_type: Optional[Literal["channel", "group", "im", "mpim"]]  # Message events
     event_ts: str
     team: str
     text: str

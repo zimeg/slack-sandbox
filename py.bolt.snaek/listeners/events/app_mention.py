@@ -17,12 +17,13 @@ def app_mention_wrapper(
         event: ChatEvent,
         logger: Logger,
     ) -> None:
-        is_following, thread_ts = db.threads_following_check(event)
+        is_following, _ = db.threads_following_check(event)
         if not is_following:
             db.threads_following_watch(event)
         response_generate(client, event, logger)
+
     return app_mention_callback
 
 
 def app_mention_check(context: BoltContext, event: ChatEvent) -> bool:
-    return f"<@{context.bot_user_id}>" in event['text']
+    return f"<@{context.bot_user_id}>" in event["text"]

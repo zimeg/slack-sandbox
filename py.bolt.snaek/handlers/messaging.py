@@ -24,7 +24,7 @@ def put_message(
                 text=content,
                 metadata=metadata,
             )
-            message_ts = response['ts']
+            message_ts = response["ts"]
         else:
             client.chat_update(
                 channel=channel_id,
@@ -39,29 +39,27 @@ def put_message(
 
 
 def get_message_thread(
-    client: WebClient,
-    event: ChatEvent,
-    logger: Logger
+    client: WebClient, event: ChatEvent, logger: Logger
 ) -> List[ModelMessage]:
     try:
         return [
             {
                 "role": "assistant" if "bot_id" in message else "user",
-                "content": message['text'],
+                "content": message["text"],
             }
             for data in client.conversations_replies(
-                channel=event['channel'],
+                channel=event["channel"],
                 ts=get_event_thread_ts(event),
             )
-            for message in data['messages']
+            for message in data["messages"]
         ]
     except SlackApiError as e:
         logger.error("An error occured with the Slack API", exc_info=e)
-        return [{"role": "user", "content": event['text']}]
+        return [{"role": "user", "content": event["text"]}]
 
 
 def get_event_thread_ts(event: ChatEvent) -> str:
-    thread_ts = event.get('thread_ts')
+    thread_ts = event.get("thread_ts")
     if thread_ts is None:
-        return event['ts']
+        return event["ts"]
     return thread_ts

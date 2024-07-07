@@ -1,6 +1,6 @@
 import json
-from logging import Logger
 import os
+from logging import Logger
 
 import requests
 from slack_sdk import WebClient
@@ -43,7 +43,7 @@ def _response_generate_stream(
     response: requests.models.Response,
     logger: Logger,
 ) -> None:
-    channel_id = event['channel']
+    channel_id = event["channel"]
     content = ""
     message_ts = None
     metadata = None
@@ -52,21 +52,23 @@ def _response_generate_stream(
         for line in response.iter_lines():
             if not line:
                 continue
-            json_response = json.loads(s=line.decode('utf-8'))
-            content += json_response['message']['content']
-            if json_response['done']:
+            json_response = json.loads(s=line.decode("utf-8"))
+            message = json_response.get("message")
+            if message is not None:
+                content += message.get("content", "")
+            if json_response.get("done"):
                 metadata = {
                     "event_type": "response_generated",
                     "event_payload": {
-                        "total_duration": json_response['total_duration'],
-                        "load_duration": json_response['load_duration'],
-                        "prompt_eval_count":
-                            json_response['prompt_eval_count'],
-                        "prompt_eval_duration":
-                            json_response['prompt_eval_duration'],
-                        "eval_count": json_response['eval_count'],
-                        "eval_duration": json_response['eval_duration'],
-                    }
+                        "total_duration": json_response.get("total_duration"),
+                        "load_duration": json_response.get("load_duration"),
+                        "prompt_eval_count": json_response.get("prompt_eval_count"),
+                        "prompt_eval_duration": json_response.get(
+                            "prompt_eval_duration"
+                        ),
+                        "eval_count": json_response.get("eval_count"),
+                        "eval_duration": json_response.get("eval_duration"),
+                    },
                 }
             message_ts = messaging.put_message(
                 client=client,
@@ -75,9 +77,9 @@ def _response_generate_stream(
                 thread_ts=thread_ts,
                 content=content,
                 logger=logger,
-                metadata=metadata
+                metadata=metadata,
             )
-            if json_response['done']:
+            if json_response.get("done"):
                 break
     except json.JSONDecodeError as e:
         logger.error("Failed to decode JSON", exc_info=e)

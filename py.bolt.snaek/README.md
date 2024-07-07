@@ -73,7 +73,6 @@ $ slack run
 
 After making a connection, add the bot to a channel and start prompting!
 
-<!-- a collection of links -->
 [bolt]: https://github.com/slackapi/bolt-python
 [cli]: https://api.slack.com/automation/cli
 [models]: https://ollama.com/library

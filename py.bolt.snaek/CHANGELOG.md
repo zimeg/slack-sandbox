@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- build: lint and format code according to ruff opinionated choices 2024-07-07
 - chore: bump versions of application dependencies and other tooling 2024-07-07
 - build: install and manage python dependencies with the nix flake 2024-03-17
 - fix: check if a thread timestamp exists without causing key error 2024-03-07
@@ -27,6 +28,5 @@ versioned with [calendar versioning][calver].
 - build: prepare a development environment using a simple nix flake 2024-02-24
 - feat: respond to simple greetings in a slithery way via a CLI run 2024-02-24
 
-<!-- a collection of links -->
 [calver]: https://calver.org
 [commits]: https://www.conventionalcommits.org/en/v1.0.0/

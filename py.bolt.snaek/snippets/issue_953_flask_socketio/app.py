@@ -53,7 +53,7 @@ Run Flask app in the main thread
 """
 
 flask_app = Flask(__name__)
-flask_app.config['SECRET_KEY'] = 'unknownish'
+flask_app.config["SECRET_KEY"] = "unknownish"
 socketio = SocketIO(flask_app)
 
 
@@ -73,4 +73,4 @@ def main_route():
 
 
 if __name__ == "__main__":
-    socketio.run(flask_app, host='0.0.0.0', port=5001, debug=True)
+    socketio.run(flask_app, host="0.0.0.0", port=5001, debug=True)

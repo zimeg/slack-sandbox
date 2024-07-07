@@ -54,6 +54,7 @@
         devShell = pkgs.mkShell {
           buildInputs = [
             pkgs.gnumake
+            pkgs.ruff
             pkgs.ollama
             pythonEnv
             slackcli

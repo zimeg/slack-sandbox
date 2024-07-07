@@ -1,4 +1,11 @@
-.PHONY: test
+.PHONY: format
+format:
+	ruff format
 
-test:
-	python3 -m mypy app.py
+.PHONY: lint
+lint:
+	ruff check
+
+.PHONY: test
+test: format lint
+	python3 -m mypy **/*.py
