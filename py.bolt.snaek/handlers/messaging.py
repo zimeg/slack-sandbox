@@ -16,6 +16,8 @@ def put_message(
     logger: Logger,
     metadata: dict | None = None,
 ) -> str | None:
+    if content == "":
+        return message_ts
     try:
         if message_ts is None:
             response = client.chat_postMessage(

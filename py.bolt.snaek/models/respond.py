@@ -54,8 +54,7 @@ def _response_generate_stream(
                 continue
             json_response = json.loads(s=line.decode("utf-8"))
             message = json_response.get("message")
-            if message is not None:
-                content += message.get("content", "")
+            content += message.get("content", "")
             if json_response.get("done"):
                 metadata = {
                     "event_type": "response_generated",

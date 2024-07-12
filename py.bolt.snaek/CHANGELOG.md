@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- fix: avoid posting or updating messages that have no text content 2024-07-11
 - build: restart production system services after latest deployments 2024-07-07
 - chore: update the snaek modefile to use the latest llama3 release 2024-07-07
 - build: hot reload changes to files without restarting the process 2024-07-07
