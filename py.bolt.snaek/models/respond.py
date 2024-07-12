@@ -1,5 +1,6 @@
 import json
 import os
+import time
 from logging import Logger
 
 import requests
@@ -49,6 +50,7 @@ def _response_generate_stream(
     metadata = None
     thread_ts = messaging.get_event_thread_ts(event)
     try:
+        last_update_ms = 0
         for line in response.iter_lines():
             if not line:
                 continue
@@ -69,6 +71,8 @@ def _response_generate_stream(
                         "eval_duration": json_response.get("eval_duration"),
                     },
                 }
+            elif round(time.time() * 1000) - last_update_ms < 1000:
+                continue
             message_ts = messaging.put_message(
                 client=client,
                 channel_id=channel_id,
@@ -78,6 +82,7 @@ def _response_generate_stream(
                 logger=logger,
                 metadata=metadata,
             )
+            last_update_ms = round(time.time() * 1000)
             if json_response.get("done"):
                 break
     except json.JSONDecodeError as e:
