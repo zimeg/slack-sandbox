@@ -38,6 +38,10 @@ def response_generate(
         logger.error("An unknown error has happened", exc_info=e)
 
 
+def _now():
+    return round(time.time() * 1000)
+
+
 def _response_generate_stream(
     client: WebClient,
     event: ChatEvent,
@@ -50,7 +54,7 @@ def _response_generate_stream(
     metadata = None
     thread_ts = messaging.get_event_thread_ts(event)
     try:
-        last_update_ms = 0
+        last_update_ms = _now()
         for line in response.iter_lines():
             if not line:
                 continue
@@ -71,7 +75,7 @@ def _response_generate_stream(
                         "eval_duration": json_response.get("eval_duration"),
                     },
                 }
-            elif round(time.time() * 1000) - last_update_ms < 1000:
+            elif _now() - last_update_ms < 1200:
                 continue
             message_ts = messaging.put_message(
                 client=client,
@@ -82,7 +86,7 @@ def _response_generate_stream(
                 logger=logger,
                 metadata=metadata,
             )
-            last_update_ms = round(time.time() * 1000)
+            last_update_ms = _now()
             if json_response.get("done"):
                 break
     except json.JSONDecodeError as e:

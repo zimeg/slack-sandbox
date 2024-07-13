@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- fix: delay initial responses to reduce edits for buffered messages 2024-07-12
 - build: set python version to 3.11 for stable setups and packaging 2024-07-12
 - chore: bump versions of application dependencies and other tooling 2024-07-12
 - fix: batch responses from the model to avoid reaching rate limits 2024-07-11
