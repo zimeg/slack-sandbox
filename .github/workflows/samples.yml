@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - "deno.sdk.begut/**"
+      - "deno.sdk.chanl/**"
       - "js.bolt.surge/**"
       - "js.bolt.tails/**"
       - "py.bolt.snaek/**"
@@ -20,6 +21,7 @@ jobs:
       matrix:
         folder:
           - deno.sdk.begut
+          - deno.sdk.chanl
           - js.bolt.surge
           - js.bolt.tails
           - py.bolt.snaek
