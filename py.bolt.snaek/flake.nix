@@ -11,7 +11,7 @@
         pkgs = import nixpkgs {
           inherit system;
         };
-        pythonEnv = pkgs.python3.withPackages (ps: with ps; [
+        pythonEnv = pkgs.python311.withPackages (ps: with ps; [
           mypy # https://github.com/python/mypy
           requests # https://github.com/psf/requests
           slack-bolt # http://github.com/slackapi/bolt-python

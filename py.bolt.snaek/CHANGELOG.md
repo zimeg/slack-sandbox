@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- build: set python version to 3.11 for stable setups and packaging 2024-07-12
 - chore: bump versions of application dependencies and other tooling 2024-07-12
 - fix: batch responses from the model to avoid reaching rate limits 2024-07-11
 - fix: avoid posting or updating messages that have no text content 2024-07-11
