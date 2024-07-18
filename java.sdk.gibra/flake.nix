@@ -14,7 +14,7 @@
       {
         devShell = pkgs.mkShell {
           buildInputs = [
-            pkgs.jdk22 # https://github.com/openjdk/jdk/releases/tag/jdk-22-ga
+            pkgs.jdk21 # https://github.com/openjdk/jdk/releases/tag/jdk-21-ga
             pkgs.gradle # https://github.com/gradle/gradle
           ];
         };
