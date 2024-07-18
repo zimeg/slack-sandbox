@@ -1,10 +1,16 @@
 plugins {
     id("application")
 }
+java {
+	sourceCompatibility = JavaVersion.VERSION_22
+	targetCompatibility = JavaVersion.VERSION_22
+}
+wrapper {
+  gradleVersion = "8.8"
+}
+// https://slack.dev/java-slack-sdk/guides/web-api-client-setup#build-from-source
 repositories {
     mavenCentral()
-    // https://slack.dev/java-slack-sdk/guides/web-api-client-setup#build-from-source
-    // mavenLocal()
 }
 dependencies {
     implementation("com.slack.api:slack-api-client:1.40.3")
@@ -15,7 +21,7 @@ application {
     mainClass = "App"
 }
 run {
-    if (project.hasProperty('args')) {
-        args project.args.split(',')
+    if (project.hasProperty("args")) {
+        args project.args.split(",")
     }
 }
