@@ -1,4 +1,4 @@
-FROM llama3
+FROM llama3.1
 
 PARAMETER mirostat 2
 PARAMETER mirostat_eta 0.2
