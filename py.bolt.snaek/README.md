@@ -39,6 +39,9 @@ Generate a new model with:
 $ ollama create snaek --file models/Modelfile
 ```
 
+Updates to the `Modelfile` require creating that same model again for changes
+to take effect.
+
 #### Configuring networks
 
 Default settings serve the model on `localhost` but this can be changed to the

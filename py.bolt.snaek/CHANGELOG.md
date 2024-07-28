@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- docs: note the rebuild needed to update the model after modelfile 2024-07-27
 - chore: update the modefile to use the latest llama3.1 8bn release 2024-07-25
 - fix: delay initial responses to reduce edits for buffered messages 2024-07-12
 - build: set python version to 3.11 for stable setups and packaging 2024-07-12
