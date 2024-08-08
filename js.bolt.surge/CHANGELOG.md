@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- build: enforce passing lints and checked types as tests 2024-08-07
 - style: lint and format files not found in the gitignore 2024-06-23
 - refactor: convert commonjs imports to esmodule imports 2024-06-22
 - build: reload after changes for restarting socket mode 2024-06-22
