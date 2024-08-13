@@ -16,7 +16,7 @@
     "npm": ">=10.0.0 <11.0.0"
   },
   "dependencies": {
-    "@slack/bolt": "^3.19.0"
+    "@slack/bolt": "^3.20.0"
   },
   "devDependencies": {
     "@slack/cli-hooks": "^1.1.1",
