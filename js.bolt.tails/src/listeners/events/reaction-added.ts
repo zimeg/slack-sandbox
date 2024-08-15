@@ -1,8 +1,8 @@
 import { AllMiddlewareArgs, SlackEventMiddlewareArgs } from "@slack/bolt";
 
 export const reactionAdded = async ({
-    event
+  event,
 }: AllMiddlewareArgs & SlackEventMiddlewareArgs<"reaction_added">) => {
-    const { channel } = event.item;
-    console.log(`Reaction added in #${channel}!`);
+  const { channel } = event.item;
+  console.log(`Reaction added in #${channel}!`);
 };

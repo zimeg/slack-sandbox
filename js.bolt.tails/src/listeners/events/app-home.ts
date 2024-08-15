@@ -1,38 +1,37 @@
-import { AllMiddlewareArgs, SlackEventMiddlewareArgs } from '@slack/bolt';
+import { AllMiddlewareArgs, SlackEventMiddlewareArgs } from "@slack/bolt";
 
 export const appHomeOpened = async ({
-    event,
-    client
-}: & AllMiddlewareArgs & SlackEventMiddlewareArgs<"app_home_opened">) => {
+  event,
+  client,
+}: AllMiddlewareArgs & SlackEventMiddlewareArgs<"app_home_opened">) => {
+  try {
+    const result = await client.views.publish({
+      user_id: event.user,
+      view: {
+        type: "home",
+        blocks: [
+          {
+            type: "actions",
+            elements: [
+              {
+                type: "button",
+                text: {
+                  type: "plain_text",
+                  text: "Go to channel",
+                  emoji: true,
+                },
+                value: "general",
+                url: "slack://channel?team=T02A074M3U3&id=C02APLENHAL",
+                action_id: "channel-button-0",
+              },
+            ],
+          },
+        ],
+      },
+    });
 
-    try {
-        const result = await client.views.publish({
-            user_id: event.user,
-            view: {
-                type: "home",
-                blocks: [
-                    {
-                        "type": "actions",
-                        "elements": [
-                            {
-                                "type": "button",
-                                "text": {
-                                    "type": "plain_text",
-                                    "text": "Go to channel",
-                                    "emoji": true,
-                                },
-                                "value": "general",
-                                "url": "slack://channel?team=T02A074M3U3&id=C02APLENHAL",
-                                "action_id": "channel-button-0",
-                            },
-                        ],
-                    },
-                ],
-            },
-        });
-
-        console.log(result);
-    } catch (error) {
-        console.error(error);
-    }
+    console.log(result);
+  } catch (error) {
+    console.error(error);
+  }
 };

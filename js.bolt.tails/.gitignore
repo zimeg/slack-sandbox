@@ -2,6 +2,7 @@
 .env
 
 # Build and development
+.direnv
 .slack/apps.dev.json
 dist/
 node_modules/

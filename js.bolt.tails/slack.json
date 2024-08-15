@@ -1,5 +1,6 @@
 {
   "hooks": {
-    "get-hooks": "npx -q --no-install -p @slack/bolt slack-cli-get-hooks"
+    "get-hooks": "npx -q --no-install -p @slack/bolt slack-cli-get-hooks",
+    "start": "echo $SLACK_BOT_TOKEN $SLACK_APP_TOKEN"
   }
 }

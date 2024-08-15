@@ -1,21 +1,33 @@
 {
   "name": "js.bolt.tails",
-  "version": "2024.05.08",
-  "description": "a Slack app that does various types of things",
+  "version": "2024.08.14",
+  "description": "a slack app that takes things",
   "main": "dist/app.js",
   "scripts": {
     "build": "tsc",
-    "refresh": "rm -rf node_modules && npm install --save",
+    "lint": "npx @biomejs/biome check --verbose",
+    "lint:fix": "npx @biomejs/biome check --verbose --write",
     "start": "slack run",
     "watch": "npx nodemon --watch 'src' --ext 'ts' --exec npm run build"
   },
   "author": "@zimeg",
   "license": "MIT",
+  "keywords": [
+    "slack"
+  ],
   "engines": {
-    "node": ">=20.0.0 <21.0.0",
+    "node": ">=22.0.0 <23.0.0",
     "npm": ">=10.0.0 <11.0.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zimeg/slack-sandbox.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zimeg/slack-sandbox/issues"
+  },
   "dependencies": {
+    "@biomejs/biome": "^1.8.3",
     "@slack/bolt": "^3.21.0"
   },
   "devDependencies": {

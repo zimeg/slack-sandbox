@@ -1,86 +1,86 @@
 {
-    "display_information": {
-        "name": "Tails",
-        "description": "a typed type of tanginess",
-        "background_color": "#2f3020"
+  "display_information": {
+    "name": "Tails",
+    "description": "a typed type of tanginess",
+    "background_color": "#2f3020"
+  },
+  "features": {
+    "app_home": {
+      "home_tab_enabled": true,
+      "messages_tab_enabled": true,
+      "messages_tab_read_only_enabled": true
     },
-    "features": {
-        "app_home": {
-            "home_tab_enabled": true,
-            "messages_tab_enabled": false,
-            "messages_tab_read_only_enabled": true
-        },
-        "bot_user": {
-            "display_name": "Tails",
-            "always_online": false
-        },
-        "slash_commands": [
-            {
-                "command": "/ticket",
-                "url": "https://c3d9-13-110-54-11.ngrok-free.app/slack/events",
-                "description": "modal tests",
-                "should_escape": false
-            }
-        ]
+    "bot_user": {
+      "display_name": "Tails",
+      "always_online": false
     },
-    "oauth_config": {
-        "scopes": {
-            "user": [
-                "channels:write",
-                "channels:write.invites",
-                "files:write",
-                "im:write"
-            ],
-            "bot": [
-                "app_mentions:read",
-                "channels:history",
-                "channels:manage",
-                "channels:read",
-                "channels:write.invites",
-                "chat:write",
-                "chat:write.customize",
-                "chat:write.public",
-                "commands",
-                "files:read",
-                "files:write",
-                "groups:history",
-                "groups:read",
-                "groups:write",
-                "im:history",
-                "im:read",
-                "im:write",
-                "mpim:history",
-                "mpim:read",
-                "mpim:write",
-                "reactions:read",
-                "reactions:write",
-                "users:read"
-            ]
-        }
+    "slash_commands": [
+      {
+        "command": "/ticket",
+        "url": "https://c3d9-13-110-54-11.ngrok-free.app/slack/events",
+        "description": "modal tests",
+        "should_escape": false
+      }
+    ]
+  },
+  "oauth_config": {
+    "scopes": {
+      "user": [
+        "channels:write",
+        "channels:write.invites",
+        "files:write",
+        "im:write"
+      ],
+      "bot": [
+        "app_mentions:read",
+        "channels:history",
+        "channels:manage",
+        "channels:read",
+        "channels:write.invites",
+        "chat:write",
+        "chat:write.customize",
+        "chat:write.public",
+        "commands",
+        "files:read",
+        "files:write",
+        "groups:history",
+        "groups:read",
+        "groups:write",
+        "im:history",
+        "im:read",
+        "im:write",
+        "mpim:history",
+        "mpim:read",
+        "mpim:write",
+        "reactions:read",
+        "reactions:write",
+        "users:read"
+      ]
+    }
+  },
+  "settings": {
+    "event_subscriptions": {
+      "bot_events": [
+        "app_home_opened",
+        "app_mention",
+        "app_uninstalled",
+        "channel_left",
+        "member_joined_channel",
+        "member_left_channel",
+        "message.channels",
+        "message.groups",
+        "message.im",
+        "message.mpim",
+        "reaction_added",
+        "tokens_revoked"
+      ]
     },
-    "settings": {
-        "event_subscriptions": {
-            "bot_events": [
-                "app_home_opened",
-                "app_mention",
-                "app_uninstalled",
-                "channel_left",
-                "member_joined_channel",
-                "member_left_channel",
-                "message.channels",
-                "message.groups",
-                "message.im",
-                "message.mpim",
-                "reaction_added",
-                "tokens_revoked"
-            ]
-        },
-        "interactivity": {
-            "is_enabled": true
-        },
-        "org_deploy_enabled": true,
-        "socket_mode_enabled": true,
-        "token_rotation_enabled": false
+    "interactivity": {
+      "is_enabled": true
     },
-    "outgoing_domains": []
+    "org_deploy_enabled": true,
+    "socket_mode_enabled": true,
+    "token_rotation_enabled": false
+  },
+  "outgoing_domains": []
 }
