@@ -62,6 +62,10 @@ export default class Video {
     const parsed = new URL(url);
     switch (parsed.hostname) {
       case "www.youtube.com":
+        if (parsed.pathname.startsWith("/shorts/")) {
+          this.id = parsed.pathname.split("/")[2];
+          return this.id;
+        }
         const id = parsed.searchParams.get("v");
         if (id) {
           this.id = id;
