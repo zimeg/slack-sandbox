@@ -6,8 +6,11 @@
   "scripts": {
     "build": "tsc",
     "build:check": "tsc --noemit --module commonjs --project ./tsconfig.json",
+    "build:clean": "rm -rf dist",
     "lint": "npx @biomejs/biome check --verbose",
     "lint:fix": "npx @biomejs/biome check --verbose --write",
+    "install:clean": "rm -rf node_modules",
+    "install:force": "npm run install:clean && npm install",
     "prestart": "npm run build",
     "start": "node dist/app.js",
     "watch": "npx nodemon --watch 'src' --ext 'ts' --exec npm run start"
