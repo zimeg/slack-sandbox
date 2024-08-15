@@ -5,10 +5,12 @@
   "main": "dist/app.js",
   "scripts": {
     "build": "tsc",
+    "build:check": "tsc --noemit --module commonjs --project ./tsconfig.json",
     "lint": "npx @biomejs/biome check --verbose",
     "lint:fix": "npx @biomejs/biome check --verbose --write",
-    "start": "slack run",
-    "watch": "npx nodemon --watch 'src' --ext 'ts' --exec npm run build"
+    "prestart": "npm run build",
+    "start": "node dist/app.js",
+    "watch": "npx nodemon --watch 'src' --ext 'ts' --exec npm run start"
   },
   "author": "@zimeg",
   "license": "MIT",
