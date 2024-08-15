@@ -21,7 +21,8 @@
         "description": "modal tests",
         "should_escape": false
       }
-    ]
+    ],
+    "unfurl_domains": ["youtube.com", "youtu.be"]
   },
   "oauth_config": {
     "scopes": {
@@ -46,6 +47,7 @@
         "groups:history",
         "groups:read",
         "groups:write",
+        "links:read",
         "im:history",
         "im:read",
         "im:write",
@@ -65,6 +67,7 @@
         "app_mention",
         "app_uninstalled",
         "channel_left",
+        "link_shared",
         "member_joined_channel",
         "member_left_channel",
         "message.channels",
@@ -81,6 +84,5 @@
     "org_deploy_enabled": true,
     "socket_mode_enabled": true,
     "token_rotation_enabled": false
-  },
-  "outgoing_domains": []
+  }
 }

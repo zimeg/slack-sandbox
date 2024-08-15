@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- feat: download linked videos shared in channels to file disk 2024-08-15
 - docs: split the mission of the readme from maintenance steps 2024-08-14
 - build: recompile typescript and restart the local dev server 2024-08-14
 - style: perform lintings for common ecma standards with biome 2024-08-14

@@ -6,3 +6,6 @@
 .slack/apps.dev.json
 dist/
 node_modules/
+
+# Fleeting savings
+cache
