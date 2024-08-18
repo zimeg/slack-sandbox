@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- fix: ignore link shared events sourced from message composer 2024-08-17
 - feat: download shorter videos posted with links in a channel 2024-08-15
 - feat: download linked videos shared in channels to file disk 2024-08-15
 - docs: split the mission of the readme from maintenance steps 2024-08-14
