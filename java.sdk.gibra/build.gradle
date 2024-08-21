@@ -13,7 +13,7 @@ repositories {
     mavenCentral()
 }
 dependencies {
-    implementation("com.slack.api:slack-api-client:1.40.3")
+    implementation("com.slack.api:slack-api-client:1.41.0")
     implementation("io.github.cdimascio:dotenv-java:3.0.1")
     implementation("ch.qos.logback:logback-classic:1.5.7")
 }
