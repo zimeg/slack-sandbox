@@ -30,10 +30,10 @@ def response_generate(
         _response_generate_stream(client, event, response, logger)
     except requests.exceptions.HTTPError as e:
         logger.error("Unexpected HTTP error occured", exc_info=e)
-    except requests.exceptions.RequestException as e:
-        logger.error("Failed to generate a response", exc_info=e)
     except requests.exceptions.Timeout as e:
         logger.error("Request timeout error occured", exc_info=e)
+    except requests.exceptions.RequestException as e:
+        logger.error("Failed to generate a response", exc_info=e)
     except Exception as e:
         logger.error("An unknown error has happened", exc_info=e)
 
