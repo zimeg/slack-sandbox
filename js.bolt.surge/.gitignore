@@ -1,5 +1,7 @@
 # Secrets and stuff
-.env
+.env*
+!.env.example
+store
 
 # Deployment keys
 .terraform

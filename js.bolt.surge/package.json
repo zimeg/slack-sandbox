@@ -1,13 +1,15 @@
 {
   "name": "js.bolt.surge",
-  "version": "2024.08.07",
+  "version": "2024.08.25",
   "description": "a powerful online email application",
   "main": "src/app.js",
   "scripts": {
     "preinstall": "cd infra && tofu init",
-    "start": "slack run",
-    "deploy": "TF_VAR_slack_app_token=$SLACK_APP_TOKEN TF_VAR_slack_bot_token=$SLACK_BOT_TOKEN tofu -chdir=infra apply -auto-approve",
-    "logs": "heroku logs --tail --app surges",
+    "watch": "npx nodemon --exec npm run start",
+    "start": "node src/app.js",
+    "logs": "heroku logs --tail --app surged",
+    "logs:slack": "heroku logs --tail --app surged | grep app",
+    "logs:web": "heroku logs --tail --app surged | grep heroku",
     "check": "tsc --noemit --module es2022 --project ./jsconfig.json",
     "lint": "npx @biomejs/biome check --verbose",
     "lint:fix": "npx @biomejs/biome check --verbose --write",
@@ -27,6 +29,7 @@
     "url": "https://github.com/zimeg/slack-sandbox/issues"
   },
   "workspaces": [
+    "scripts",
     "src"
   ],
   "devDependencies": {

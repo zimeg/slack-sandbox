@@ -1,7 +1,14 @@
 {
   "hooks": {
     "get-hooks": "npx -p @slack/bolt slack-cli-get-hooks",
-    "start": "npx nodemon src/app.js",
-    "deploy": "npm run deploy"
+    "get-manifest": "node scripts/get-manifest.js",
+    "start": "npm run watch",
+    "deploy": "bash scripts/deploy.sh"
+  },
+  "config": {
+    "protocol-version": ["default"],
+    "watch": {
+      "filter-regex": "^manifest.*\\.json$"
+    }
   }
 }

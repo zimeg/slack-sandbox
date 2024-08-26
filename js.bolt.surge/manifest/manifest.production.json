@@ -1,0 +1,10 @@
+{
+  "oauth_config": {
+    "redirect_urls": ["https://surgem.ai/slack/oauth_redirect"]
+  },
+  "settings": {
+    "event_subscriptions": {
+      "request_url": "https://surgem.ai/slack/events"
+    }
+  }
+}
