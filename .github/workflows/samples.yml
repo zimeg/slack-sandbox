@@ -53,7 +53,7 @@ jobs:
           git push -u origin ${{ matrix.folder }} --force
       - name: Send a notification of completion
         id: slack
-        uses: slackapi/slack-github-action@v1.26.0
+        uses: slackapi/slack-github-action@v1.27.0
         with:
           channel-id: ${{ env.SLACK_CHANNEL_ID }}
           slack-message: "${{ matrix.folder }}(chore): downstream now mirrors changes"
