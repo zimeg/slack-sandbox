@@ -2,6 +2,7 @@
   "name": "js.bolt.surge",
   "version": "2024.08.31",
   "description": "a powerful online email application",
+  "homepage": "https://surgem.ai",
   "main": "src/app.js",
   "scripts": {
     "preinstall": "cd infra && tofu init",

@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- docs: paste production links for placeholder path pages 2024-08-31
 - chore: update stack to latest dependencies with node 22 2024-08-31
 - feat: store installations while manifesting applications 2024-08-25
 - build: enforce passing lints and checked types as tests 2024-08-07

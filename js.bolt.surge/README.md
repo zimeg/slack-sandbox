@@ -3,6 +3,8 @@
 An email organizer that moves the right messages across channels from the sights
 of a satellite. Powered with [Bolt for JavaScript][bolt] on [Heroku][heroku].
 
+> 🔗 [**https://surgem.ai/**][surgemail]
+
 ## Getting started
 
 Development with the [Slack CLI][cli] is encouraged but requires customization:
@@ -61,3 +63,4 @@ Hooks that the CLI uses to interact with this project and the associated SDK.
 [heroku.cli]: https://devcenter.heroku.com/articles/heroku-cli
 [infra]: ./infra/README.md
 [opentofu]: https://opentofu.org/docs/intro/install
+[surgemail]: https://surgem.ai/
