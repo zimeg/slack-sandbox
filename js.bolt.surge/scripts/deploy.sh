@@ -17,7 +17,7 @@ function debug() {
 }
 
 if ! source .env.production >&2; then
-    debug "Attempting to source variables from .emv.production"
+    debug "Attempting to source variables from .env.production"
 fi
 
 if [ "$SLACK_ENVIRONMENT_TAG" != "production" ]; then
@@ -37,4 +37,5 @@ export TF_VAR_slack_log_level="$SLACK_LOG_LEVEL"
 export TF_VAR_slack_signing_secret="$SLACK_SIGNING_SECRET"
 export TF_VAR_slack_state_secret="$SLACK_STATE_SECRET"
 
+tofu -chdir=infra init
 tofu -chdir=infra apply -auto-approve

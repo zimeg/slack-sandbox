@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- build: init tofu infra before deploying and not install 2024-08-31
 - docs: paste production links for placeholder path pages 2024-08-31
 - chore: update stack to latest dependencies with node 22 2024-08-31
 - feat: store installations while manifesting applications 2024-08-25
