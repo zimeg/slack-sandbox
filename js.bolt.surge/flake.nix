@@ -36,7 +36,7 @@
           buildInputs = [
             pkgs.bash
             pkgs.heroku
-            pkgs.nodejs_20
+            pkgs.nodejs_22
             pkgs.opentofu
             slackcli
           ];

@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- chore: update stack to latest dependencies with node 22 2024-08-31
 - feat: store installations while manifesting applications 2024-08-25
 - build: enforce passing lints and checked types as tests 2024-08-07
 - style: lint and format files not found in the gitignore 2024-06-23

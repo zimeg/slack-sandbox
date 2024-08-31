@@ -1,6 +1,6 @@
 {
   "name": "js.bolt.surge",
-  "version": "2024.08.25",
+  "version": "2024.08.31",
   "description": "a powerful online email application",
   "main": "src/app.js",
   "scripts": {

@@ -1,10 +1,12 @@
 {
+  "name": "js.bolt.surge(src)",
+  "version": "2024.08.31",
   "scripts": {
     "start": "echo '<3'"
   },
   "type": "module",
   "engines": {
-    "node": "20.12.2"
+    "node": "22.5.1"
   },
   "dependencies": {
     "@slack/bolt": "3.21.1",

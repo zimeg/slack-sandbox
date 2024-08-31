@@ -1,7 +1,7 @@
 resource "heroku_app" "surged" {
   name   = var.heroku_app_name
   region = "us"
-  stack  = "heroku-22"
+  stack  = "heroku-24"
   acm = "true"
 
   buildpacks = [ "heroku/nodejs" ]
