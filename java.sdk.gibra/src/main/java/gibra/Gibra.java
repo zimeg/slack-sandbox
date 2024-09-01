@@ -16,6 +16,7 @@ import gibra.api.ApiTest;
 import gibra.api.ConversationsHistory;
 import gibra.api.FilesUploadV2;
 import gibra.listeners.Listeners;
+import gibra.scanner.KB;
 
 /**
  * This app chooses to do two things that might not be so related depending on
@@ -85,7 +86,7 @@ public class Gibra {
      */
     private static void method(CommandLine cmd) throws Exception {
         String help = cmd.getOptionValue("help", "");
-        String method = cmd.getOptionValue("method", "");
+        String method = KB.get(cmd, "method");
         String token = System.getenv("SLACK_BOT_TOKEN");
         if (!help.isBlank() || method.length() == 0) {
             help();
@@ -107,6 +108,7 @@ public class Gibra {
                 help();
                 break;
         }
+        KB.close();
     }
 
     /**

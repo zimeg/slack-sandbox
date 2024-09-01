@@ -1,6 +1,3 @@
-# Secret tokens
-.env
-
 # Development leftovers
 .direnv
 

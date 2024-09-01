@@ -1,0 +1,15 @@
+{
+  "runtime": "java",
+  "hooks": {
+    "build": "gradle clean shadowJar",
+    "deploy": "gradle clean shadowJar && java -jar build/libs/java.sdk.gibra-all.jar -mode api",
+    "get-manifest": "cat manifest.json #",
+    "start": "gradle run -Pargs='-mode bolt'"
+  },
+  "config": {
+    "protocol-version": ["default"],
+    "watch": {
+      "filter-regex": "^manifest.json$"
+    }
+  }
+}

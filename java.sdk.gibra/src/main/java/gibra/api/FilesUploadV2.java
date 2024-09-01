@@ -9,6 +9,8 @@ import org.apache.commons.cli.CommandLine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import gibra.scanner.KB;
+
 /**
  * Implementation of file uploads with polling patterns for asynchronous upload.
  *
@@ -19,8 +21,8 @@ public class FilesUploadV2 {
     public static void upload(String token, CommandLine cmd) {
         Logger logger = LoggerFactory.getLogger("gibra.logs");
         Slack slack = Slack.getInstance();
-        String channel = cmd.getOptionValue("channel", "");
-        String filepath = cmd.getOptionValue("filepath", "");
+        String channel = KB.get(cmd, "channel");
+        String filepath = KB.get(cmd, "filepath");
         if (channel.length() <= 0 || filepath.length() <= 0) {
             System.out.println("Error: Missing an argument for this method!");
             usage();

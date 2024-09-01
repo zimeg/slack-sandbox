@@ -7,6 +7,8 @@ import java.io.IOException;
 import org.apache.commons.cli.CommandLine;
 import org.slf4j.LoggerFactory;
 
+import gibra.scanner.KB;
+
 /**
  * Experiments around the {@link ConversationsHistory} API method.
  *
@@ -17,7 +19,7 @@ public class ConversationsHistory {
     public static void retreive(String token, CommandLine cmd) {
         var client = Slack.getInstance().methods();
         var logger = LoggerFactory.getLogger("gibra.logs");
-        String channel = cmd.getOptionValue("channel", "");
+        String channel = KB.get(cmd, "channel");
 
         if (channel.length() <= 0) {
             System.out.println("Error: Missing an argument for this snippet!");
