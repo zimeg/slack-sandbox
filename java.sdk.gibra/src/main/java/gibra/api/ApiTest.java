@@ -1,15 +1,15 @@
-// https://api.slack.com/methods/api.test
-
-package snippets;
+package gibra.api;
 
 import com.slack.api.Slack;
-import com.slack.api.methods.response.api.ApiTestResponse;
-
 import com.slack.api.methods.SlackApiException;
+import com.slack.api.methods.response.api.ApiTestResponse;
 import java.io.IOException;
 import org.slf4j.LoggerFactory;
 
-public class Example0000ApiTest {
+/**
+ * @see {@link https://api.slack.com/methods/api.test}
+ */
+public class ApiTest {
     public static void ping() {
         Slack slack = Slack.getInstance();
         var logger = LoggerFactory.getLogger("gibra.logs");

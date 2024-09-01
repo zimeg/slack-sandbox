@@ -13,15 +13,18 @@ repositories {
     mavenCentral()
 }
 dependencies {
-    implementation("com.slack.api:slack-api-client:1.42.0")
-    implementation("io.github.cdimascio:dotenv-java:3.0.1")
     implementation("ch.qos.logback:logback-classic:1.5.7")
+    implementation("com.slack.api:bolt-socket-mode:1.42.0")
+    implementation("com.slack.api:slack-api-client:1.42.0")
+    implementation("commons-cli:commons-cli:1.9.0")
+    implementation("org.glassfish.tyrus.bundles:tyrus-standalone-client:1.21")
+    implementation("org.slf4j:slf4j-simple:1.7.36")
 }
 application {
-    mainClass = "App"
+    mainClass = "gibra.Gibra"
 }
 run {
     if (project.hasProperty("args")) {
-        args project.args.split(",")
+        args project.args.split(" ")
     }
 }

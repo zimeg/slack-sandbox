@@ -1,32 +1,33 @@
-// https://github.com/slackapi/java-slack-sdk/issues/1179
-
-package snippets;
+package gibra.api;
 
 import com.slack.api.Slack;
-
-import java.util.Optional;
-
 import com.slack.api.methods.SlackApiException;
+import java.util.Optional;
 import java.io.IOException;
+import org.apache.commons.cli.CommandLine;
 import org.slf4j.LoggerFactory;
 
-public class Issue1179ConversationHistory {
-    public static void retreive(String token, String[] args) {
+/**
+ * Experiments around the {@link ConversationsHistory} API method.
+ *
+ * @see {@link https://api.slack.com/methods/conversations.history}
+ * @see {@link https://github.com/slackapi/java-slack-sdk/issues/1179}
+ */
+public class ConversationsHistory {
+    public static void retreive(String token, CommandLine cmd) {
         var client = Slack.getInstance().methods();
         var logger = LoggerFactory.getLogger("gibra.logs");
+        String channel = cmd.getOptionValue("channel", "");
 
-        if (args.length != 2) {
+        if (channel.length() <= 0) {
             System.out.println("Error: Missing an argument for this snippet!");
             usage();
             return;
         }
-        String channelId = args[1];
-
         try {
             var result = client.conversationsHistory(r -> r
                     .token(token)
-                    .channel(channelId)
-                    );
+                    .channel(channel));
             var conversationHistory = Optional.ofNullable(result.getMessages());
             System.out.println(conversationHistory);
         } catch (IOException | SlackApiException e) {
@@ -35,6 +36,6 @@ public class Issue1179ConversationHistory {
     }
 
     private static void usage() {
-        System.out.println("Usage: -Pargs=\"Issue1179ConversationHistory,C0123456789\"");
+        System.out.println("Usage: -method \"conversations.history\" -channel \"C0123456789\"");
     }
 }
