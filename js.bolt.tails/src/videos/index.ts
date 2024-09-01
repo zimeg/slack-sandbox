@@ -1,5 +1,6 @@
-import util from "node:util";
 import childProcess from "node:child_process";
+import util from "node:util";
+import config from "../config";
 
 const exec = util.promisify(childProcess.exec);
 
@@ -33,7 +34,9 @@ export default class Video {
    * @link https://github.com/yt-dlp/yt-dlp
    */
   async download(
-    options: DownloadOptions = { filepath: `./cache/${this.id}` },
+    options: DownloadOptions = {
+      filepath: `${config.CACHE_DIRECTORY}/${this.id}`,
+    },
   ) {
     const args = ["yt-dlp", this.url, "-o", options.filepath];
     const download = await exec(args.join(" "));

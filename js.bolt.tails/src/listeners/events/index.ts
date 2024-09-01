@@ -2,8 +2,8 @@ import { App } from "@slack/bolt";
 
 import { appHomeOpened } from "./app-home";
 import { appMention } from "./app-mention";
-import { linkShared } from "./link-shared";
 import { memberJoinedChannel, memberLeftChannel } from "./channel-membership";
+import { linkShared } from "./link-shared";
 import { reactionAdded } from "./reaction-added";
 
 const register = (app: App) => {
