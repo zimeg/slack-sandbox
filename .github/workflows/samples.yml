@@ -5,6 +5,7 @@ on:
     paths:
       - "deno.sdk.begut/**"
       - "deno.sdk.chanl/**"
+      - "java.sdk.gibra/**"
       - "js.bolt.surge/**"
       - "js.bolt.tails/**"
       - "py.bolt.snaek/**"
@@ -22,6 +23,7 @@ jobs:
         folder:
           - deno.sdk.begut
           - deno.sdk.chanl
+          - java.sdk.gibra
           - js.bolt.surge
           - js.bolt.tails
           - py.bolt.snaek
@@ -47,6 +49,7 @@ jobs:
           git checkout --orphan ${{ matrix.folder }}
           rsync -av --delete --exclude=".git" ../sandbox/${{ matrix.folder }}/ .
           rm -f .slack/apps.json
+          rm -f .slack/apps.*.json
           cp ../sandbox/LICENSE .
           git add .
           git commit -m "chore(sync): update sample with the latest upstream changes"

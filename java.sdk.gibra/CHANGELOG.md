@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- ci: consider the application set for sharing in the downstream 2024-08-31
 - build: perform scripted action and start apps using slack cli 2024-08-31
 - build: start a bolt socket mode application or request an api 2024-08-31
 - build: downgrade java version to match flaked gralde defaults 2024-07-18
