@@ -35,11 +35,6 @@ resource "heroku_domain" "surgemail" {
   hostname = "surgem.ai"
 }
 
-moved {
-  from = heroku_formation.labor
-  to   = heroku_formation.inbox
-}
-
 resource "heroku_formation" "inbox" {
   app_id     = heroku_app.surged.id
   type       = "web"
