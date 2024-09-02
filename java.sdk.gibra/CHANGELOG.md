@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- build: include implementations of a javax websocket connection 2024-09-01
 - build: remove dotenv setups when entering the application anew 2024-09-01
 - ci: consider the application set for sharing in the downstream 2024-08-31
 - build: perform scripted action and start apps using slack cli 2024-08-31
