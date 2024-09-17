@@ -59,7 +59,6 @@
             pkgs.curl # https://github.com/curl/curl
             pkgs.gnumake # https://github.com/mirror/make
             pkgs.ruff # http://github.com/astral-sh/ruff
-            pkgs.ollama # http://github.com/ollama/ollama
             pkgs.yajsv # https://github.com/neilpa/yajsv
             pythonEnv
             slackcli
