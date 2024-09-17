@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- fix: raise runtime errors returned when loading the model response 2024-09-17
 - build: prefer the shared system ollama setups found on the machine 2024-09-17
 - chore: update dependencies to avoid mismatched build hash problems 2024-09-17
 - fix: catch timeouts before logging the general request exceptions 2024-08-24

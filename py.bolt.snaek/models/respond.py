@@ -59,6 +59,8 @@ def _response_generate_stream(
             if not line:
                 continue
             json_response = json.loads(s=line.decode("utf-8"))
+            if json_response.get("error") is not None:
+                raise RuntimeError(json_response.get("error"))
             message = json_response.get("message")
             content += message.get("content", "")
             if json_response.get("done"):
