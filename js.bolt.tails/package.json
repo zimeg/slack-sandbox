@@ -32,7 +32,7 @@
     "url": "https://github.com/zimeg/slack-sandbox/issues"
   },
   "dependencies": {
-    "@biomejs/biome": "^1.9.2",
+    "@biomejs/biome": "^1.9.3",
     "@slack/bolt": "^3.22.0"
   },
   "devDependencies": {
