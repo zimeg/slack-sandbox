@@ -14,14 +14,6 @@
       "display_name": "Tails",
       "always_online": false
     },
-    "slash_commands": [
-      {
-        "command": "/ticket",
-        "url": "https://c3d9-13-110-54-11.ngrok-free.app/slack/events",
-        "description": "modal tests",
-        "should_escape": false
-      }
-    ],
     "unfurl_domains": ["youtube.com", "youtu.be"]
   },
   "oauth_config": {
@@ -41,7 +33,6 @@
         "chat:write",
         "chat:write.customize",
         "chat:write.public",
-        "commands",
         "files:read",
         "files:write",
         "groups:history",

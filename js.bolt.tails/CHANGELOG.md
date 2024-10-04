@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- feat: remove the slash command setup from past test scaffold 2024-10-03
 - feat: show and stream videos from a webpage for easiest view 2024-08-31
 - fix: ignore link shared events sourced from message composer 2024-08-17
 - feat: download shorter videos posted with links in a channel 2024-08-15
