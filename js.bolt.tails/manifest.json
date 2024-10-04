@@ -18,20 +18,9 @@
   },
   "oauth_config": {
     "scopes": {
-      "user": [
-        "channels:write",
-        "channels:write.invites",
-        "files:write",
-        "im:write"
-      ],
       "bot": [
-        "app_mentions:read",
         "channels:history",
-        "channels:manage",
-        "channels:read",
-        "channels:write.invites",
         "chat:write",
-        "chat:write.customize",
         "chat:write.public",
         "files:read",
         "files:write",
@@ -46,8 +35,7 @@
         "mpim:read",
         "mpim:write",
         "reactions:read",
-        "reactions:write",
-        "users:read"
+        "reactions:write"
       ]
     }
   },
@@ -55,18 +43,12 @@
     "event_subscriptions": {
       "bot_events": [
         "app_home_opened",
-        "app_mention",
-        "app_uninstalled",
-        "channel_left",
         "link_shared",
-        "member_joined_channel",
-        "member_left_channel",
         "message.channels",
         "message.groups",
         "message.im",
         "message.mpim",
-        "reaction_added",
-        "tokens_revoked"
+        "reaction_added"
       ]
     },
     "interactivity": {

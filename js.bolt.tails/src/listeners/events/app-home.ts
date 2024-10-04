@@ -1,9 +1,12 @@
 import { AllMiddlewareArgs, SlackEventMiddlewareArgs } from "@slack/bolt";
 
-export const appHomeOpened = async ({
+/**
+ * @see {@link https://api.slack.com/events/app_home_opened}
+ */
+export async function appHomeOpened({
   event,
   client,
-}: AllMiddlewareArgs & SlackEventMiddlewareArgs<"app_home_opened">) => {
+}: AllMiddlewareArgs & SlackEventMiddlewareArgs<"app_home_opened">) {
   try {
     const result = await client.views.publish({
       user_id: event.user,
@@ -29,9 +32,8 @@ export const appHomeOpened = async ({
         ],
       },
     });
-
     console.log(result);
   } catch (error) {
     console.error(error);
   }
-};
+}

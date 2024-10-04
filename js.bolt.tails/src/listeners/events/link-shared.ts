@@ -1,15 +1,16 @@
 import { AllMiddlewareArgs, SlackEventMiddlewareArgs } from "@slack/bolt";
 import Video from "../../videos";
 
-/*
+/**
  * Cache the video at the shared link.
- * @see https://api.slack.com/events/link_shared
+ * @see {@link https://api.slack.com/events/link_shared}
  */
-export const linkShared = async ({
+export async function linkShared({
+  client,
   event,
-}: AllMiddlewareArgs & SlackEventMiddlewareArgs<"link_shared">) => {
+}: AllMiddlewareArgs & SlackEventMiddlewareArgs<"link_shared">) {
   const { links, source } = event;
-  if (source === "composer") {
+  if (source != "conversations_history") {
     return;
   }
   for (let n = 0; n < links.length; n++) {
@@ -21,4 +22,4 @@ export const linkShared = async ({
       console.error("Failed to download a link:", e);
     }
   }
-};
+}
