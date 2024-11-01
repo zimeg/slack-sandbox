@@ -26,30 +26,33 @@ jobs:
       - name: Send a notification of completion
         if: steps.metadata.outputs.update-type == 'version-update:semver-patch' || steps.metadata.outputs.update-type == 'version-update:semver-minor'
         id: slack-success
-        uses: slackapi/slack-github-action@v1.27.0
+        uses: slackapi/slack-github-action@v2.0.0-rc.1
         with:
-          channel-id: ${{ env.SLACK_CHANNEL_ID }}
-          slack-message: "${{ steps.metadata.outputs.directory }}(chore): dependencies have been updated"
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
+          payload: |
+            channel: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
+            text: "${{ steps.metadata.outputs.directory }}(chore): dependencies have been updated"
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
           SLACK_CHANNEL_ID: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
       - name: Send a notification of pending
         if: steps.metadata.outputs.update-type != 'version-update:semver-patch' && steps.metadata.outputs.update-type != 'version-update:semver-minor'
         id: slack-pending
-        uses: slackapi/slack-github-action@v1.27.0
+        uses: slackapi/slack-github-action@v2.0.0-rc.1
         with:
-          channel-id: ${{ env.SLACK_CHANNEL_ID }}
-          slack-message: "${{ steps.metadata.outputs.directory }}(chore): dependencies have a pending update"
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
-          SLACK_CHANNEL_ID: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
+          payload: |
+            channel: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
+            text: "${{ steps.metadata.outputs.directory }}(chore): dependencies have a pending update"
       - name: Send a notification of failure
         if: failure()
         id: slack-failure
-        uses: slackapi/slack-github-action@v1.27.0
+        uses: slackapi/slack-github-action@v2.0.0-rc.1
         with:
-          channel-id: ${{ env.SLACK_CHANNEL_ID }}
-          slack-message: "${{ steps.metadata.outputs.directory }}(chore): failed to update dependencies"
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
-          SLACK_CHANNEL_ID: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
+          payload: |
+            channel: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
+            text: "${{ steps.metadata.outputs.directory }}(chore): failed to update dependencies"
