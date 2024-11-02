@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Send a message to channel
         id: slack
-        uses: slackapi/slack-github-action@v2.0.0-rc.1
+        uses: slackapi/slack-github-action@v2.0.0-rc.2
         with:
           method: chat.postMessage
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
@@ -19,7 +19,7 @@ jobs:
             channel: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
             text: "chore(<!channel>): merge w the latest changes on main"
       - name: Respond with affection
-        uses: slackapi/slack-github-action@v2.0.0-rc.1
+        uses: slackapi/slack-github-action@v2.0.0-rc.2
         with:
           method: reactions.add
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
