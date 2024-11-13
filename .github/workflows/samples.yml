@@ -56,7 +56,7 @@ jobs:
           git push -u origin ${{ matrix.folder }} --force
       - name: Send a notification of completion
         id: slack
-        uses: slackapi/slack-github-action@v2.0.0-rc.2
+        uses: slackapi/slack-github-action@v2.0.0-rc.3
         with:
           method: chat.postMessage
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
