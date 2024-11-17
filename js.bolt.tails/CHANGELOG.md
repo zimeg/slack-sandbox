@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- build: write a deploy script with the latest release of tool 2024-11-16
 - feat: remove additional features that have no immediate plan 2024-10-04
 - feat: remove the slash command setup from past test scaffold 2024-10-03
 - feat: show and stream videos from a webpage for easiest view 2024-08-31

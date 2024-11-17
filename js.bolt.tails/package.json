@@ -7,6 +7,8 @@
     "build": "tsc",
     "build:check": "tsc --noemit --module commonjs --project ./tsconfig.json",
     "build:clean": "rm -rf dist",
+    "predeploy": "echo \"SLACK_APP_TOKEN=$SLACK_APP_TOKEN\nSLACK_BOT_TOKEN=$SLACK_BOT_TOKEN\" > .env.production",
+    "deploy": "systemctl --user restart slack:tails.service",
     "lint": "npx @biomejs/biome check --verbose",
     "lint:fix": "npx @biomejs/biome check --verbose --write",
     "install:clean": "rm -rf node_modules",

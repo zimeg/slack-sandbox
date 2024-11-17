@@ -1,5 +1,6 @@
 # Secret values
 .env
+.env.production
 
 # Build and development
 .direnv
