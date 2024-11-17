@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- fix: include the method flag option for parsing value of flags 2024-11-16
 - fix: avoid duplicate socket connection with the sdk connection 2024-09-01
 - build: include implementations of a javax websocket connection 2024-09-01
 - build: remove dotenv setups when entering the application anew 2024-09-01
