@@ -41,7 +41,7 @@ jobs:
       - name: Install a flaked Nix
         uses: DeterminateSystems/nix-installer-action@v9
       - name: Test ${{ matrix.app }}
-        run: nix develop -c "${{ matrix.test }}"
+        run: nix develop -c ${{ matrix.test }}
   synchronize:
     name: Update remote branches
     if: github.ref == 'refs/heads/main'
