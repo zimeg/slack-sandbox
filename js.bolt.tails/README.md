@@ -6,6 +6,8 @@ This app aims to save copies of videos for archival hint or later listenings
 using [Bolt for Javascript][bolt] and [`typescript`][typescript] with a program
 that downloads both audio and visuals called [`yt-dlp`][ytdlp].
 
+<img src="./assets/icon.png" title="tails tames video" alt="a striking watch" width="400" height="400" />
+
 ## Starting the show
 
 Download [the Slack CLI][cli] for quick installations then follow these steps:
