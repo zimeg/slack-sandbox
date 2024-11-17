@@ -16,6 +16,7 @@ jobs:
         include:
           - app: deno.sdk.begut
             test: deno task test
+            deploy: slack deploy --app ${{ secrets.SLACK_APP_BEGUT_APP_ID }} --token ${{ secrets.SLACK_CLI_TOKEN }}
           - app: deno.sdk.chanl
             test: deno task test
           - app: java.sdk.gibra
@@ -48,6 +49,9 @@ jobs:
       - name: Test ${{ matrix.app }}
         if: ${{ matrix.test }}
         run: nix develop -c ${{ matrix.test }}
+      - name: Deploy ${{ matrix.app }}
+        if: ${{ matrix.deploy }}
+        run: nix develop -c ${{ matrix.deploy }}
   synchronize:
     name: Update remote branches
     if: github.ref == 'refs/heads/main'
