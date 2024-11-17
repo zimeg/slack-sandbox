@@ -1,40 +1,50 @@
 # 🪁 Tails
 
-This app contains typed testings of [Bolt for JavaScript][boltjs] and runs with
-the [CLI Hooks][hooks].
+> Grounding energies from the cloud
 
-## Spinning up
+This app aims to save copies of videos for archival hint or later listenings
+using [Bolt for Javascript][bolt] and [`typescript`][typescript] with a program
+that downloads both audio and visuals called [`yt-dlp`][ytdlp].
 
-1. Install dependencies with `npm install` and download [the Slack CLI][cli].
-2. Use `npm run watch` to transpile changes to source code.
-3. Use `slack run` to reflect changes during development. Restarts required.
+<img src="./assets/icon.png" title="tails tames video" alt="a striking watch" width="400" height="400" />
 
-## Setting the SDK versions
+## Starting the show
 
-This app uses the `@slack/bolt` package to power app functionalities and the
-`@slack/cli-hooks` package to make development easier.
-
-Either package version can be updated in the `package.json` to reference a local
-copy:
+Download [the Slack CLI][cli] for quick installations then follow these steps:
 
 ```sh
-$ npm install ../../tools/bolt-js
-$ npm install ../../tools/node-slack-sdk/packages/cli-hooks --save-dev
+$ slack create tails --template zimeg/slacks --branch js.bolt.tails
+$ cd tails
+$ slack run     # Start a development server
 ```
 
-After making changes to a local copy, a rebuild of the package and app might be
-needed. Sometimes a fresh start helps too:
+> :warning: Some of the code won't make sense. It's a bit of a WIP.
+
+## Saving videos
+
+Posting a link to a YouTube video will cache the video as a file:
+
+```slack
+https://www.youtube.com/watch?v=jNQXAC9IVRw
+```
 
 ```sh
-$ npm run refresh
+$ ls cache
+jNQXAC9IVRw.webm
 ```
 
-## Documentation
+Playback might require an internet browser despite the file being saved to disk.
 
-- https://slack.dev/bolt-js/concepts
-- https://slack.dev/bolt-js/reference
+## Discovering documentation
+
+Fast reference can be found from the following paths:
+
+- Downloader: https://github.com/yt-dlp/yt-dlp
+- Bolt JS: https://slack.dev/bolt-js
+- Slack API: https://api.slack.com/docs/apps
 
 [apps]: https://api.slack.com/apps
-[boltjs]: https://github.com/slackapi/bolt-js
+[bolt]: https://github.com/slackapi/bolt-js
 [cli]: https://api.slack.com/automation/cli
-[hooks]: https://github.com/slackapi/node-slack-sdk/tree/main/packages/cli-hooks
+[typescript]: https://www.typescriptlang.org
+[ytdlp]: https://github.com/yt-dlp/yt-dlp

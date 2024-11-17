@@ -1,0 +1,11 @@
+{
+  "name": "js.bolt.surge(scripts)",
+  "version": "2024.08.31",
+  "scripts": {
+    "get-manifest": "./get-manifest.js"
+  },
+  "type": "module",
+  "engines": {
+    "node": "22.5.1"
+  }
+}

@@ -2,28 +2,28 @@ name: Share an update
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   upgrade:
     name: Suggest the latest changes
     runs-on: ubuntu-latest
     steps:
-    - name: Send a message to channel
-      id: slack
-      uses: slackapi/slack-github-action@v1.26.0
-      with:
-        channel-id: ${{ env.SLACK_CHANNEL_ID }}
-        slack-message: "chore(<!channel>): merge w the latest changes on main"
-      env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
-          SLACK_CHANNEL_ID: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
-    - name: Respond with affection
-      run: |
-        curl -X POST -H "Authorization: Bearer ${{ env.SLACK_BOT_TOKEN }}" \
-          -H "Content-type: application/json" \
-          --data '{"channel":"${{ env.SLACK_CHANNEL_ID }}","timestamp":"${{ steps.slack.outputs.ts }}","name":"heart"}' \
-          https://slack.com/api/reactions.add
-      env:
-        SLACK_BOT_TOKEN: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
-        SLACK_CHANNEL_ID: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
+      - name: Send a message to channel
+        id: slack
+        uses: slackapi/slack-github-action@v2
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
+          payload: |
+            channel: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
+            text: "chore(<!channel>): merge w the latest changes on main"
+      - name: Respond with affection
+        uses: slackapi/slack-github-action@v2
+        with:
+          method: reactions.add
+          token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
+          payload: |
+            channel: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
+            timestamp: "${{ steps.slack.outputs.ts }}"
+            name: heart

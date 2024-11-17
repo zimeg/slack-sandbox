@@ -1,0 +1,21 @@
+{
+  "display_information": {
+    "name": "surge - developments"
+  },
+  "features": {
+    "bot_user": {
+      "display_name": "surge - development",
+      "always_online": false
+    }
+  },
+  "oauth_config": {
+    "redirect_urls": [
+      "https://example-123-45-67-89.ngrok-free.app/slack/oauth_redirect"
+    ]
+  },
+  "settings": {
+    "event_subscriptions": {
+      "request_url": "https://example-123-45-67-89.ngrok-free.app/slack/events"
+    }
+  }
+}

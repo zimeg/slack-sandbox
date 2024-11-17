@@ -8,7 +8,9 @@ export const expenseCategories: {
 } = {
   "🎨 arts": "art",
   "📦 belongings": "belongings",
+  "🧣 clothing": "clothing",
   "💾 computers": "computers",
+  "🕹️ gaming": "gaming",
   "👠 glamour": "glamour",
   "🥬 groceries": "groceries",
   "🏥 health": "health",

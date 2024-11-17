@@ -4,23 +4,23 @@ Some configurations and other information on the servers that run production.
 
 ## Preparing the providers
 
-Hosting is handled by Heroku and runs with an [Eco dyno][eco]. An account is
+Hosting is handled by Heroku and runs with a [Heroku dyno][dyno]. An account is
 needed to host here so please [create an account][heroku] if needed.
 
 Gather a Heroku API key from the CLI with `heroku authorizations:create` and
 save it to the `.env` file.
 
-AWS credentials might be necessary if you [share the state][#sharing-the-state].
+AWS credentials might be necessary if you [share the state](#sharing-the-state).
 
 After this setup is complete try creating new infrastructure that runs your app
 with the [OpenTofu CLI][tofu]:
 
 ```sh
 # Prepare project dependencies
-$ npm install && npm run bundle
+$ npm install
 
 # Push to production
-$ npm run deploy
+$ slack deploy
 ```
 
 ## Configuring environment variables
@@ -38,8 +38,8 @@ variables to a file in this directory called `tofu.auto.tfvars.json`:
 
 ```json
 {
-    "numerics": "12",
-    "password": "super-secret-value"
+  "numerics": "12",
+  "password": "super-secret-value"
 }
 ```
 
@@ -66,7 +66,7 @@ This is optional but useful as it synchronizes changes across multiple machines.
 Instructions for setup are [detailed here][state] or the `backend` section can
 be removed from `main.tf`.
 
-<!-- a collection of links -->
-[eco]: https://devcenter.heroku.com/articles/eco-dyno-hours
+[dyno]: https://devcenter.heroku.com/articles/dyno-types
 [heroku]: https://dashboard.heroku.com/apps
 [state]: https://developer.hashicorp.com/terraform/language/settings/backends/configuration
+[tofu]: https://opentofu.org

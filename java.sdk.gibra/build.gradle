@@ -1,21 +1,39 @@
 plugins {
     id("application")
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
+java {
+	sourceCompatibility = JavaVersion.VERSION_21
+	targetCompatibility = JavaVersion.VERSION_21
+}
+wrapper {
+  gradleVersion = "8.8"
+}
+// https://slack.dev/java-slack-sdk/guides/web-api-client-setup#build-from-source
 repositories {
     mavenCentral()
-    // https://slack.dev/java-slack-sdk/guides/web-api-client-setup#build-from-source
-    // mavenLocal()
 }
 dependencies {
-    implementation("com.slack.api:slack-api-client:1.39.1")
-    implementation("io.github.cdimascio:dotenv-java:3.0.0")
-    implementation("ch.qos.logback:logback-classic:1.5.6")
+    implementation("ch.qos.logback:logback-classic:1.5.12")
+    implementation("com.slack.api:bolt-socket-mode:1.44.1")
+    implementation("com.slack.api:slack-api-client:1.44.1")
+    implementation("commons-cli:commons-cli:1.9.0")
+    implementation("javax.websocket:javax.websocket-api:1.1")
+    implementation("org.glassfish.tyrus.bundles:tyrus-standalone-client:1.21")
+    implementation("org.slf4j:slf4j-simple:2.0.16")
 }
 application {
-    mainClass = "App"
+    mainClass = "gibra.Gibra"
 }
 run {
-    if (project.hasProperty('args')) {
-        args project.args.split(',')
+    if (project.hasProperty("args")) {
+        args project.args.split(" ")
+    }
+}
+shadowJar {
+    manifest {
+        attributes(
+            'Main-Class': application.mainClass.get()
+        )
     }
 }

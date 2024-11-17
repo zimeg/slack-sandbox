@@ -1,0 +1,31 @@
+{
+  "display_information": {
+    "name": "surge",
+    "background_color": "#1a1a10",
+    "description": "the simple sorter of streaming mail",
+    "long_description": "@surge delivers mail as messages to channels around. some sorting and set settings can be applied to tilt orderings in various directions.\r\n\r\nConfigure an inbox then decide what should go where as new messages arrive!"
+  },
+  "features": {
+    "app_home": {
+      "home_tab_enabled": true,
+      "messages_tab_enabled": true,
+      "messages_tab_read_only_enabled": true
+    },
+    "bot_user": {
+      "display_name": "surge",
+      "always_online": true
+    }
+  },
+  "oauth_config": {
+    "scopes": {
+      "bot": ["channels:history", "chat:write"]
+    }
+  },
+  "settings": {
+    "event_subscriptions": {
+      "bot_events": ["app_home_opened", "message.channels"]
+    },
+    "org_deploy_enabled": true,
+    "token_rotation_enabled": false
+  }
+}

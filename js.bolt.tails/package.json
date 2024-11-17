@@ -1,28 +1,47 @@
 {
   "name": "js.bolt.tails",
-  "version": "2024.05.08",
-  "description": "a Slack app that does various types of things",
+  "version": "2024.08.14",
+  "description": "a slack app that takes things",
   "main": "dist/app.js",
   "scripts": {
     "build": "tsc",
-    "refresh": "rm -rf node_modules && npm install --save",
-    "start": "slack run",
-    "watch": "npx nodemon --watch 'src' --ext 'ts' --exec npm run build"
+    "build:check": "tsc --noemit --module commonjs --project ./tsconfig.json",
+    "build:clean": "rm -rf dist",
+    "predeploy": "echo \"SLACK_APP_TOKEN=$SLACK_APP_TOKEN\nSLACK_BOT_TOKEN=$SLACK_BOT_TOKEN\" > .env.production",
+    "deploy": "systemctl --user restart slack:tails.service",
+    "lint": "npx @biomejs/biome check --verbose",
+    "lint:fix": "npx @biomejs/biome check --verbose --write",
+    "install:clean": "rm -rf node_modules",
+    "install:force": "npm run install:clean && npm install",
+    "prestart": "npm run build",
+    "start": "node dist/app.js",
+    "watch": "npx nodemon --watch 'src' --ext 'ts' --exec npm run start"
   },
   "author": "@zimeg",
   "license": "MIT",
+  "keywords": [
+    "slack"
+  ],
   "engines": {
-    "node": ">=20.0.0 <21.0.0",
+    "node": ">=22.0.0 <23.0.0",
     "npm": ">=10.0.0 <11.0.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zimeg/slack-sandbox.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zimeg/slack-sandbox/issues"
+  },
   "dependencies": {
-    "@slack/bolt": "^3.18.0"
+    "@biomejs/biome": "^1.9.4",
+    "@slack/bolt": "^4.1.0"
   },
   "devDependencies": {
-    "@slack/cli-hooks": "^1.1.0",
-    "@types/node": "^20.12.11",
-    "nodemon": "^3.1.0",
+    "@slack/cli-hooks": "^1.1.1",
+    "@types/node": "^22.9.0",
+    "nodemon": "^3.1.7",
     "ts-node": "^10.9.2",
-    "typescript": "^5.4.5"
+    "typescript": "^5.6.3"
   }
 }

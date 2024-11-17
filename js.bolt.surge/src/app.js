@@ -1,27 +1,24 @@
-const { App, LogLevel } = require('@slack/bolt');
+import bolt from "@slack/bolt";
+import logger from "@slack/logger";
+import Dotenv from "./config/dotenv.js";
+import Options from "./config/options.js";
+import Database from "./database/index.js";
+import events from "./listeners/events/index.js";
 
-const app = new App({
-  token: process.env.SLACK_BOT_TOKEN,
-  socketMode: true,
-  appToken: process.env.SLACK_APP_TOKEN,
-  logLevel: LogLevel.DEBUG,
-});
+const env = new Dotenv();
+const db = new Database(env);
+const options = new Options(env, db);
+const app = new bolt.App(options.config);
 
-app.function('sample_function', async ({ inputs, complete, fail }) => {
-  try {
-    const { sample_input } = inputs;
-    complete({ outputs: { sample_output: sample_input } });
-  } catch (error) {
-    console.error(error);
-    fail({ error });
-  }
-});
+events(app);
 
 (async () => {
+  const log = new logger.ConsoleLogger();
   try {
-    await app.start(process.env.PORT || 3000);
-    console.log('⚡️ Bolt app is running! ⚡️');
+    await db.load();
+    await app.start(env.vars.port ?? 3000);
+    log.info(":zap: Bolt is now powering Surge");
   } catch (error) {
-    console.error('Failed to start app', error);
+    log.error("Failed to start the app!", error);
   }
 })();

@@ -39,6 +39,9 @@ Generate a new model with:
 $ ollama create snaek --file models/Modelfile
 ```
 
+Updates to the `Modelfile` require creating that same model again for changes
+to take effect.
+
 #### Configuring networks
 
 Default settings serve the model on `localhost` but this can be changed to the
@@ -73,7 +76,6 @@ $ slack run
 
 After making a connection, add the bot to a channel and start prompting!
 
-<!-- a collection of links -->
 [bolt]: https://github.com/slackapi/bolt-python
 [cli]: https://api.slack.com/automation/cli
 [models]: https://ollama.com/library

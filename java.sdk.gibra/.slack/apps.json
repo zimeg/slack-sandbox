@@ -1,0 +1,10 @@
+{
+  "apps": {
+    "T02A074M3U3": {
+      "app_id": "A05FURW3A6R",
+      "team_domain": "slackbox-ez",
+      "team_id": "T02A074M3U3"
+    }
+  },
+  "default": "slackbox-ez"
+}

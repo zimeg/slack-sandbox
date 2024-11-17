@@ -4,10 +4,12 @@ on:
   pull_request:
   push:
     paths:
-      - 'deno.sdk.begut/**'
-      - 'js.bolt.surge/**'
-      - 'js.bolt.tails/**'
-      - 'py.bolt.snaek/**'
+      - "deno.sdk.begut/**"
+      - "deno.sdk.chanl/**"
+      - "java.sdk.gibra/**"
+      - "js.bolt.surge/**"
+      - "js.bolt.tails/**"
+      - "py.bolt.snaek/**"
   workflow_dispatch:
 
 jobs:
@@ -41,6 +43,8 @@ jobs:
       matrix:
         folder:
           - deno.sdk.begut
+          - deno.sdk.chanl
+          - java.sdk.gibra
           - js.bolt.surge
           - js.bolt.tails
           - py.bolt.snaek
@@ -63,19 +67,20 @@ jobs:
       - name: Update ${{ matrix.folder }}
         run: |
           cd samples
-          git checkout -b ${{ matrix.folder }} --force
-          git rebase main
+          git checkout --orphan ${{ matrix.folder }}
           rsync -av --delete --exclude=".git" ../sandbox/${{ matrix.folder }}/ .
+          rm -f .slack/apps.json
+          rm -f .slack/apps.*.json
           cp ../sandbox/LICENSE .
           git add .
           git commit -m "chore(sync): update sample with the latest upstream changes"
-          git push origin HEAD --force
+          git push -u origin ${{ matrix.folder }} --force
       - name: Send a notification of completion
         id: slack
-        uses: slackapi/slack-github-action@v1.26.0
+        uses: slackapi/slack-github-action@v2
         with:
-          channel-id: ${{ env.SLACK_CHANNEL_ID }}
-          slack-message: "${{ matrix.folder }}(chore): downstream now mirrors changes"
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
-          SLACK_CHANNEL_ID: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
+          payload: |
+            channel: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
+            text: "${{ matrix.folder }}(chore): downstream now mirrors changes"
