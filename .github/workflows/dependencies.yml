@@ -1,11 +1,9 @@
 name: Update dependencies
-
-on: pull_request
-
+on:
+  pull_request:
 permissions:
   contents: write
   pull-requests: write
-
 jobs:
   dependabot:
     name: Merge automatic pull requests
@@ -14,9 +12,9 @@ jobs:
       - name: Wait for tests to succeed
         uses: lewagon/wait-on-check-action@v1.3.4
         with:
-          check-name: "Confirm sensible changes"
           ref: ${{ github.event.pull_request.head.sha }}
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+          running-workflow-name: "Merge automatic pull requests"
           wait-interval: 10
       - name: Collect update metadata
         if: github.actor == 'dependabot[bot]'
