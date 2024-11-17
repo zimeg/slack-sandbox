@@ -1,17 +1,10 @@
 name: Synchronize certain samples
-
 on:
   pull_request:
   push:
-    paths:
-      - "deno.sdk.begut/**"
-      - "deno.sdk.chanl/**"
-      - "java.sdk.gibra/**"
-      - "js.bolt.surge/**"
-      - "js.bolt.tails/**"
-      - "py.bolt.snaek/**"
+    branches:
+      - "main"
   workflow_dispatch:
-
 jobs:
   test:
     name: Confirm sensible changes
