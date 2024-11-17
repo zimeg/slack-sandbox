@@ -1,11 +1,9 @@
 name: Update dependencies
-
-on: pull_request
-
+on:
+  pull_request:
 permissions:
   contents: write
   pull-requests: write
-
 jobs:
   dependabot:
     name: Merge automatic pull requests
@@ -17,6 +15,13 @@ jobs:
         uses: dependabot/fetch-metadata@v2
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
+      - name: Wait for tests to succeed
+        uses: lewagon/wait-on-check-action@v1.3.4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          running-workflow-name: "Merge automatic pull requests"
+          wait-interval: 10
       - name: Merge requests from the kind dependabot
         if: steps.metadata.outputs.update-type == 'version-update:semver-patch' || steps.metadata.outputs.update-type == 'version-update:semver-minor'
         run: gh pr merge --auto --squash "$PR_URL"
