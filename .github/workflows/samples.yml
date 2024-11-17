@@ -24,11 +24,14 @@ jobs:
           - app: deno.sdk.chanl
             test: deno task test
           - app: java.sdk.gibra
-            test: gradle clean shadowJar && java -jar build/libs/java.sdk.gibra-all.jar -mode api -method api.test
+            build: gradle clean shadowJar
+            test: java -jar build/libs/java.sdk.gibra-all.jar -mode api -method api.test
           - app: js.bolt.surge
-            test: npm install && npm run test
+            build: npm install
+            test: npm run test
           - app: js.bolt.tails
-            test: npm install && npm run build:check && npm run lint
+            build: npm install
+            test: npm run build:check && npm run lint
           - app: py.bolt.snaek
             test: make test
     defaults:
@@ -39,7 +42,11 @@ jobs:
         uses: actions/checkout@v4
       - name: Install a flaked Nix
         uses: DeterminateSystems/nix-installer-action@v9
+      - name: Build ${{ matrix.app }}
+        if: ${{ matrix.build }}
+        run: nix develop -c ${{ matrix.build }}
       - name: Test ${{ matrix.app }}
+        if: ${{ matrix.test }}
         run: nix develop -c ${{ matrix.test }}
   synchronize:
     name: Update remote branches
