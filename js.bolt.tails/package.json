@@ -15,6 +15,7 @@
     "install:force": "npm run install:clean && npm install",
     "prestart": "npm run build",
     "start": "node dist/app.js",
+    "test:ci": "npm run build:check && npm run lint",
     "watch": "npx nodemon --watch 'src' --ext 'ts' --exec npm run start"
   },
   "author": "@zimeg",

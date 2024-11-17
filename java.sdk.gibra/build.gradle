@@ -5,9 +5,12 @@ plugins {
 java {
 	sourceCompatibility = JavaVersion.VERSION_21
 	targetCompatibility = JavaVersion.VERSION_21
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
 }
 wrapper {
-  gradleVersion = "8.8"
+  gradleVersion = "8.5"
 }
 // https://slack.dev/java-slack-sdk/guides/web-api-client-setup#build-from-source
 repositories {
