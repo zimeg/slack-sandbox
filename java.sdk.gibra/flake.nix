@@ -34,7 +34,7 @@
       {
         devShell = pkgs.mkShell {
           buildInputs = [
-            pkgs.jdk23 # https://github.com/openjdk/jdk/releases/tag/jdk-23-ga
+            pkgs.jdk21 # https://github.com/openjdk/jdk/releases/tag/jdk-21-ga
             pkgs.gradle # https://github.com/gradle/gradle
             slackcli
           ];
