@@ -34,7 +34,7 @@ jobs:
         working-directory: ${{ matrix.app }}
     steps:
       - name: Checkout this repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
       - name: Install a flaked Nix
         uses: DeterminateSystems/nix-installer-action@v16
       - name: Cache saved flakes
@@ -66,12 +66,12 @@ jobs:
           - py.bolt.snaek
     steps:
       - name: Checkout this repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
         with:
           fetch-depth: 0
           path: sandbox
       - name: Checkout sample repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
         with:
           repository: zimeg/slacks
           path: samples
@@ -93,7 +93,7 @@ jobs:
           git push -u origin ${{ matrix.folder }} --force
       - name: Send a notification of completion
         id: slack
-        uses: slackapi/slack-github-action@v2
+        uses: slackapi/slack-github-action@v2.0.0
         with:
           method: chat.postMessage
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
