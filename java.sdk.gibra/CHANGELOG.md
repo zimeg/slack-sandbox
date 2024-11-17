@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- build: downgrade the gradle version to match the java version 2024-11-17
 - build: set java language toolchain to a matching major version 2024-11-17
 - fix: include the method flag option for parsing value of flags 2024-11-16
 - fix: avoid duplicate socket connection with the sdk connection 2024-09-01
