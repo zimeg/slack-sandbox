@@ -32,7 +32,7 @@ jobs:
             test: npm run test
           - app: js.bolt.tails
             build: npm install
-            test: npm run build:check && npm run lint
+            test: npm run test:ci
           - app: py.bolt.snaek
             test: make test
     defaults:

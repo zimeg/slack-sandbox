@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- build: include combined testing commands for ci circumstance 2024-11-17
 - feat: add iconic of this bot receiving zap from watch button 2024-11-16
 - build: write a deploy script with the latest release of tool 2024-11-16
 - feat: remove additional features that have no immediate plan 2024-10-04
