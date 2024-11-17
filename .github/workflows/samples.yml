@@ -15,32 +15,26 @@ on:
 jobs:
   test:
     name: Confirm sensible changes
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         include:
           - app: deno.sdk.begut
-            os: ubuntu-latest
             test: deno task test
           - app: deno.sdk.chanl
-            os: ubuntu-latest
             test: deno task test
           - app: java.sdk.gibra
-            os: ubuntu-latest
             test: gradle clean shadowJar && java -jar build/libs/java.sdk.gibra-all.jar -mode api -method api.test
           - app: js.bolt.surge
-            os: ubuntu-latest
             test: npm install && npm run test
           - app: js.bolt.tails
-            os: ubuntu-latest
             test: npm install && npm run build:check && npm run lint
           - app: py.bolt.snaek
-            os: ubuntu-latest
             test: make test
     defaults:
       run:
         working-directory: ${{ matrix.app }}
-    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout this repo
         uses: actions/checkout@v4
