@@ -31,7 +31,6 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Send a notification of completion
         if: steps.metadata.outputs.update-type == 'version-update:semver-patch' || steps.metadata.outputs.update-type == 'version-update:semver-minor'
-        id: slack-success
         uses: slackapi/slack-github-action@v2.0.0
         with:
           method: chat.postMessage
@@ -44,7 +43,6 @@ jobs:
           SLACK_CHANNEL_ID: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
       - name: Send a notification of pending
         if: steps.metadata.outputs.update-type != 'version-update:semver-patch' && steps.metadata.outputs.update-type != 'version-update:semver-minor'
-        id: slack-pending
         uses: slackapi/slack-github-action@v2.0.0
         with:
           method: chat.postMessage
@@ -54,7 +52,6 @@ jobs:
             text: "${{ steps.metadata.outputs.directory }}(chore): dependencies have a pending update"
       - name: Send a notification of failure
         if: failure()
-        id: slack-failure
         uses: slackapi/slack-github-action@v2.0.0
         with:
           method: chat.postMessage
