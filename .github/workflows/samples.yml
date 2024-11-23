@@ -31,6 +31,7 @@ jobs:
             test: npm run test:ci
           - app: py.bolt.snaek
             test: make test
+    environment: ${{ matrix.app }}
     defaults:
       run:
         working-directory: ${{ matrix.app }}
@@ -52,7 +53,7 @@ jobs:
         run: nix develop -c ${{ matrix.test }}
       - name: Deploy ${{ matrix.app }}
         if: ${{ matrix.deploy }}
-        run: nix develop -c ${{ matrix.deploy }}
+        run: echo ${{ matrix.deploy }}
         env:
           SLACK_APP_ID: ${{ secrets[matrix.id] }}
           SLACK_CLI_TOKEN: ${{ secrets.SLACK_CLI_TOKEN }}
