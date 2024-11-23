@@ -55,7 +55,7 @@ jobs:
         if: ${{ matrix.deploy }}
         run: echo ${{ matrix.deploy }}
         env:
-          SLACK_APP_ID: ${{ secrets[matrix.id] }}
+          SLACK_APP_ID: ${{ secrets.SLACK_APP_ID }}
           SLACK_CLI_TOKEN: ${{ secrets.SLACK_CLI_TOKEN }}
   synchronize:
     name: Update remote branches
