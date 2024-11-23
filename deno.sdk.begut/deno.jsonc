@@ -1,34 +1,34 @@
 {
-  "$schema": "https://deno.land/x/deno/cli/schemas/config-file.v1.json",
-  "fmt": {
-    "include": [
-      "README.md",
-      "datastores",
-      "external_auth",
-      "functions",
-      "manifest.ts",
-      "triggers",
-      "types",
-      "views",
-      "workflows"
-    ]
-  },
-  "importMap": "import_map.json",
-  "lint": {
-    "include": [
-      "datastores",
-      "external_auth",
-      "functions",
-      "manifest.ts",
-      "triggers",
-      "types",
-      "views",
-      "workflows"
-    ]
-  },
-  "lock": false,
-  "tasks": {
-    "test": "deno fmt --check && deno lint && deno test --allow-read --allow-none",
-    "update": "deno run --allow-read --allow-net --allow-write https://deno.land/x/udd@0.8.2/main.ts import_map.json"
-  }
+    "$schema": "https://deno.land/x/deno/cli/schemas/config-file.v1.json",
+    "fmt": {
+        "include": [
+            "README.md",
+            "datastores",
+            "external_auth",
+            "functions",
+            "manifest.ts",
+            "triggers",
+            "types",
+            "views",
+            "workflows"
+        ]
+    },
+    "importMap": "import_map.json",
+    "lint": {
+        "include": [
+            "datastores",
+            "external_auth",
+            "functions",
+            "manifest.ts",
+            "triggers",
+            "types",
+            "views",
+            "workflows"
+        ]
+    },
+    "lock": false,
+    "tasks": {
+        "test": "deno fmt --check && deno lint && deno test --allow-read",
+        "update": "deno run --allow-read --allow-net --allow-write https://deno.land/x/udd@0.8.2/main.ts import_map.json"
+    }
 }
