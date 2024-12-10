@@ -1,6 +1,6 @@
 {
   "name": "js.bolt.surge",
-  "version": "2024.08.31",
+  "version": "2024.12.10",
   "description": "a powerful online email application",
   "homepage": "https://surgem.ai",
   "main": "src/app.js",
