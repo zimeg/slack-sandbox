@@ -35,7 +35,7 @@ lint:
 schema:
 	find $(SLACK_SCHEMA_FILE) 1> /dev/null || curl -o $(SLACK_SCHEMA_FILE) $(SLACK_SCHEMA_URL)
 	yajsv -s $(SLACK_SCHEMA_FILE) manifest.json
-	slack manifest validate --app $(SLACK_APP_ID) $(VERBOSE_FLAG) || printf "\x1b[2mChange the \x1b[1mSLACK_APP_ID='%s'\x1b[0;2m variable!\x1b[0m\n" $(SLACK_APP_ID)
+	slack manifest validate --app $(SLACK_APP_ID) $(VERBOSE_FLAG) || (printf "\x1b[2mSuggestion: Change the \x1b[1mSLACK_APP_ID='%s'\x1b[0;2m variable!\x1b[0m\n" $(SLACK_APP_ID) && exit 1)
 
 .PHONY: test
 test: schema format lint
