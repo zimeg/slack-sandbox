@@ -29,6 +29,6 @@ def message_wrapper(
                 db.threads_following_watch(event)
         elif not is_following or is_app_mention:
             return
-        response_generate(client, event, logger)
+        response_generate(client, event, logger, stream=True)
 
     return message_callback

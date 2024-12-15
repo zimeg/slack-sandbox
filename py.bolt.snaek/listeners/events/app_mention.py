@@ -20,7 +20,7 @@ def app_mention_wrapper(
         is_following, _ = db.threads_following_check(event)
         if not is_following:
             db.threads_following_watch(event)
-        response_generate(client, event, logger)
+        response_generate(client, event, logger, stream=True)
 
     return app_mention_callback
 

@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- feat: unlock the assistant panel for messaging outside of channel 2024-12-14
 - build: export environment variables from hidden credentials files 2024-12-14
 - test: exit with an error if the slack app manifest fails validate 2024-12-14
 - chore: update dependencies with added environment setup for nixos 2024-12-14
