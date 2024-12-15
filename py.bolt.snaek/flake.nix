@@ -11,8 +11,9 @@
         pkgs = import nixpkgs {
           inherit system;
         };
-        pythonEnv = pkgs.python311.withPackages (ps: with ps; [
+        pythonEnv = pkgs.python312.withPackages (ps: with ps; [
           mypy # https://github.com/python/mypy
+          packaging # https://github.com/pypa/packaging
           requests # https://github.com/psf/requests
           slack-bolt # http://github.com/slackapi/bolt-python
           slack-sdk # https://github.com/slackapi/python-slack-sdk
@@ -38,13 +39,13 @@
             if pkgs.stdenv.isDarwin then
               pkgs.fetchurl
                 {
-                  url = "https://downloads.slack-edge.com/slack-cli/slack_cli_2.29.2_macOS_64-bit.tar.gz";
-                  sha256 = "173qhvdl3l06cqq1qlvgsd3igxxgmdqi10a1wz1dyfyczppnpcmv";
+                  url = "https://downloads.slack-edge.com/slack-cli/slack_cli_2.32.0_macOS_64-bit.tar.gz";
+                  sha256 = "013436s1xgfi34lvwlaaqkv0xwbfvnlcm9jhh6bgd15xl1k7x7y7";
                 }
             else
               pkgs.fetchurl {
-                url = "https://downloads.slack-edge.com/slack-cli/slack_cli_2.29.2_linux_64-bit.tar.gz";
-                sha256 = "1ass6imlvc3yjddzfasgqi9a19qr6k7rjgngibi1zx25f1vjica6";
+                url = "https://downloads.slack-edge.com/slack-cli/slack_cli_2.32.0_linux_64-bit.tar.gz";
+                sha256 = "0b2xz83q2j2gz456wkvqg0z3qmrcl9cixi4q0zgqv9za8kdn4lrb";
               };
           unpackPhase = "tar -xzf $src";
           installPhase = ''
