@@ -24,7 +24,7 @@ def response_generate(
     )
     try:
         data = {
-            "model": os.getenv("OLLAMA_MODEL", "mistral"),
+            "model": os.getenv("OLLAMA_MODEL", "llama3.2"),
             "messages": thread,
             "stream": stream,
         }

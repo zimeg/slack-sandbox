@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- feat: bump model versions to the fast and recent llama 3.2 tagging 2024-12-14
 - feat: unlock the assistant panel for messaging outside of channel 2024-12-14
 - build: export environment variables from hidden credentials files 2024-12-14
 - test: exit with an error if the slack app manifest fails validate 2024-12-14

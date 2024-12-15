@@ -25,7 +25,7 @@ After installing Ollama CLI, start an Ollama server for engaging conversation:
 $ ollama serve
 ```
 
-The prepared model is `mistral` and other available models can be found from
+The prepared model is `llama3.2` and other available models can be found from
 [the Ollama library][models].
 
 Update the `OLLAMA_MODEL` environment variable with any model name you'd like!
