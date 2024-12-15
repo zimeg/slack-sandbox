@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- build: export environment variables from hidden credentials files 2024-12-14
 - test: exit with an error if the slack app manifest fails validate 2024-12-14
 - chore: update dependencies with added environment setup for nixos 2024-12-14
 - fix: raise runtime errors returned when loading the model response 2024-09-17
