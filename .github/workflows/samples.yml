@@ -7,6 +7,19 @@ on:
       - "main"
   workflow_dispatch:
 jobs:
+  message:
+    name: Experiment with proxies
+    runs-on: self-hosted
+    steps:
+      - name: Post a message
+        uses: slackapi/slack-github-action@v2.0.0
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
+          proxy: "http://localhost:3128"
+          payload: |
+            channel: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
+            text: "greetings!"
   test:
     name: Confirm sensible changes
     runs-on: ubuntu-latest
