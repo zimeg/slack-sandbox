@@ -16,7 +16,7 @@ jobs:
         with:
           method: chat.postMessage
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
-          proxy: "http://localhost:3128"
+          proxy: "http://localhost:3129"
           payload: |
             channel: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
             text: "greetings!"
