@@ -23,7 +23,7 @@ jobs:
       - name: Send a webhook
         uses: slackapi/slack-github-action@v2.0.0
         with:
-          proxy: "http://localhost:3128"
+          proxy: "http://localhost:3129"
           webhook: ${{ secrets.SLACK_GITHUB_ACTION_INCOMING_WEBHOOK }}
           webhook-type: incoming-webhook
           payload: |
