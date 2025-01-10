@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@biomejs/biome": "^1.9.4",
-    "@slack/bolt": "^4.1.1"
+    "@slack/bolt": "^4.2.0"
   },
   "devDependencies": {
     "@slack/cli-hooks": "^1.1.2",
