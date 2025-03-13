@@ -38,7 +38,7 @@ jobs:
       - name: Install a flaked Nix
         uses: DeterminateSystems/nix-installer-action@v16
       - name: Cache saved flakes
-        uses: DeterminateSystems/magic-nix-cache-action@v8
+        uses: DeterminateSystems/magic-nix-cache-action@v9
       - name: Install dependencies
         if: ${{ matrix.deps }}
         run: nix develop -c ${{ matrix.deps }}
