@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- test: track coverage of unit tests for updating insight 2025-03-15
 - test: confirm scripts to get manifests match production 2025-03-15
 - chore: set node versions to a tested production for now 2025-03-15
 - chore: update slack tooling to latest released versions 2025-03-15
