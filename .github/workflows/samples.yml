@@ -47,6 +47,13 @@ jobs:
       - name: Test ${{ matrix.app }}
         if: ${{ matrix.test }}
         run: nix develop -c ${{ matrix.test }}
+      - name: Upload coverage
+        uses: codecov/codecov-action@v5
+        with:
+          flags: ${{ matrix.app }}
+          token: ${{ secrets.CODECOV_TOKEN }}
+          verbose: true
+          working-directory: ${{ matrix.app }}
   synchronize:
     name: Update remote branches
     if: github.ref == 'refs/heads/main'
