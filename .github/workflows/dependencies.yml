@@ -100,7 +100,7 @@ jobs:
       - name: Save changed version
         run: |
           git checkout main
-          git merge update
+          git merge --squash update
           git push -u origin main
           git push origin --delete update
       - name: Message the happened errors
