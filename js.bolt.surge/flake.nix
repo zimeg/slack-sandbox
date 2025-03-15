@@ -2,18 +2,23 @@
   description = "a powerful online email application";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-node.url = "github:NixOS/nixpkgs/0cb2fd7c59fed0cd82ef858cbcbdb552b9a33465"; # 22.5.1
     flake-utils.url = "github:numtide/flake-utils";
   };
   outputs =
     {
       flake-utils,
       nixpkgs,
+      nixpkgs-node,
       ...
     }:
     flake-utils.lib.eachDefaultSystem (
       system:
       let
         pkgs = import nixpkgs {
+          inherit system;
+        };
+        nodepkgs = import nixpkgs-node {
           inherit system;
         };
         slackcli = pkgs.stdenv.mkDerivation {
@@ -41,7 +46,7 @@
           buildInputs = [
             pkgs.bash
             pkgs.heroku
-            pkgs.nodejs_22
+            nodepkgs.nodejs_22
             pkgs.opentofu
             slackcli
           ];

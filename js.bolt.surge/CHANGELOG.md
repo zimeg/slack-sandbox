@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- chore: set node versions to a tested production for now 2025-03-15
 - chore: update slack tooling to latest released versions 2025-03-15
 - build: declare the installed oauth package as top level 2024-12-10
 - style: remove remaining renaming of past infrastructure 2024-08-31
