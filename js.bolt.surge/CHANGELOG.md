@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- test: confirm scripts to get manifests match production 2025-03-15
 - chore: set node versions to a tested production for now 2025-03-15
 - chore: update slack tooling to latest released versions 2025-03-15
 - build: declare the installed oauth package as top level 2024-12-10

@@ -4,6 +4,7 @@
   "description": "a powerful online email application",
   "homepage": "https://surgem.ai",
   "main": "src/app.js",
+  "type": "module",
   "scripts": {
     "watch": "npx nodemon --exec npm run start",
     "start": "node src/app.js",
@@ -13,7 +14,8 @@
     "check": "tsc --noemit --module es2022 --project ./jsconfig.json",
     "lint": "npx @biomejs/biome check --verbose",
     "lint:fix": "npx @biomejs/biome check --verbose --write",
-    "test": "npm run lint && npm run check"
+    "pretest": "npm run lint && npm run check",
+    "test": "mocha test/**/*.spec.js"
   },
   "author": "@zimeg",
   "license": "MIT",
@@ -35,6 +37,7 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@slack/cli-hooks": "1.2.0",
+    "mocha": "11.1.0",
     "nodemon": "3.1.9",
     "typescript": "^5.8.2"
   }
