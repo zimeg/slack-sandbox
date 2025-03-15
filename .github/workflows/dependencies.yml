@@ -70,7 +70,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout this repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
       - name: Configure git credentials
         run: |
           git config user.name 'github-actions[bot]'
