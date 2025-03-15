@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- build: guard against important manifest object override 2025-03-15
 - test: track coverage of unit tests for updating insight 2025-03-15
 - test: confirm scripts to get manifests match production 2025-03-15
 - chore: set node versions to a tested production for now 2025-03-15
