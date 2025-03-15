@@ -5,14 +5,14 @@ on:
   schedule:
     - cron: "22 22 * * *"
   workflow_dispatch:
-permissions:
-  contents: write
-  pull-requests: write
 jobs:
   dependabot:
     name: Merge automatic pull requests
-    runs-on: ubuntu-latest
     if: github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - name: Collect update metadata
         id: metadata
@@ -65,6 +65,9 @@ jobs:
   flake:
     name: Freeze the latest lockfile
     runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: write
     steps:
       - name: Checkout this repo
         uses: actions/checkout@v4
