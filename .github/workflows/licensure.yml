@@ -8,6 +8,9 @@ jobs:
   licensure:
     name: Extension for the year
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - name: Checkout this repo
         uses: actions/checkout@v4.2.2

@@ -7,6 +7,8 @@ jobs:
   upgrade:
     name: Suggest the latest changes
     runs-on: ubuntu-latest
+    permissions:
+      contents: none
     steps:
       - name: Send a message to channel
         id: message
