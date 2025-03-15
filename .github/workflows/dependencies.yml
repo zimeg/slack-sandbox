@@ -71,6 +71,8 @@ jobs:
     steps:
       - name: Checkout this repo
         uses: actions/checkout@v4.2.2
+        with:
+          ref: main
       - name: Configure git credentials
         run: |
           git config user.name 'github-actions[bot]'
