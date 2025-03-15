@@ -92,6 +92,14 @@ jobs:
         run: |
           git commit --all --message "chore(deps): automatic version bump to the most recent packages"
           git push -u origin update
+      - name: Start the tests
+        run: |
+          gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            /repos/${{ github.event.repository.name }}/actions/workflows/samples.yml/dispatches \
+             -f "ref=update"
       - name: Wait for testing to complete
         uses: lewagon/wait-on-check-action@v1.3.4
         with:
