@@ -56,7 +56,7 @@ jobs:
           verbose: true
       - name: Upload results
         if: ${{ !cancelled() }}
-        uses: codecov/codecov-test-results-action@v1.1.0
+        uses: codecov/test-results-action@v1.1.0
         with:
           directory: ${{ matrix.app }}
           flags: ${{ matrix.app }}
