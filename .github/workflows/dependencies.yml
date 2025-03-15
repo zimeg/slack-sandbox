@@ -64,6 +64,7 @@ jobs:
             text: "${{ steps.metadata.outputs.directory }}(chore): failed to update dependencies"
   flake:
     name: Freeze the latest lockfile
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     permissions:
       actions: write
