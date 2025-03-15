@@ -11,6 +11,13 @@ describe("scripts", () => {
       process.env.SLACK_ENVIRONMENT_TAG = undefined;
     });
 
+    it("missing", () => {
+      process.env.SLACK_ENVIRONMENT_TAG = "unknown";
+      assert.throws(() => {
+        getManifest();
+      });
+    });
+
     it("production", () => {
       process.env.SLACK_ENVIRONMENT_TAG = "production";
       const manifest = getManifest();
