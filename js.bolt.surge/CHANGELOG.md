@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- chore: update slack tooling to latest released versions 2025-03-15
 - build: declare the installed oauth package as top level 2024-12-10
 - style: remove remaining renaming of past infrastructure 2024-08-31
 - build: init tofu infra before deploying and not install 2024-08-31
