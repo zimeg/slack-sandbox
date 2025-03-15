@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- build: update tooling for developing and the development filepaths 2025-03-15
 - feat: bump model versions to the fast and recent llama 3.2 tagging 2024-12-14
 - feat: unlock the assistant panel for messaging outside of channel 2024-12-14
 - build: export environment variables from hidden credentials files 2024-12-14
