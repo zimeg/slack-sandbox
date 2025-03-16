@@ -34,6 +34,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-biome": {
+      "locked": {
+        "lastModified": 1741715534,
+        "narHash": "sha256-IDtwLhWMKvydW9GrB6ETwhij+vma0hYHln8pR/rTd+U=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "0d534853a55b5d02a4ababa1d71921ce8f0aee4c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "0d534853a55b5d02a4ababa1d71921ce8f0aee4c",
+        "type": "github"
+      }
+    },
     "nixpkgs-node": {
       "locked": {
         "lastModified": 1723635686,
@@ -54,6 +70,7 @@
       "inputs": {
         "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-biome": "nixpkgs-biome",
         "nixpkgs-node": "nixpkgs-node"
       }
     },
