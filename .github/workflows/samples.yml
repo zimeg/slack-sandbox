@@ -6,7 +6,7 @@ on:
 jobs:
   test:
     name: Confirm sensible changes
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     permissions:
       contents: read
     strategy:
@@ -66,7 +66,7 @@ jobs:
     name: Update remote branches
     if: github.ref == 'refs/heads/main'
     needs: test
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     permissions:
       contents: write
     strategy:
