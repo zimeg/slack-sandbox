@@ -2,6 +2,7 @@
   description = "a powerful online email application";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-biome.url = "github:NixOS/nixpkgs/0d534853a55b5d02a4ababa1d71921ce8f0aee4c"; # 1.9.4
     nixpkgs-node.url = "github:NixOS/nixpkgs/0cb2fd7c59fed0cd82ef858cbcbdb552b9a33465"; # 22.5.1
     flake-utils.url = "github:numtide/flake-utils";
   };
@@ -9,6 +10,7 @@
     {
       flake-utils,
       nixpkgs,
+      nixpkgs-biome,
       nixpkgs-node,
       ...
     }:
@@ -16,6 +18,9 @@
       system:
       let
         pkgs = import nixpkgs {
+          inherit system;
+        };
+        biomepkgs = import nixpkgs-biome {
           inherit system;
         };
         nodepkgs = import nixpkgs-node {
@@ -44,11 +49,12 @@
       {
         devShell = pkgs.mkShell {
           buildInputs = [
-            pkgs.bash
-            pkgs.heroku
-            nodepkgs.nodejs_22
-            pkgs.opentofu
-            slackcli
+            pkgs.bash # https://git.savannah.gnu.org/cgit/bash.git
+            biomepkgs.biome # https://github.com/biomejs/biome
+            pkgs.heroku # https://github.com/heroku/cli
+            nodepkgs.nodejs_22 # https://github.com/nodejs/node
+            pkgs.opentofu # https://github.com/opentofu/opentofu
+            slackcli # https://tools.slack.dev/slack-cli
           ];
           shellHook = ''
             export SLACK_CONFIG_DIR="$HOME/.config/slack"
