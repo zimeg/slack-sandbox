@@ -1,16 +1,11 @@
-# Secrets and stuff
-.env*
-!.env.example
-store
-
-# Deployment keys
-.terraform
-tofu.auto.tfvars.json
-terraform.tfstate*
-
 # Development environment
 .direnv
 node_modules
 
-# Development tools
-.slack/apps.dev.json
+# Secrets and similar things
+.env*
+!.env.example
+store
+
+# Testing tooling
+coverage

@@ -7,6 +7,13 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- fix: include integrity hashes of snippet websocket webpage example 2025-03-15
+- build: update tooling for developing and the development filepaths 2025-03-15
+- feat: bump model versions to the fast and recent llama 3.2 tagging 2024-12-14
+- feat: unlock the assistant panel for messaging outside of channel 2024-12-14
+- build: export environment variables from hidden credentials files 2024-12-14
+- test: exit with an error if the slack app manifest fails validate 2024-12-14
+- chore: update dependencies with added environment setup for nixos 2024-12-14
 - fix: raise runtime errors returned when loading the model response 2024-09-17
 - build: prefer the shared system ollama setups found on the machine 2024-09-17
 - chore: update dependencies to avoid mismatched build hash problems 2024-09-17

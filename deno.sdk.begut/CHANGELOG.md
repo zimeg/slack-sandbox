@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- chore(deps): bump versions of slack tooling to latest releases 2025-03-10
 - test: remove the flag that allowed no tests to be tested on test 2024-11-23
 - test: replace "mock-fetch" with "deno-mock-fetch" to avoid error 2024-11-23
 - chore(deps): bump versions of slack tooling to latest releases 2024-11-17

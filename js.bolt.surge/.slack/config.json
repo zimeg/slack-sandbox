@@ -1,4 +1,6 @@
 {
   "project_id": "a4b37e9f-72e1-42d0-af75-5f1c41af7b38",
-  "experiments": ["bolt"]
+  "manifest": {
+    "source": "local"
+  }
 }

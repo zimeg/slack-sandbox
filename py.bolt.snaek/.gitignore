@@ -4,8 +4,6 @@ caduceus.db
 # Development artifacts
 __pycache__
 .direnv
-.slack/apps.dev.json
-.slack/schema.json
 .venv
 
 # Environment variables

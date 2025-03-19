@@ -1,15 +1,14 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 name: Synchronize certain samples
 on:
-  pull_request:
   push:
-    branches:
-      - "main"
   workflow_dispatch:
 jobs:
   test:
     name: Confirm sensible changes
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     strategy:
       fail-fast: false
       matrix:
@@ -40,8 +39,6 @@ jobs:
         uses: actions/checkout@v4.2.2
       - name: Install a flaked Nix
         uses: DeterminateSystems/nix-installer-action@v16
-      - name: Cache saved flakes
-        uses: DeterminateSystems/magic-nix-cache-action@v8
       - name: Install dependencies
         if: ${{ matrix.deps }}
         run: nix develop -c ${{ matrix.deps }}
@@ -57,11 +54,28 @@ jobs:
         env:
           SLACK_APP_ID: ${{ secrets.SLACK_APP_ID }}
           SLACK_CLI_TOKEN: ${{ secrets.SLACK_CLI_TOKEN }}
+      - name: Upload coverage
+        uses: codecov/codecov-action@v5.4.0
+        with:
+          directory: ${{ matrix.app }}
+          flags: ${{ matrix.app }}
+          token: ${{ secrets.CODECOV_TOKEN }}
+          verbose: true
+      - name: Upload results
+        if: ${{ !cancelled() }}
+        uses: codecov/test-results-action@v1.1.0
+        with:
+          directory: ${{ matrix.app }}
+          flags: ${{ matrix.app }}
+          token: ${{ secrets.CODECOV_TOKEN }}
+          verbose: true
   synchronize:
     name: Update remote branches
     if: github.ref == 'refs/heads/main'
     needs: test
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
+    permissions:
+      contents: write
     strategy:
       fail-fast: false
       max-parallel: 1

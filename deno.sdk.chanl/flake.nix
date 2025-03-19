@@ -2,12 +2,23 @@
   description = "unstable packages with known channels";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-deno.url = "github:NixOS/nixpkgs/5ed627539ac84809c78b2dd6d26a5cebeb5ae269"; # 1.46.2
     flake-utils.url = "github:numtide/flake-utils";
   };
-  outputs = { nixpkgs, flake-utils, ... }:
-    flake-utils.lib.eachDefaultSystem (system:
+  outputs =
+    {
+      nixpkgs,
+      nixpkgs-deno,
+      flake-utils,
+      ...
+    }:
+    flake-utils.lib.eachDefaultSystem (
+      system:
       let
         pkgs = import nixpkgs {
+          inherit system;
+        };
+        denopkgs = import nixpkgs-deno {
           inherit system;
         };
         # https://api.slack.com/automation/cli
@@ -15,11 +26,10 @@
           name = "slackcli";
           src =
             if pkgs.stdenv.isDarwin then
-              pkgs.fetchurl
-                {
-                  url = "https://downloads.slack-edge.com/slack-cli/slack_cli_2.27.1_macOS_64-bit.tar.gz";
-                  sha256 = "0ixxlprfhsf1zfj4kd06hav2fxva83s8by0vjhaf1njnh07higbz";
-                }
+              pkgs.fetchurl {
+                url = "https://downloads.slack-edge.com/slack-cli/slack_cli_2.27.1_macOS_64-bit.tar.gz";
+                sha256 = "0ixxlprfhsf1zfj4kd06hav2fxva83s8by0vjhaf1njnh07higbz";
+              }
             else
               pkgs.fetchurl {
                 url = "https://downloads.slack-edge.com/slack-cli/slack_cli_2.27.1_linux_64-bit.tar.gz";
@@ -35,7 +45,7 @@
       {
         devShell = pkgs.mkShell {
           buildInputs = [
-            pkgs.deno # https://github.com/denoland/deno
+            denopkgs.deno # https://github.com/denoland/deno
             slackcli
           ];
           shellHook = ''
@@ -43,5 +53,6 @@
             mkdir -p $SLACK_CONFIG_DIR
           '';
         };
-      });
+      }
+    );
 }

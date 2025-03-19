@@ -1,3 +1,6 @@
 {
-  "project_id":"561ca564-1cb4-47df-9b7f-9a9533f8736b"
+  "project_id": "561ca564-1cb4-47df-9b7f-9a9533f8736b",
+  "manifest": {
+    "source": "local"
+  }
 }
