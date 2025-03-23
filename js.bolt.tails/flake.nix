@@ -26,13 +26,13 @@
           src =
             if pkgs.stdenv.isDarwin then
               pkgs.fetchurl {
-                url = "https://downloads.slack-edge.com/slack-cli/slack_cli_2.31.0_macOS_64-bit.tar.gz";
-                sha256 = "15xv5fpm7pdb0jyjniyky4vlafp4g0isnzxf23m7fynw2jkj7s1a";
+                url = "https://downloads.slack-edge.com/slack-cli/slack_cli_3.0.1_macOS_64-bit.tar.gz";
+                sha256 = "0ywmvzixv8dfz7nhdn2sh79amwns87vg06is8xhsl0f41igcnxw5";
               }
             else
               pkgs.fetchurl {
-                url = "https://downloads.slack-edge.com/slack-cli/slack_cli_2.31.0_linux_64-bit.tar.gz";
-                sha256 = "1bdk8c1insqhjkrn3fzc6dzlkgq6y0nvhac6rs3fsv81if8a5fgf";
+                url = "https://downloads.slack-edge.com/slack-cli/slack_cli_3.0.1_linux_64-bit.tar.gz";
+                sha256 = "1dsfpdqyyklilrzvljj51q6iafmbipvx7fjhwbsn1rcb0jxrg614";
               };
           unpackPhase = "tar -xzf $src";
           installPhase = ''
