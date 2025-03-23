@@ -64,7 +64,7 @@ jobs:
           SLACK_CLI_TOKEN: ${{ secrets.SLACK_CLI_TOKEN }}
           SLACK_CLIENT_ID: ${{ secrets.SLACK_CLIENT_ID }}
           SLACK_CLIENT_SECRET: ${{ secrets.SLACK_CLIENT_SECRET }}
-          SLACK_ENVIRONMENT_TAG: ${{ secrets.SLACK_ENVIRONMENT_TAG }}
+          SLACK_ENVIRONMENT_TAG: ${{ vars.SLACK_ENVIRONMENT_TAG }}
           SLACK_LOG_LEVEL: ${{ secrets.SLACK_LOG_LEVEL }}
           SLACK_SIGNING_SECRET: ${{ secrets.SLACK_SIGNING_SECRET }}
           SLACK_STATE_SECRET: ${{ secrets.SLACK_STATE_SECRET }}
