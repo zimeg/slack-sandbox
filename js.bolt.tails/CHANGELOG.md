@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- build: prefer the packaged flake installations of typescript 2025-03-22
 - build: include combined testing commands for ci circumstance 2024-11-17
 - feat: add iconic of this bot receiving zap from watch button 2024-11-16
 - build: write a deploy script with the latest release of tool 2024-11-16

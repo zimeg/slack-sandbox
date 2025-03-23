@@ -46,6 +46,7 @@
           buildInputs = [
             biomepkgs.biome # https://github.com/biomejs/biome
             pkgs.nodejs_22 # https://github.com/nodejs/node
+            pkgs.typescript # https://github.com/microsoft/TypeScript
             pkgs.yt-dlp # https://github.com/yt-dlp/yt-dlp
             slackcli # https://tools.slack.dev/slack-cli
           ];
