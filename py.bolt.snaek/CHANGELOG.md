@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- build: change the model for the most popular gemma3 in this moment 2025-03-23
 - fix: include integrity hashes of snippet websocket webpage example 2025-03-15
 - build: update tooling for developing and the development filepaths 2025-03-15
 - feat: bump model versions to the fast and recent llama 3.2 tagging 2024-12-14
