@@ -1,33 +1,5 @@
 #!/usr/bin/env bash
 
-function error() {
-    printf "\x1b[31mERROR\x1b[0m %s\n" "$1" >&2
-}
-
-function warn() {
-    printf "\x1b[37mWARN\x1b[0m %s\n" "$1" >&2
-}
-
-function info() {
-    printf "INFO %s\n" "$1"
-}
-
-function debug() {
-    printf "\x1b[2mDEBUG\x1b[0m %s\n" "$1"
-}
-
-if ! source .env.production >&2; then
-    debug "Attempting to source variables from .env.production"
-fi
-
-if [ "$SLACK_ENVIRONMENT_TAG" != "production" ]; then
-    error "Failed to gather production environment variables"
-    info "Missing SLACK_ENVIRONMENT_TAG=\"production\""
-    warn "It is possible the app manifest was updated regardless"
-
-    exit 1
-fi
-
 export TF_VAR_database_url="$DATABASE_URL"
 export TF_VAR_heroku_api_key="$HEROKU_API_KEY"
 export TF_VAR_slack_client_id="$SLACK_CLIENT_ID"
