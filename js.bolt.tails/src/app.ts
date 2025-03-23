@@ -8,11 +8,14 @@ const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
   customRoutes: routes,
   logLevel: LogLevel.DEBUG,
+  installerOptions: {
+    port: +(process.env.PORT || 3000), // https://github.com/slackapi/bolt-js/blob/7c2957ea2319c409a55f83e488d3b16a726ae338/src/receivers/SocketModeReceiver.ts#L159
+  },
 });
 
 registerListeners(app);
 
 (async () => {
-  await app.start(process.env.PORT || 3000);
+  await app.start();
   console.log("⚡️ Bolt app is running!");
 })();
