@@ -40,7 +40,12 @@ jobs:
     steps:
       - name: Checkout this repo
         uses: actions/checkout@v4.2.2
+      - name: Reflect existing Nix
+        id: nixos
+        continue-on-error: true
+        run: uname -a | grep NixOS
       - name: Install a flaked Nix
+        if: steps.nixos.outcome != 'success'
         uses: DeterminateSystems/nix-installer-action@v16
       - name: Install dependencies
         if: ${{ matrix.deps }}
