@@ -1,3 +1,6 @@
 {
+  "manifest": {
+    "source": "local"
+  },
   "project_id": "f7f6f620-525f-46c9-b7fa-64ba73a15bce"
 }
