@@ -23,7 +23,12 @@ jobs:
             build: gradle clean shadowJar
             test: java -jar build/libs/java.sdk.gibra-all.jar -mode api -method api.test
           - app: js.bolt.surge
-            deploy: slack deploy --app $SLACK_APP_ID --token $SLACK_CLI_TOKEN --force
+            deploy: |
+              SLACK_ENVIRONMENT_TAG=$SLACK_ENVIRONMENT_TAG \
+              slack deploy \
+                --app $SLACK_APP_ID \
+                --token $SLACK_CLI_TOKEN \
+                --force
             deps: npm install
             test: npm run test
           - app: js.bolt.tails
@@ -58,7 +63,7 @@ jobs:
         run: nix develop -c ${{ matrix.test }}
       - name: Deploy ${{ matrix.app }}
         if: ${{ matrix.deploy }}
-        run: nix develop -c ${{ matrix.deploy }}
+        run: nix develop --command bash -c "${{ matrix.deploy }}"
         env:
           SLACK_APP_ID: ${{ secrets.SLACK_APP_ID }}
           SLACK_CLI_TOKEN: ${{ secrets.SLACK_CLI_TOKEN }}
