@@ -70,17 +70,17 @@ jobs:
         if: ${{ matrix.test }}
         run: nix develop -c ${{ matrix.test }}
       - name: Configure AWS credentials
-        if: hashFiles('infra/*.tf') != ''
+        if: ${{ secrets.AWS_ACCESS_KEY_ID }} != ""
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
       - name: Setup Tofu tooling
-        if: hashFiles('infra/*.tf') != ''
+        if: ${{ secrets.AWS_ACCESS_KEY_ID }} != ""
         uses: opentofu/setup-opentofu@v1
       - name: Plan infrastructure changes
-        if: hashFiles('infra/*.tf') != '' && github.event_name == 'pull_request'
+        if: ${{ secrets.AWS_ACCESS_KEY_ID }} != "" && github.event_name == "pull_request"
         run: |
           cd infra
           nix run .#tofu -- init
