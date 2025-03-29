@@ -91,10 +91,10 @@ jobs:
         if: ${{ matrix.infra == 'tofu' }}
         run: |
           cd infra
-          tofu init
-          tofu fmt -check
-          tofu validate
-          tofu plan
+          nix develop -c tofu init
+          nix develop -c tofu fmt -check
+          nix develop -c tofu validate
+          nix develop -c tofu plan
       - name: Deploy ${{ matrix.app }}
         if: ${{ matrix.deploy }}
         run: nix develop --command bash -c "${{ matrix.deploy }}"
