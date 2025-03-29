@@ -81,7 +81,7 @@ jobs:
         if: ${{ matrix.infra }}
         uses: opentofu/setup-opentofu@v1
       - name: Plan infrastructure changes
-        if: ${{ matrix.infra }} && github.event_name == "pull_request"
+        if: ${{ matrix.infra && github.event_name == "pull_request" }}
         run: |
           cd infra
           nix run .#tofu -- init
