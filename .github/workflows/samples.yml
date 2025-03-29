@@ -88,13 +88,13 @@ jobs:
         if: ${{ matrix.infra == 'tofu' && steps.nixos.outcome != 'success' }}
         uses: opentofu/setup-opentofu@v1
       - name: Plan infrastructure changes
-        if: ${{ matrix.infra == 'tofu' && github.event_name == 'pull_request' }}
+        if: ${{ matrix.infra == 'tofu' }}
         run: |
           cd infra
-          nix run .#tofu -- init
-          nix run .#tofu -- fmt -check
-          nix run .#tofu -- validate
-          nix run .#tofu -- plan
+          tofu init
+          tofu fmt -check
+          tofu validate
+          tofu plan
       - name: Deploy ${{ matrix.app }}
         if: ${{ matrix.deploy }}
         run: nix develop --command bash -c "${{ matrix.deploy }}"
