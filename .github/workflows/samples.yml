@@ -26,7 +26,14 @@ jobs:
             test: java -jar build/libs/java.sdk.gibra-all.jar -mode api -method api.test
           - app: js.bolt.surge
             deploy: |
+              DATABASE_URL=$DATABASE_URL \
+              HEROKU_API_KEY=$HEROKU_API_KEY \
+              SLACK_CLIENT_ID=$SLACK_CLIENT_ID \
+              SLACK_CLIENT_SECRET=$SLACK_CLIENT_SECRET \
               SLACK_ENVIRONMENT_TAG=$SLACK_ENVIRONMENT_TAG \
+              SLACK_LOG_LEVEL=$SLACK_LOG_LEVEL \
+              SLACK_SIGNING_SECRET=$SLACK_SIGNING_SECRET \
+              SLACK_STATE_SECRET=$SLACK_STATE_SECRET \
               slack deploy \
                 --app $SLACK_APP_ID \
                 --token $SLACK_CLI_TOKEN \
