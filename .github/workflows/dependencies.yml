@@ -91,11 +91,21 @@ jobs:
           cd js.bolt.surge && nix flake update && cd ..
           cd js.bolt.tails && nix flake update && cd ..
           cd py.bolt.snaek && nix flake update && cd ..
+      - name: Check for changes
+        id: diff
+        run: |
+          if ! git diff --quiet; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
       - name: Save the flake locks
+        if: steps.diff.outputs.changed == 'true'
         run: |
           git commit --all --message "chore(deps): automatic version bump to the most recent packages"
           git push -u origin update
       - name: Start the tests
+        if: steps.diff.outputs.changed == 'true'
         run: |
           gh api \
             --method POST \
@@ -106,6 +116,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
       - name: Wait for testing to complete
+        if: steps.diff.outputs.changed == 'true'
         uses: lewagon/wait-on-check-action@v1.3.4
         with:
           check-regexp: Confirm sensible changes \(.*?\)
@@ -114,6 +125,7 @@ jobs:
           wait-interval: 10
           allowed-conclusions: success
       - name: Save changed version
+        if: steps.diff.outputs.changed == 'true'
         run: |
           git checkout main
           git merge update
