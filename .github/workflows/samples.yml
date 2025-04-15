@@ -46,7 +46,7 @@ jobs:
         if: ${{ matrix.test }}
         run: nix develop -c ${{ matrix.test }}
       - name: Upload coverage
-        uses: codecov/codecov-action@v5.4.0
+        uses: codecov/codecov-action@v5.4.2
         with:
           directory: ${{ matrix.app }}
           flags: ${{ matrix.app }}
