@@ -14,8 +14,9 @@ jobs:
           method: chat.postMessage
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
           payload: |
-            channel: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }},
-            text: "greetings!",
+            {
+              "channel": "${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}",
+              "text": "greetings!"
   test:
     name: Confirm sensible changes
     runs-on: ubuntu-latest
