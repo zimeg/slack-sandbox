@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Errors with invalid JSON
-        uses: zimeg/slack-github-action@v2.0.1-rc.3
+        uses: zimeg/slack-github-action@v2.0.1-rc.4
         with:
           method: chat.postMessage
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
