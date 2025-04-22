@@ -11,12 +11,14 @@ jobs:
       - name: Errors with invalid JSON
         uses: zimeg/slack-github-action@v2.0.1-rc.4
         with:
+          errors: true
           method: chat.postMessage
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
           payload: |
             {
-              "channel": "${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}",
+              "channl": "${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}",
               "text": "greetings!"
+            }
   test:
     name: Confirm sensible changes
     runs-on: ubuntu-latest
