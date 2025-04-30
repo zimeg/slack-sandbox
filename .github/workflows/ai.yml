@@ -11,7 +11,7 @@ jobs:
         id: tom
         uses: zimeg/slack-github-action@v2.0.1-rc.4
         with:
-          api: "http://127.0.0.1:11434/api/"
+          api: "127.0.0.1:11434/api/"
           method: "generate"
           retries: "10"
           token: "example"
