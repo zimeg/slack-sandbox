@@ -1,0 +1,34 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: Answer questions
+on:
+  push:
+jobs:
+  ai:
+    name: Predict words
+    runs-on: self-hosted
+    steps:
+      - name: Ask TOM
+        id: tom
+        uses: zimeg/slack-github-action@v2.0.1-rc.4
+        with:
+          api: "http://127.0.0.1:11434/api/"
+          method: "generate"
+          retries: "10"
+          token: "example"
+          payload: |
+            model: "gemma3"
+            prompt: "How many sides does a circle have?"
+            stream: false
+      - name: Parse
+        run: |
+          echo "${{ steps.tom.outputs.response }}"
+          RESPONSE=$(echo '${{ steps.tom.outputs.response }}' | jq -r '.response' )
+          echo "RESPONSE=$RESPONSE" >> $GITHUB_ENV
+      - name: Respond
+        uses: zimeg/slack-github-action@v2.0.1-rc.4
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
+          payload: |
+            channel: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
+            text: "${{ env.RESPONSE }}"
