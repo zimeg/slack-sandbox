@@ -8,17 +8,15 @@ jobs:
     name: Experiment with errors
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout the latest changes
+        uses: actions/checkout@v4.2.2
       - name: Errors with invalid JSON
         uses: zimeg/slack-github-action@v2.0.1-rc.4
         with:
           errors: true
           method: chat.postMessage
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
-          payload: |
-            {
-              "channl": "${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}",
-              "text": "greetings!"
-            }
+          payload-file-path: "./oop.json"
   test:
     name: Confirm sensible changes
     runs-on: ubuntu-latest
