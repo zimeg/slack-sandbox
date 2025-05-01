@@ -16,7 +16,7 @@ jobs:
           errors: true
           method: chat.postMessage
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
-          payload-file-path: "./oop.json"
+          payload-file-path: "./oop.yaml"
   test:
     name: Confirm sensible changes
     runs-on: ubuntu-latest
