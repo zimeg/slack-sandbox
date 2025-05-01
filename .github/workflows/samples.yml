@@ -11,7 +11,7 @@ jobs:
       - name: Checkout the latest changes
         uses: actions/checkout@v4.2.2
       - name: Errors with invalid JSON
-        uses: zimeg/slack-github-action@v2.0.1-rc.4
+        uses: zimeg/slack-github-action@v2.0.1-rc.5
         with:
           errors: true
           method: chat.postMessage
