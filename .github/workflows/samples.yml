@@ -106,7 +106,7 @@ jobs:
           git commit -m "chore(sync): update sample with the latest upstream changes"
           git push -u origin ${{ matrix.folder }} --force
       - name: Send a notification of completion
-        uses: slackapi/slack-github-action@v2.0.0
+        uses: slackapi/slack-github-action@v2.1.0
         with:
           method: chat.postMessage
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
