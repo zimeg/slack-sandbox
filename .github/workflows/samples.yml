@@ -35,7 +35,7 @@ jobs:
       - name: Checkout this repo
         uses: actions/checkout@v4.2.2
       - name: Install a flaked Nix
-        uses: DeterminateSystems/nix-installer-action@v16
+        uses: DeterminateSystems/nix-installer-action@v17
       - name: Install dependencies
         if: ${{ matrix.deps }}
         run: nix develop -c ${{ matrix.deps }}
