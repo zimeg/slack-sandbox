@@ -4,6 +4,19 @@ on:
   push:
   workflow_dispatch:
 jobs:
+  message:
+    name: Experiment with errors
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the latest changes
+        uses: actions/checkout@v4.2.2
+      - name: Errors with invalid JSON
+        uses: zimeg/slack-github-action@v2.0.1-rc.5
+        with:
+          errors: true
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
+          payload-file-path: "./oop.yaml"
   test:
     name: Confirm sensible changes
     runs-on: ubuntu-latest
