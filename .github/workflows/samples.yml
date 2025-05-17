@@ -22,7 +22,7 @@ jobs:
               slack deploy --app $SLACK_APP_ID --token $SLACK_CLI_TOKEN
             test: deno task test
           - app: java.sdk.gibra
-            build: gradle clean shadowJar
+            build: gradle clean --no-daemon shadowJar
             test: java -jar build/libs/java.sdk.gibra-all.jar -mode api -method api.test
           - app: js.bolt.surge
             deploy: |
