@@ -23,6 +23,7 @@ jobs:
             test: deno task test
           - app: java.sdk.gibra
             build: |
+              mkdir -p .gradle .tmp
               gradle clean --no-daemon --gradle-user-home=".gradle" -Djava.io.tmpdir=".tmp" shadowJar
             test: |
               java -jar build/libs/java.sdk.gibra-all.jar -mode api -method api.test
