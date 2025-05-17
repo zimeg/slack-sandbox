@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: Collect update metadata
         id: metadata
-        uses: dependabot/fetch-metadata@v2.3.0
+        uses: dependabot/fetch-metadata@v2.4.0
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
       - name: Wait for tests to succeed
@@ -34,7 +34,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Send a notification of completion
         if: steps.metadata.outputs.update-type == 'version-update:semver-patch' || steps.metadata.outputs.update-type == 'version-update:semver-minor'
-        uses: slackapi/slack-github-action@v2.0.0
+        uses: slackapi/slack-github-action@v2.1.0
         with:
           method: chat.postMessage
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
@@ -46,7 +46,7 @@ jobs:
           SLACK_CHANNEL_ID: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
       - name: Send a notification of pending
         if: steps.metadata.outputs.update-type != 'version-update:semver-patch' && steps.metadata.outputs.update-type != 'version-update:semver-minor'
-        uses: slackapi/slack-github-action@v2.0.0
+        uses: slackapi/slack-github-action@v2.1.0
         with:
           method: chat.postMessage
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
@@ -55,7 +55,7 @@ jobs:
             text: "${{ steps.metadata.outputs.directory }}(chore): dependencies have a pending update"
       - name: Send a notification of failure
         if: failure()
-        uses: slackapi/slack-github-action@v2.0.0
+        uses: slackapi/slack-github-action@v2.1.0
         with:
           method: chat.postMessage
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
@@ -79,7 +79,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
       - name: Install a flaked Nix
-        uses: DeterminateSystems/nix-installer-action@v16
+        uses: DeterminateSystems/nix-installer-action@v17
       - name: Checkout an update
         run: |
           git checkout -b update
@@ -91,11 +91,21 @@ jobs:
           cd js.bolt.surge && nix flake update && cd ..
           cd js.bolt.tails && nix flake update && cd ..
           cd py.bolt.snaek && nix flake update && cd ..
+      - name: Check for changes
+        id: diff
+        run: |
+          if ! git diff --quiet; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
       - name: Save the flake locks
+        if: steps.diff.outputs.changed == 'true'
         run: |
           git commit --all --message "chore(deps): automatic version bump to the most recent packages"
           git push -u origin update
       - name: Start the tests
+        if: steps.diff.outputs.changed == 'true'
         run: |
           gh api \
             --method POST \
@@ -106,6 +116,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
       - name: Wait for testing to complete
+        if: steps.diff.outputs.changed == 'true'
         uses: lewagon/wait-on-check-action@v1.3.4
         with:
           check-regexp: Confirm sensible changes \(.*?\)
@@ -114,6 +125,7 @@ jobs:
           wait-interval: 10
           allowed-conclusions: success
       - name: Save changed version
+        if: steps.diff.outputs.changed == 'true'
         run: |
           git checkout main
           git merge update
@@ -121,7 +133,7 @@ jobs:
           git push origin --delete update
       - name: Message the happened errors
         if: failure()
-        uses: slackapi/slack-github-action@v2.0.0
+        uses: slackapi/slack-github-action@v2.1.0
         with:
           method: chat.postMessage
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}

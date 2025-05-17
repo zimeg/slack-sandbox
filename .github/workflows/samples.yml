@@ -67,7 +67,7 @@ jobs:
         run: uname -a | grep NixOS
       - name: Install a flaked Nix
         if: ${{ steps.nixos.outcome != 'success' }}
-        uses: DeterminateSystems/nix-installer-action@v16
+        uses: DeterminateSystems/nix-installer-action@v17
       - name: Install dependencies
         if: ${{ matrix.deps }}
         run: nix develop -c ${{ matrix.deps }}
@@ -110,7 +110,7 @@ jobs:
           SLACK_SIGNING_SECRET: ${{ secrets.SLACK_SIGNING_SECRET }}
           SLACK_STATE_SECRET: ${{ secrets.SLACK_STATE_SECRET }}
       - name: Upload coverage
-        uses: codecov/codecov-action@v5.4.0
+        uses: codecov/codecov-action@v5.4.3
         with:
           directory: ${{ matrix.app }}
           flags: ${{ matrix.app }}
@@ -170,7 +170,7 @@ jobs:
           git commit -m "chore(sync): update sample with the latest upstream changes"
           git push -u origin ${{ matrix.app }} --force
       - name: Send a notification of completion
-        uses: slackapi/slack-github-action@v2.0.0
+        uses: slackapi/slack-github-action@v2.1.0
         with:
           method: chat.postMessage
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
