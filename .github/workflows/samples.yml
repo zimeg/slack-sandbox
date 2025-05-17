@@ -71,15 +71,15 @@ jobs:
       - name: Install dependencies
         if: ${{ matrix.deps }}
         run: |
-          nix develop -c "${{ matrix.deps }}"
+          nix develop --command bash -c "${{ matrix.deps }}"
       - name: Build ${{ matrix.app }}
         if: ${{ matrix.build }}
         run: |
-          nix develop -c "${{ matrix.build }}"
+          nix develop --command bash -c "${{ matrix.build }}"
       - name: Test ${{ matrix.app }}
         if: ${{ matrix.test }}
         run: |
-          nix develop -c "${{ matrix.test }}"
+          nix develop --command bash -c "${{ matrix.test }}"
       - name: Configure AWS credentials
         if: ${{ matrix.infra == 'tofu' }}
         uses: aws-actions/configure-aws-credentials@v4
