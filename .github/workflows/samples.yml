@@ -50,9 +50,7 @@ jobs:
             test: npm run test:ci
           - app: py.bolt.snaek
             deploy: |
-              # https://github.com/zimeg/slack-sandbox/issues/327
-              #
-              # slack deploy --app $SLACK_APP_ID --token $SLACK_CLI_TOKEN --force
+              slack deploy --app $SLACK_APP_ID --token $SLACK_CLI_TOKEN --force
             test: make test
     environment: ${{ matrix.app }}
     defaults:
