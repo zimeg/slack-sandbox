@@ -40,13 +40,13 @@ jobs:
                 --app $SLACK_APP_ID \
                 --token $SLACK_CLI_TOKEN \
                 --force
-            deps: npm install
+            deps: npm ci
             infra: tofu
             test: npm run test
           - app: js.bolt.tails
             deploy: |
               slack deploy --app $SLACK_APP_ID --token $SLACK_CLI_TOKEN --force
-            deps: npm install
+            deps: npm ci
             test: npm run test:ci
           - app: py.bolt.snaek
             deploy: |
