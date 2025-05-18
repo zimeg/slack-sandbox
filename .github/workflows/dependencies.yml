@@ -16,11 +16,11 @@ jobs:
     steps:
       - name: Collect update metadata
         id: metadata
-        uses: dependabot/fetch-metadata@v2.4.0
+        uses: dependabot/fetch-metadata@08eff52bf64351f401fb50d4972fa95b9f2c2d1b # v2.4.0
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
       - name: Wait for tests to succeed
-        uses: lewagon/wait-on-check-action@v1.3.4
+        uses: lewagon/wait-on-check-action@ccfb013c15c8afb7bf2b7c028fb74dc5a068cccc # v1.3.4
         with:
           check-regexp: Confirm sensible changes \(.*?\)
           ref: ${{ github.event.pull_request.head.sha }}
@@ -34,7 +34,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Send a notification of completion
         if: steps.metadata.outputs.update-type == 'version-update:semver-patch' || steps.metadata.outputs.update-type == 'version-update:semver-minor'
-        uses: slackapi/slack-github-action@v2.1.0
+        uses: slackapi/slack-github-action@b0fa283ad8fea605de13dc3f449259339835fc52 # v2.1.0
         with:
           method: chat.postMessage
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
@@ -46,7 +46,7 @@ jobs:
           SLACK_CHANNEL_ID: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
       - name: Send a notification of pending
         if: steps.metadata.outputs.update-type != 'version-update:semver-patch' && steps.metadata.outputs.update-type != 'version-update:semver-minor'
-        uses: slackapi/slack-github-action@v2.1.0
+        uses: slackapi/slack-github-action@b0fa283ad8fea605de13dc3f449259339835fc52 # v2.1.0
         with:
           method: chat.postMessage
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
@@ -55,7 +55,7 @@ jobs:
             text: "${{ steps.metadata.outputs.directory }}(chore): dependencies have a pending update"
       - name: Send a notification of failure
         if: failure()
-        uses: slackapi/slack-github-action@v2.1.0
+        uses: slackapi/slack-github-action@b0fa283ad8fea605de13dc3f449259339835fc52 # v2.1.0
         with:
           method: chat.postMessage
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
@@ -71,15 +71,16 @@ jobs:
       contents: write
     steps:
       - name: Checkout this repo
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
+          persist-credentials: true
           ref: main
       - name: Configure git credentials
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
       - name: Install a flaked Nix
-        uses: DeterminateSystems/nix-installer-action@v17
+        uses: DeterminateSystems/nix-installer-action@21a544727d0c62386e78b4befe52d19ad12692e3 # v17
       - name: Checkout an update
         run: |
           git checkout -b update
@@ -117,7 +118,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
       - name: Wait for testing to complete
         if: steps.diff.outputs.changed == 'true'
-        uses: lewagon/wait-on-check-action@v1.3.4
+        uses: lewagon/wait-on-check-action@ccfb013c15c8afb7bf2b7c028fb74dc5a068cccc # v1.3.4
         with:
           check-regexp: Confirm sensible changes \(.*?\)
           ref: update
@@ -133,7 +134,7 @@ jobs:
           git push origin --delete update
       - name: Message the happened errors
         if: failure()
-        uses: slackapi/slack-github-action@v2.1.0
+        uses: slackapi/slack-github-action@b0fa283ad8fea605de13dc3f449259339835fc52 # v2.1.0
         with:
           method: chat.postMessage
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
