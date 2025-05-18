@@ -112,16 +112,16 @@ jobs:
         if: ${{ matrix.deploy }}
         run: nix develop --command bash -c "${{ matrix.deploy }}"
         env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-          SLACK_APP_ID: ${{ secrets.SLACK_APP_ID }}
-          SLACK_CLI_TOKEN: ${{ secrets.SLACK_CLI_TOKEN }}
-          SLACK_CLIENT_ID: ${{ secrets.SLACK_CLIENT_ID }}
-          SLACK_CLIENT_SECRET: ${{ secrets.SLACK_CLIENT_SECRET }}
-          SLACK_ENVIRONMENT_TAG: ${{ vars.SLACK_ENVIRONMENT_TAG }}
-          SLACK_LOG_LEVEL: ${{ vars.SLACK_LOG_LEVEL }}
-          SLACK_SIGNING_SECRET: ${{ secrets.SLACK_SIGNING_SECRET }}
-          SLACK_STATE_SECRET: ${{ secrets.SLACK_STATE_SECRET }}
+          TF_VAR_database_url: ${{ secrets.DATABASE_URL }}
+          TF_VAR_heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          TF_VAR_slack_app_id: ${{ secrets.SLACK_APP_ID }}
+          TF_VAR_slack_cli_token: ${{ secrets.SLACK_CLI_TOKEN }}
+          TF_VAR_slack_client_id: ${{ secrets.SLACK_CLIENT_ID }}
+          TF_VAR_slack_client_secret: ${{ secrets.SLACK_CLIENT_SECRET }}
+          TF_VAR_slack_environment_tag: ${{ vars.SLACK_ENVIRONMENT_TAG }}
+          TF_VAR_slack_log_level: ${{ vars.SLACK_LOG_LEVEL }}
+          TF_VAR_slack_signing_secret: ${{ secrets.SLACK_SIGNING_SECRET }}
+          TF_VAR_slack_state_secret: ${{ secrets.SLACK_STATE_SECRET }}
       - name: Lookup Codecov
         id: codecov
         run: |
