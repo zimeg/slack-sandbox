@@ -84,14 +84,14 @@ jobs:
         uses: opentofu/setup-opentofu@v1
       - name: Setup infrastructure updates
         if: ${{ matrix.infra == 'tofu' }}
-        working-directory: infra
+        working-directory: ${{ matrix.app }}/infra
         run: |
           nix develop -c tofu init
           nix develop -c tofu fmt -check
           nix develop -c tofu validate
       - name: Plan infrastructure changes
         if: ${{ matrix.infra == 'tofu' && github.event_name == 'pull_request' }}
-        working-directory: infra
+        working-directory: ${{ matrix.app }}/infra
         run: |
           nix develop -c tofu plan
         env:
