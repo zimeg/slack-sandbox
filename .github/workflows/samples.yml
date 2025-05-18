@@ -122,6 +122,9 @@ jobs:
           SLACK_LOG_LEVEL: ${{ vars.SLACK_LOG_LEVEL }}
           SLACK_SIGNING_SECRET: ${{ secrets.SLACK_SIGNING_SECRET }}
           SLACK_STATE_SECRET: ${{ secrets.SLACK_STATE_SECRET }}
+      - name: Lookup codecov
+        run: |
+          codecov --help
       - name: Upload coverage
         uses: codecov/codecov-action@v5.4.3
         with:
