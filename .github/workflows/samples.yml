@@ -79,13 +79,17 @@ jobs:
       - name: Setup Tofu tooling
         if: ${{ matrix.infra == 'tofu' && steps.nixos.outcome != 'success' }}
         uses: opentofu/setup-opentofu@v1
-      - name: Plan infrastructure changes
+      - name: Setup infrastructure updates
         if: ${{ matrix.infra == 'tofu' }}
         run: |
           cd infra
           nix develop -c tofu init
           nix develop -c tofu fmt -check
           nix develop -c tofu validate
+      - name: Plan infrastructure changes
+        if: ${{ matrix.infra == 'tofu' && github.event_name == "pull_request" }}
+        run: |
+          cd infra
           nix develop -c tofu plan
         env:
           TF_VAR_database_url: ${{ secrets.DATABASE_URL }}
