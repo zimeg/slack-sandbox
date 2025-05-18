@@ -87,14 +87,13 @@ jobs:
           nix develop -c tofu fmt -check
           nix develop -c tofu validate
       - name: Plan infrastructure changes
-        if: ${{ matrix.infra == 'tofu' && github.event_name == "pull_request" }}
+        if: ${{ matrix.infra == 'tofu' && github.event_name == 'pull_request' }}
         run: |
           cd infra
           nix develop -c tofu plan
         env:
           TF_VAR_database_url: ${{ secrets.DATABASE_URL }}
           TF_VAR_heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          TF_VAR_slack_app_id: ${{ secrets.SLACK_APP_ID }}
           TF_VAR_slack_client_id: ${{ secrets.SLACK_CLIENT_ID }}
           TF_VAR_slack_client_secret: ${{ secrets.SLACK_CLIENT_SECRET }}
           TF_VAR_slack_environment_tag: ${{ vars.SLACK_ENVIRONMENT_TAG }}
