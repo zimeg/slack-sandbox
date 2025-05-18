@@ -58,7 +58,6 @@
           ];
           shellHook = ''
             export SLACK_CONFIG_DIR="$HOME/.config/slack"
-            export SLACK_ENVIRONMENT_TAG="development"
             mkdir -p $SLACK_CONFIG_DIR
           '';
         };
