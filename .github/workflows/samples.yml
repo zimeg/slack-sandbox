@@ -120,7 +120,7 @@ jobs:
           SLACK_LOG_LEVEL: ${{ vars.SLACK_LOG_LEVEL }}
           SLACK_SIGNING_SECRET: ${{ secrets.SLACK_SIGNING_SECRET }}
           SLACK_STATE_SECRET: ${{ secrets.SLACK_STATE_SECRET }}
-      - name: Lookup codecov
+      - name: Lookup Codecov
         id: codecov
         run: |
           echo "path=$(nix develop -c which codecov)" >> "$GITHUB_OUTPUT"
