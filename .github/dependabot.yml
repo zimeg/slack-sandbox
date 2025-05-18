@@ -35,6 +35,7 @@ updates:
     labels:
       - "dependencies"
       - "proj:js.bolt.surge"
+    versioning-strategy: increase
   - package-ecosystem: "terraform"
     directory: "js.bolt.surge/infra"
     schedule:
@@ -53,6 +54,7 @@ updates:
     labels:
       - "dependencies"
       - "proj:js.bolt.surge"
+    versioning-strategy: increase
   - package-ecosystem: "npm"
     directory: "js.bolt.tails"
     schedule:
@@ -62,6 +64,7 @@ updates:
     labels:
       - "dependencies"
       - "proj:js.bolt.tails"
+    versioning-strategy: increase
   - package-ecosystem: "pip"
     directory: "py.sdk.sdkai"
     schedule:
@@ -71,3 +74,4 @@ updates:
     labels:
       - "dependencies"
       - "proj:py.sdk.sdkai"
+    versioning-strategy: increase
