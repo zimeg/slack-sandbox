@@ -136,6 +136,7 @@ jobs:
         if: ${{ !cancelled() }}
         uses: codecov/test-results-action@v1.1.0
         with:
+          binary: ${{ steps.codecov.outputs.path }}
           directory: ${{ matrix.app }}
           flags: ${{ matrix.app }}
           token: ${{ secrets.CODECOV_TOKEN }}
