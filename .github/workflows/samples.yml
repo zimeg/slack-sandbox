@@ -96,7 +96,6 @@ jobs:
           TF_VAR_heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           TF_VAR_slack_client_id: ${{ vars.SLACK_CLIENT_ID }}
           TF_VAR_slack_client_secret: ${{ secrets.SLACK_CLIENT_SECRET }}
-          TF_VAR_slack_environment_tag: ${{ vars.SLACK_ENVIRONMENT_TAG }}
           TF_VAR_slack_log_level: ${{ vars.SLACK_LOG_LEVEL }}
           TF_VAR_slack_signing_secret: ${{ secrets.SLACK_SIGNING_SECRET }}
           TF_VAR_slack_state_secret: ${{ secrets.SLACK_STATE_SECRET }}
@@ -106,11 +105,11 @@ jobs:
         env:
           SLACK_APP_ID: ${{ vars.SLACK_APP_ID }}
           SLACK_CLI_TOKEN: ${{ secrets.SLACK_CLI_TOKEN }}
+          SLACK_ENVIRONMENT_TAG: ${{ vars.SLACK_ENVIRONMENT_TAG }}
           TF_VAR_database_url: ${{ secrets.DATABASE_URL }}
           TF_VAR_heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           TF_VAR_slack_client_id: ${{ vars.SLACK_CLIENT_ID }}
           TF_VAR_slack_client_secret: ${{ secrets.SLACK_CLIENT_SECRET }}
-          TF_VAR_slack_environment_tag: ${{ vars.SLACK_ENVIRONMENT_TAG }}
           TF_VAR_slack_log_level: ${{ vars.SLACK_LOG_LEVEL }}
           TF_VAR_slack_signing_secret: ${{ secrets.SLACK_SIGNING_SECRET }}
           TF_VAR_slack_state_secret: ${{ secrets.SLACK_STATE_SECRET }}

@@ -31,6 +31,7 @@ variable "slack_client_secret" {
 variable "slack_environment_tag" {
   description = "Meaning behind the manifest"
   type        = string
+  default     = "production"
 }
 
 variable "slack_log_level" {
