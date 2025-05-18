@@ -125,6 +125,7 @@ jobs:
       - name: Upload coverage
         uses: codecov/codecov-action@v5.4.3
         with:
+          binary: codecov
           directory: ${{ matrix.app }}
           flags: ${{ matrix.app }}
           token: ${{ secrets.CODECOV_TOKEN }}
