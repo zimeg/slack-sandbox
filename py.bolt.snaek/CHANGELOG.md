@@ -7,6 +7,8 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- ci: check for formatting fixes with an erroring steps in test run 2025-05-18
+- build: remove obsolete machine and username in self hosted runners 2025-03-23
 - build: change the model for the most popular gemma3 in this moment 2025-03-23
 - fix: include integrity hashes of snippet websocket webpage example 2025-03-15
 - build: update tooling for developing and the development filepaths 2025-03-15

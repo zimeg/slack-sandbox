@@ -16,7 +16,7 @@ def response_generate(
     logger: Logger,
     stream: bool,
 ) -> None:
-    url = f'{os.getenv("OLLAMA_CLIENT", "http://localhost:11434")}/api/chat'
+    url = f"{os.getenv('OLLAMA_CLIENT', 'http://localhost:11434')}/api/chat"
     thread = messaging.get_message_thread(
         client=client,
         event=event,

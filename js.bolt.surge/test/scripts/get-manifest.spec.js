@@ -4,11 +4,17 @@ import getManifest from "../../scripts/get-manifest.js";
 describe("scripts", () => {
   describe("get-manifest", () => {
     beforeEach(() => {
-      process.env.SLACK_ENVIRONMENT_TAG = undefined;
+      delete process.env.SLACK_ENVIRONMENT_TAG;
     });
 
     afterEach(() => {
-      process.env.SLACK_ENVIRONMENT_TAG = undefined;
+      delete process.env.SLACK_ENVIRONMENT_TAG;
+    });
+
+    it("undefined", () => {
+      assert.throws(() => {
+        getManifest();
+      });
     });
 
     it("missing", () => {

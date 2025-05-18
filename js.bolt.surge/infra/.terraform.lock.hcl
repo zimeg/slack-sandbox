@@ -5,6 +5,7 @@ provider "registry.opentofu.org/heroku/heroku" {
   version     = "5.2.9"
   constraints = "~> 5.2"
   hashes = [
+    "h1:Nd2DTAfCF+Gi8lK3UVyteskHuQNHDmw7yG8LfKtQedY=",
     "h1:wKXEVu8jl0x292fsZp5T/Ee38JRFT2eWbx/ed0q+bcM=",
     "zh:0b93b4c0b5db8da4104a75838d94f9dfe7b881bb986450b6f8f0102a49e4824f",
     "zh:1db42480b42183f33d2942165f37da68de0e414ee3ff485099716ef7e0ed6ab0",

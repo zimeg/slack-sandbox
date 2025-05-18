@@ -45,10 +45,10 @@ function readManifest(filename) {
  */
 export default function getManifest() {
   const tag = process.env.SLACK_ENVIRONMENT_TAG;
-  const manifest = readManifest(`manifest.json`);
   if (!tag) {
-    return manifest;
+    throw new Error("No environment tag found");
   }
+  const manifest = readManifest(`manifest.json`);
   const customizations = readManifest(`manifest.${tag}.json`);
   return merge(manifest, customizations);
 }
