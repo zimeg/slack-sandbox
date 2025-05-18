@@ -22,7 +22,8 @@ jobs:
       - name: Wait for tests to succeed
         uses: lewagon/wait-on-check-action@ccfb013c15c8afb7bf2b7c028fb74dc5a068cccc # v1.3.4
         with:
-          check-regexp: Confirm sensible changes \(.*?\)
+          allowed-conclusions: success
+          check-regexp: ^Confirm sensible changes
           ref: ${{ github.event.pull_request.head.sha }}
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 10
@@ -120,11 +121,11 @@ jobs:
         if: steps.diff.outputs.changed == 'true'
         uses: lewagon/wait-on-check-action@ccfb013c15c8afb7bf2b7c028fb74dc5a068cccc # v1.3.4
         with:
-          check-regexp: Confirm sensible changes \(.*?\)
+          allowed-conclusions: success
+          check-regexp: ^Confirm sensible changes
           ref: update
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 10
-          allowed-conclusions: success
       - name: Save changed version
         if: steps.diff.outputs.changed == 'true'
         run: |
