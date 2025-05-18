@@ -123,12 +123,13 @@ jobs:
           SLACK_SIGNING_SECRET: ${{ secrets.SLACK_SIGNING_SECRET }}
           SLACK_STATE_SECRET: ${{ secrets.SLACK_STATE_SECRET }}
       - name: Lookup codecov
+        id: codecov
         run: |
-          codecov --help
+          echo "path=$(nix develop -c which codecov)" >> "$GITHUB_OUTPUT"
       - name: Upload coverage
         uses: codecov/codecov-action@v5.4.3
         with:
-          binary: codecov
+          binary: ${{ steps.codecov.outputs.path }}
           directory: ${{ matrix.app }}
           flags: ${{ matrix.app }}
           token: ${{ secrets.CODECOV_TOKEN }}
