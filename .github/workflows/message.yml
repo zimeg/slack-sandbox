@@ -7,10 +7,12 @@ jobs:
   upgrade:
     name: Suggest the latest changes
     runs-on: ubuntu-latest
+    permissions:
+      contents: none
     steps:
       - name: Send a message to channel
         id: message
-        uses: slackapi/slack-github-action@v2.0.0
+        uses: slackapi/slack-github-action@v2.1.0
         with:
           method: chat.postMessage
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
@@ -18,7 +20,8 @@ jobs:
             channel: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
             text: "chore(<!channel>): merge w the latest changes on main"
       - name: Respond with affection
-        uses: slackapi/slack-github-action@v2.0.0
+        if: ${{ steps.message.outputs.ok }}
+        uses: slackapi/slack-github-action@v2.1.0
         with:
           method: reactions.add
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}

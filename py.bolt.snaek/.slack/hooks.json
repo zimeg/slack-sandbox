@@ -1,6 +1,6 @@
 {
   "hooks": {
-    "deploy": "systemctl --user restart slack:snaek.service",
+    "deploy": "systemctl restart slack:snaek.service",
     "get-hooks": "python3 -m slack_cli_hooks.hooks.get_hooks",
     "start": "jurigged -v app.py"
   }

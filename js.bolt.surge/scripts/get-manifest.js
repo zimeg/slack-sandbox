@@ -13,7 +13,8 @@ if (fs.realpathSync(process.argv[1]) === fileURLToPath(import.meta.url)) {
  */
 function merge(target, source) {
   Object.keys(source).forEach((key) => {
-    if (key in target) {
+    if (key === "__proto__" || key === "constructor") return;
+    if (target.hasOwnProperty(key)) {
       if (typeof target[key] === "object" && typeof source[key] === "object") {
         merge(target[key], source[key]);
       } else {
@@ -44,10 +45,10 @@ function readManifest(filename) {
  */
 export default function getManifest() {
   const tag = process.env.SLACK_ENVIRONMENT_TAG;
-  const manifest = readManifest(`manifest.json`);
   if (!tag) {
-    return manifest;
+    throw new Error("No environment tag found");
   }
+  const manifest = readManifest(`manifest.json`);
   const customizations = readManifest(`manifest.${tag}.json`);
   return merge(manifest, customizations);
 }

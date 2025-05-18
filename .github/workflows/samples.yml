@@ -4,66 +4,157 @@ on:
   pull_request:
   push:
     branches:
-      - "main"
+      - main
   workflow_dispatch:
 jobs:
   test:
     name: Confirm sensible changes
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
+    permissions:
+      contents: read
     strategy:
       fail-fast: false
       matrix:
         include:
           - app: deno.sdk.begut
+            deploy: |
+              slack deploy --app $SLACK_APP_ID --token $SLACK_CLI_TOKEN
             test: deno task test
           - app: deno.sdk.chanl
+            deploy: |
+              slack deploy --app $SLACK_APP_ID --token $SLACK_CLI_TOKEN
             test: deno task test
           - app: java.sdk.gibra
-            build: gradle clean shadowJar
-            test: java -jar build/libs/java.sdk.gibra-all.jar -mode api -method api.test
+            build: |
+              gradle clean --no-daemon --gradle-user-home=".gradle" shadowJar
+            deps: |
+              mkdir -p .gradle
+            test: |
+              java -jar build/libs/java.sdk.gibra-all.jar -mode api -method api.test
           - app: js.bolt.surge
-            deps: npm install
+            deploy: |
+              slack deploy --app $SLACK_APP_ID --token $SLACK_CLI_TOKEN --force
+            deps: npm ci --verbose
+            infra: tofu
             test: npm run test
           - app: js.bolt.tails
-            deps: npm install
+            deploy: |
+              slack deploy --app $SLACK_APP_ID --token $SLACK_CLI_TOKEN --force
+            deps: npm ci --verbose
             test: npm run test:ci
           - app: py.bolt.snaek
+            deploy: |
+              slack deploy --app $SLACK_APP_ID --token $SLACK_CLI_TOKEN --force
             test: make test
+    environment: ${{ matrix.app }}
     defaults:
       run:
         working-directory: ${{ matrix.app }}
     steps:
       - name: Checkout this repo
         uses: actions/checkout@v4.2.2
+      - name: Reflect existing Nix
+        id: nixos
+        continue-on-error: true
+        run: uname -a | grep NixOS
       - name: Install a flaked Nix
-        uses: DeterminateSystems/nix-installer-action@v16
-      - name: Cache saved flakes
-        uses: DeterminateSystems/magic-nix-cache-action@v9
+        if: ${{ steps.nixos.outcome != 'success' }}
+        uses: DeterminateSystems/nix-installer-action@v17
       - name: Install dependencies
         if: ${{ matrix.deps }}
-        run: nix develop -c ${{ matrix.deps }}
+        run: |
+          nix develop --command bash -c "${{ matrix.deps }}"
       - name: Build ${{ matrix.app }}
         if: ${{ matrix.build }}
-        run: nix develop -c ${{ matrix.build }}
+        run: |
+          nix develop --command bash -c "${{ matrix.build }}"
       - name: Test ${{ matrix.app }}
         if: ${{ matrix.test }}
-        run: nix develop -c ${{ matrix.test }}
+        run: |
+          nix develop --command bash -c "${{ matrix.test }}"
+      - name: Configure AWS credentials
+        if: ${{ matrix.infra == 'tofu' }}
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Setup Tofu tooling
+        if: ${{ matrix.infra == 'tofu' && steps.nixos.outcome != 'success' }}
+        uses: opentofu/setup-opentofu@v1
+      - name: Setup infrastructure updates
+        if: ${{ matrix.infra == 'tofu' }}
+        run: |
+          cd infra
+          nix develop -c tofu init
+          nix develop -c tofu fmt -check
+          nix develop -c tofu validate
+      - name: Plan infrastructure changes
+        if: ${{ matrix.infra == 'tofu' && github.event_name == 'pull_request' }}
+        run: |
+          cd infra
+          nix develop -c tofu plan
+        env:
+          TF_VAR_database_url: ${{ secrets.DATABASE_URL }}
+          TF_VAR_heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          TF_VAR_slack_client_id: ${{ vars.SLACK_CLIENT_ID }}
+          TF_VAR_slack_client_secret: ${{ secrets.SLACK_CLIENT_SECRET }}
+          TF_VAR_slack_log_level: ${{ vars.SLACK_LOG_LEVEL }}
+          TF_VAR_slack_signing_secret: ${{ secrets.SLACK_SIGNING_SECRET }}
+          TF_VAR_slack_state_secret: ${{ secrets.SLACK_STATE_SECRET }}
+      - name: Deploy ${{ matrix.app }}
+        if: ${{ matrix.deploy && github.event_name != 'pull_request' }}
+        run: nix develop --command bash -c "${{ matrix.deploy }}"
+        env:
+          SLACK_APP_ID: ${{ vars.SLACK_APP_ID }}
+          SLACK_CLI_TOKEN: ${{ secrets.SLACK_CLI_TOKEN }}
+          SLACK_ENVIRONMENT_TAG: ${{ vars.SLACK_ENVIRONMENT_TAG }}
+          TF_VAR_database_url: ${{ secrets.DATABASE_URL }}
+          TF_VAR_heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          TF_VAR_slack_client_id: ${{ vars.SLACK_CLIENT_ID }}
+          TF_VAR_slack_client_secret: ${{ secrets.SLACK_CLIENT_SECRET }}
+          TF_VAR_slack_log_level: ${{ vars.SLACK_LOG_LEVEL }}
+          TF_VAR_slack_signing_secret: ${{ secrets.SLACK_SIGNING_SECRET }}
+          TF_VAR_slack_state_secret: ${{ secrets.SLACK_STATE_SECRET }}
+      - name: Lookup Codecov
+        id: codecov
+        run: |
+          echo "path=$(nix develop -c which codecov)" >> "$GITHUB_OUTPUT"
+      - name: Upload coverage
+        uses: codecov/codecov-action@v5.4.3
+        with:
+          binary: ${{ steps.codecov.outputs.path }}
+          directory: ${{ matrix.app }}
+          flags: ${{ matrix.app }}
+          token: ${{ secrets.CODECOV_TOKEN }}
+          verbose: true
+      - name: Upload results
+        if: ${{ !cancelled() }}
+        uses: codecov/test-results-action@v1.1.0
+        with:
+          binary: ${{ steps.codecov.outputs.path }}
+          directory: ${{ matrix.app }}
+          flags: ${{ matrix.app }}
+          token: ${{ secrets.CODECOV_TOKEN }}
+          verbose: true
   synchronize:
     name: Update remote branches
     if: github.ref == 'refs/heads/main'
     needs: test
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
+    permissions:
+      contents: write
     strategy:
       fail-fast: false
       max-parallel: 1
       matrix:
-        folder:
-          - deno.sdk.begut
-          - deno.sdk.chanl
-          - java.sdk.gibra
-          - js.bolt.surge
-          - js.bolt.tails
-          - py.bolt.snaek
+        include:
+          - app: deno.sdk.begut
+          - app: deno.sdk.chanl
+          - app: java.sdk.gibra
+          - app: js.bolt.surge
+          - app: js.bolt.tails
+          - app: py.bolt.snaek
     steps:
       - name: Checkout this repo
         uses: actions/checkout@v4.2.2
@@ -80,22 +171,22 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
-      - name: Update ${{ matrix.folder }}
+      - name: Update ${{ matrix.app }}
         run: |
           cd samples
-          git checkout --orphan ${{ matrix.folder }}
-          rsync -av --delete --exclude=".git" ../sandbox/${{ matrix.folder }}/ .
+          git checkout --orphan ${{ matrix.app }}
+          rsync -av --delete --exclude=".git" ../sandbox/${{ matrix.app }}/ .
           rm -f .slack/apps.json
           rm -f .slack/apps.*.json
           cp ../sandbox/LICENSE .
           git add .
           git commit -m "chore(sync): update sample with the latest upstream changes"
-          git push -u origin ${{ matrix.folder }} --force
+          git push -u origin ${{ matrix.app }} --force
       - name: Send a notification of completion
-        uses: slackapi/slack-github-action@v2.0.0
+        uses: slackapi/slack-github-action@v2.1.0
         with:
           method: chat.postMessage
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
           payload: |
             channel: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
-            text: "${{ matrix.folder }}(chore): downstream now mirrors changes"
+            text: "${{ matrix.app }}(chore): downstream now mirrors changes"

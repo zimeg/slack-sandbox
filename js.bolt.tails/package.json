@@ -7,12 +7,8 @@
     "build": "tsc",
     "build:check": "tsc --noemit --module commonjs --project ./tsconfig.json",
     "build:clean": "rm -rf dist",
-    "predeploy": "echo \"SLACK_APP_TOKEN=$SLACK_APP_TOKEN\nSLACK_BOT_TOKEN=$SLACK_BOT_TOKEN\" > .env.production",
-    "deploy": "systemctl --user restart slack:tails.service",
-    "lint": "npx @biomejs/biome check --verbose",
-    "lint:fix": "npx @biomejs/biome check --verbose --write",
-    "install:clean": "rm -rf node_modules",
-    "install:force": "npm run install:clean && npm install",
+    "lint": "biome check --verbose",
+    "lint:fix": "biome check --verbose --write",
     "prestart": "npm run build",
     "start": "node dist/app.js",
     "test:ci": "npm run build:check && npm run lint",
@@ -35,14 +31,11 @@
     "url": "https://github.com/zimeg/slack-sandbox/issues"
   },
   "dependencies": {
-    "@biomejs/biome": "^1.9.4",
-    "@slack/bolt": "^4.1.1"
+    "@slack/bolt": "^4.3.0"
   },
   "devDependencies": {
-    "@slack/cli-hooks": "^1.1.2",
-    "@types/node": "^22.10.7",
-    "nodemon": "^3.1.9",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.7.3"
+    "@slack/cli-hooks": "^1.2.0",
+    "@types/node": "^22.15.18",
+    "nodemon": "^3.1.10"
   }
 }

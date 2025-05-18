@@ -26,6 +26,14 @@ select repos.
 
 After creating the token, add it as a repository secret: `SANDBOX_ACCESS_TOKEN`
 
-<!-- a collection of links -->
+#### Runner configurations
+
+Personal computation is applied towards running personal production apps and
+package sharing across sample changes.
+
+Additional **Read and Write** access for "Administration" is needed to create a
+new runner as [TOM][tom].
+
 [pat]: https://github.com/settings/personal-access-tokens
 [slacks]: https://github.com/zimeg/slacks
+[tom]: https://github.com/zimeg/.DOTFILES/blob/11552faaf56fb024a9d964349f689eab3d23a008/machines/tom/services/github-runners/default.nix#L20-L27

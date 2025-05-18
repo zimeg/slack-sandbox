@@ -7,6 +7,12 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- ci: separate production environments during release run 2025-05-18
+- build: guard against important manifest object override 2025-03-15
+- test: track coverage of unit tests for updating insight 2025-03-15
+- test: confirm scripts to get manifests match production 2025-03-15
+- chore: set node versions to a tested production for now 2025-03-15
+- chore: update slack tooling to latest released versions 2025-03-15
 - build: declare the installed oauth package as top level 2024-12-10
 - style: remove remaining renaming of past infrastructure 2024-08-31
 - build: init tofu infra before deploying and not install 2024-08-31

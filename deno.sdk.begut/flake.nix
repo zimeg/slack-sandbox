@@ -2,11 +2,18 @@
   description = "a kind creation for currencies";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-deno.url = "github:NixOS/nixpkgs/dfb72de3dbe62ff47e59894d50934e03f0602072"; # 1.46.3
+    nixpkgs-deno.url = "github:NixOS/nixpkgs/5ed627539ac84809c78b2dd6d26a5cebeb5ae269"; # 1.46.2
     flake-utils.url = "github:numtide/flake-utils";
   };
-  outputs = { nixpkgs, nixpkgs-deno, flake-utils, ... }:
-    flake-utils.lib.eachDefaultSystem (system:
+  outputs =
+    {
+      nixpkgs,
+      nixpkgs-deno,
+      flake-utils,
+      ...
+    }:
+    flake-utils.lib.eachDefaultSystem (
+      system:
       let
         pkgs = import nixpkgs {
           inherit system;
@@ -18,15 +25,14 @@
           name = "slackcli";
           src =
             if pkgs.stdenv.isDarwin then
-              pkgs.fetchurl
-                {
-                  url = "https://downloads.slack-edge.com/slack-cli/slack_cli_2.31.0_macOS_64-bit.tar.gz";
-                  sha256 = "15xv5fpm7pdb0jyjniyky4vlafp4g0isnzxf23m7fynw2jkj7s1a";
-                }
+              pkgs.fetchurl {
+                url = "https://downloads.slack-edge.com/slack-cli/slack_cli_3.0.1_macOS_64-bit.tar.gz";
+                sha256 = "0ywmvzixv8dfz7nhdn2sh79amwns87vg06is8xhsl0f41igcnxw5";
+              }
             else
               pkgs.fetchurl {
-                url = "https://downloads.slack-edge.com/slack-cli/slack_cli_2.31.0_linux_64-bit.tar.gz";
-                sha256 = "1bdk8c1insqhjkrn3fzc6dzlkgq6y0nvhac6rs3fsv81if8a5fgf";
+                url = "https://downloads.slack-edge.com/slack-cli/slack_cli_3.0.1_linux_64-bit.tar.gz";
+                sha256 = "1dsfpdqyyklilrzvljj51q6iafmbipvx7fjhwbsn1rcb0jxrg614";
               };
           unpackPhase = "tar -xzf $src";
           installPhase = ''
@@ -46,5 +52,6 @@
             mkdir -p $SLACK_CONFIG_DIR
           '';
         };
-      });
+      }
+    );
 }

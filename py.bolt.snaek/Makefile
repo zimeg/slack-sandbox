@@ -23,12 +23,9 @@ clean:
 	rm -rf .ruff_cache
 	rm -rf __pycache__
 
-.PHONY: format
-format:
-	ruff format
-
 .PHONY: lint
 lint:
+	ruff format
 	ruff check
 
 .PHONY: schema
@@ -38,5 +35,7 @@ schema:
 	# slack manifest validate --app $(SLACK_APP_ID) $(VERBOSE_FLAG) || (printf "\x1b[2mSuggestion: Change the \x1b[1mSLACK_APP_ID='%s'\x1b[0;2m variable!\x1b[0m\n" $(SLACK_APP_ID) && exit 1)
 
 .PHONY: test
-test: schema format lint
+test: schema
+	ruff format --diff
+	ruff check --diff
 	python3 -m mypy **/*.py

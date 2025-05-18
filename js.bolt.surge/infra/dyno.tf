@@ -2,19 +2,19 @@ resource "heroku_app" "surged" {
   name   = var.heroku_app_name
   region = "us"
   stack  = "heroku-24"
-  acm = "true"
+  acm    = "true"
 
-  buildpacks = [ "heroku/nodejs" ]
+  buildpacks = ["heroku/nodejs"]
 
   sensitive_config_vars = {
-     DATABASE_URL = var.database_url
-     SLACK_CLIENT_ID = var.slack_client_id
-     SLACK_CLIENT_SECRET = var.slack_client_secret
-     SLACK_ENVIRONMENT_TAG = var.slack_environment_tag
-     SLACK_LOG_LEVEL = var.slack_log_level
-     SLACK_SIGNING_SECRET = var.slack_signing_secret
-     SLACK_STATE_SECRET = var.slack_state_secret
-   }
+    DATABASE_URL          = var.database_url
+    SLACK_CLIENT_ID       = var.slack_client_id
+    SLACK_CLIENT_SECRET   = var.slack_client_secret
+    SLACK_ENVIRONMENT_TAG = var.slack_environment_tag
+    SLACK_LOG_LEVEL       = var.slack_log_level
+    SLACK_SIGNING_SECRET  = var.slack_signing_secret
+    SLACK_STATE_SECRET    = var.slack_state_secret
+  }
 }
 
 resource "heroku_addon" "database" {
