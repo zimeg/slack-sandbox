@@ -7,7 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
-- ci: remove environment guard from the deployment script 2025-03-23
+- ci: separate production environments during release run 2025-05-18
 - build: guard against important manifest object override 2025-03-15
 - test: track coverage of unit tests for updating insight 2025-03-15
 - test: confirm scripts to get manifests match production 2025-03-15
