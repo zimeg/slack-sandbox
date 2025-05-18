@@ -103,7 +103,7 @@ jobs:
           TF_VAR_slack_signing_secret: ${{ secrets.SLACK_SIGNING_SECRET }}
           TF_VAR_slack_state_secret: ${{ secrets.SLACK_STATE_SECRET }}
       - name: Deploy ${{ matrix.app }}
-        if: ${{ matrix.deploy }}
+        if: ${{ matrix.deploy && github.event_name != 'pull_request' }}
         run: nix develop --command bash -c "${{ matrix.deploy }}"
         env:
           SLACK_APP_ID: ${{ vars.SLACK_APP_ID }}
