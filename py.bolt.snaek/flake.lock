@@ -77,11 +77,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1743664409,
-        "narHash": "sha256-0D9Z7Lhy0R47+G6oVyIoCF0S2uHeRRXF1kRNFhxL/Jc=",
+        "lastModified": 1747885524,
+        "narHash": "sha256-wTzplIuQz79uCF5KJ3/xjipGOlZfDN+Tr95PMLYqFhA=",
         "owner": "zimeg",
         "repo": "nur-packages",
-        "rev": "445fe146f90e8440376ffaec1f0be62bd438f5fc",
+        "rev": "a7ea0f1793f538ff263a0f0342e13ca3422ea6dd",
         "type": "github"
       },
       "original": {
