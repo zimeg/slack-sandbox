@@ -31,14 +31,8 @@ jobs:
         with:
           method: files.uploadV2
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
-          payload: |
-            channel_id: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
-            initial_comment: |
-              🚀 *New build*
-              *Commit message:*
-              ${{ github.event.head_commit.message }}
-            file: ./README.md
-            filename: docs-${{ github.sha }}.md
+          payload-file-path: ./uploads.yml
+          payload-templated: true
 
       - name: RC with JSON
         if: ${{ always() }}
@@ -53,6 +47,15 @@ jobs:
               "text": "${{ github.event.head_commit.message }}"
             }
 
+      - name: RC with JSON (files.uploadV2)
+        if: ${{ always() }}
+        uses: zimeg/slack-github-action@91855720aaee2e23bf81dae3512204a371ca1609 # v2.1.1-rc.1
+        with:
+          method: files.uploadV2
+          token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
+          payload-file-path: ./uploads.json
+          payload-templated: true
+
       - name: Latest with YAML
         if: ${{ always() }}
         uses: slackapi/slack-github-action@b0fa283ad8fea605de13dc3f449259339835fc52 # v2.1.0
@@ -63,6 +66,15 @@ jobs:
           payload: |
             channel: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
             text: "${{ github.event.head_commit.message }}"
+
+      - name: Latest with YAML (files.uploadV2)
+        if: ${{ always() }}
+        uses: slackapi/slack-github-action@b0fa283ad8fea605de13dc3f449259339835fc52 # v2.1.0
+        with:
+          method: files.uploadV2
+          token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
+          payload-file-path: ./uploads.yml
+          payload-templated: true
 
       - name: Latest with JSON
         if: ${{ always() }}
@@ -77,17 +89,11 @@ jobs:
               "text": "${{ github.event.head_commit.message }}"
             }
 
-      - name: Latest with YAML (files.uploadV2)
+      - name: Latest with JSON (files.uploadV2)
         if: ${{ always() }}
         uses: slackapi/slack-github-action@b0fa283ad8fea605de13dc3f449259339835fc52 # v2.1.0
         with:
           method: files.uploadV2
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
-          payload: |
-            channel_id: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
-            initial_comment: |
-              🚀 *New build*
-              *Commit message:*
-              ${{ github.event.head_commit.message }}
-            file: ./README.md
-            filename: docs-${{ github.sha }}.md
+          payload-file-path: ./uploads.json
+          payload-templated: true

@@ -1,0 +1,6 @@
+{
+  "channel_id": "${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}",
+  "initial_comment": "🚀 *New build*\n*Commit message:*\n${{ github.event.head_commit.message }}\n",
+  "file": "./README.md",
+  "filename": "docs-${{ github.sha }}.md"
+}
