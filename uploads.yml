@@ -1,7 +1,7 @@
-channel_id: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
+channel_id: ${{ env.CHANNEL_ID }}
 initial_comment: |
   🚀 *New build*
   *Commit message:*
-  ${{ github.event.head_commit.message }}
+  ${{ github.payload.head_commit.message }}
 file: ./README.md
 filename: docs-${{ github.sha }}.md
