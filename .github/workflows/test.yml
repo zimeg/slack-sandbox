@@ -30,7 +30,7 @@ jobs:
         uses: zimeg/slack-github-action@91855720aaee2e23bf81dae3512204a371ca1609 # v2.1.1-rc.1
         with:
           method: files.uploadV2
-          token: ${{ secrets.SLACK_BOT_TOKEN }}
+          token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
           payload: |
             channel_id: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
             initial_comment: |
@@ -82,7 +82,7 @@ jobs:
         uses: slackapi/slack-github-action@b0fa283ad8fea605de13dc3f449259339835fc52 # v2.1.0
         with:
           method: files.uploadV2
-          token: ${{ secrets.SLACK_BOT_TOKEN }}
+          token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
           payload: |
             channel_id: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
             initial_comment: |
