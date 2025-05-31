@@ -18,7 +18,7 @@ jobs:
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
           payload: |
             channel: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
-            text: ${{ github.event.head_commit.message }}
+            text: "${{ github.event.head_commit.message }}"
 
       - name: RC with JSON
         if: ${{ always() }}
@@ -42,7 +42,7 @@ jobs:
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
           payload: |
             channel: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
-            text: ${{ github.event.head_commit.message }}
+            text: "${{ github.event.head_commit.message }}"
 
       - name: Latest with JSON
         if: ${{ always() }}
