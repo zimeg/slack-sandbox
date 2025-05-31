@@ -12,21 +12,17 @@ jobs:
       - name: RC with YAML
         if: ${{ always() }}
         uses: zimeg/slack-github-action@91855720aaee2e23bf81dae3512204a371ca1609 # v2.1.1-rc.1
-        env:
-          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
         with:
           errors: true
           method: chat.postMessage
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
           payload: |
             channel: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
-            text: ${{ env.COMMIT_MESSAGE }}
+            text: ${{ github.event.head_commit.message }}
 
       - name: RC with JSON
         if: ${{ always() }}
         uses: zimeg/slack-github-action@91855720aaee2e23bf81dae3512204a371ca1609 # v2.1.1-rc.1
-        env:
-          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
         with:
           errors: true
           method: chat.postMessage
@@ -34,27 +30,23 @@ jobs:
           payload: |
             {
               "channel": "${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}",
-              "text": "${{ env.COMMIT_MESSAGE }}"
+              "text": "${{ github.event.head_commit.message }}"
             }
 
       - name: Latest with YAML
         if: ${{ always() }}
         uses: slackapi/slack-github-action@b0fa283ad8fea605de13dc3f449259339835fc52 # v2.1.0
-        env:
-          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
         with:
           errors: true
           method: chat.postMessage
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
           payload: |
             channel: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
-            text: ${{ env.COMMIT_MESSAGE }}
+            text: ${{ github.event.head_commit.message }}
 
       - name: Latest with JSON
         if: ${{ always() }}
         uses: slackapi/slack-github-action@b0fa283ad8fea605de13dc3f449259339835fc52 # v2.1.0
-        env:
-          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
         with:
           errors: true
           method: chat.postMessage
@@ -62,5 +54,5 @@ jobs:
           payload: |
             {
               "channel": "${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}",
-              "text": "${{ env.COMMIT_MESSAGE }}"
+              "text": "${{ github.event.head_commit.message }}"
             }
