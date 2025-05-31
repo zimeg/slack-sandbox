@@ -31,6 +31,7 @@ jobs:
         env:
           CHANNEL_ID: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
         with:
+          errors: true
           method: files.uploadV2
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
           payload-file-path: ./uploads.yml
@@ -55,6 +56,7 @@ jobs:
         env:
           CHANNEL_ID: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
         with:
+          errors: true
           method: files.uploadV2
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
           payload-file-path: ./uploads.json
@@ -77,6 +79,7 @@ jobs:
         env:
           CHANNEL_ID: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
         with:
+          errors: true
           method: files.uploadV2
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
           payload-file-path: ./uploads.yml
@@ -101,6 +104,7 @@ jobs:
         env:
           CHANNEL_ID: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
         with:
+          errors: true
           method: files.uploadV2
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
           payload-file-path: ./uploads.json
