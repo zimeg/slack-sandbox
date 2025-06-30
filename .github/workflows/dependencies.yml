@@ -20,7 +20,7 @@ jobs:
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
       - name: Wait for tests to succeed
-        uses: lewagon/wait-on-check-action@ccfb013c15c8afb7bf2b7c028fb74dc5a068cccc # v1.3.4
+        uses: lewagon/wait-on-check-action@0dceb95e7c4cad8cc7422aee3885998f5cab9c79 # v1.4.0
         with:
           allowed-conclusions: success
           check-regexp: ^Confirm sensible changes
@@ -119,7 +119,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
       - name: Wait for testing to complete
         if: steps.diff.outputs.changed == 'true'
-        uses: lewagon/wait-on-check-action@ccfb013c15c8afb7bf2b7c028fb74dc5a068cccc # v1.3.4
+        uses: lewagon/wait-on-check-action@0dceb95e7c4cad8cc7422aee3885998f5cab9c79 # v1.4.0
         with:
           allowed-conclusions: success
           check-regexp: ^Confirm sensible changes
