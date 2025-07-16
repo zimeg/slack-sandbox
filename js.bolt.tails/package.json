@@ -34,7 +34,7 @@
     "@slack/bolt": "^4.4.0"
   },
   "devDependencies": {
-    "@slack/cli-hooks": "^1.2.0",
+    "@slack/cli-hooks": "^1.2.1",
     "@types/node": "^22.15.30",
     "nodemon": "^3.1.10"
   }
