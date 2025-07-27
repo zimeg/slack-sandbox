@@ -1,22 +1,24 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.1.2/schema.json",
   "files": {
+    "includes": ["./scripts/**", "./src/**"],
     "ignoreUnknown": true
   },
   "formatter": {
-    "ignore": ["*.json"],
     "indentStyle": "space"
   },
   "linter": {
     "enabled": true,
-    "ignore": ["*.json"],
     "rules": {
       "recommended": false
     }
   },
-  "organizeImports": {
-    "enabled": true,
-    "ignore": ["*.json"]
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
   },
   "vcs": {
     "enabled": true,

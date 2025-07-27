@@ -15,7 +15,6 @@
     "pretest": "npm run lint && npm run check",
     "start": "node src/app.js",
     "test": "c8 --config ./test/.c8rc.json mocha --config ./test/.mocharc.json test/**/*.spec.js",
-    "update": "npm pkg set --workspace src engines.node=$(npm version --json | jq -r .node)",
     "watch": "npx nodemon --exec npm run start"
   },
   "author": "@zimeg",

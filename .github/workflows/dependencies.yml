@@ -90,7 +90,7 @@ jobs:
           cd deno.sdk.begut && nix flake update && cd ..
           cd deno.sdk.chanl && nix flake update && cd ..
           cd java.sdk.gibra && nix flake update && cd ..
-          cd js.bolt.surge && nix flake update && nix develop --command npm run update && cd ..
+          cd js.bolt.surge && nix flake update && nix develop --command ./scripts/install-update.sh && cd ..
           cd js.bolt.tails && nix flake update && cd ..
           cd py.bolt.snaek && nix flake update && cd ..
       - name: Check for changes
