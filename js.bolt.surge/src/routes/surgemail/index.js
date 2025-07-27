@@ -1,5 +1,5 @@
-import path from "path";
 import ejs from "ejs";
+import path from "path";
 
 /**
  * @typedef {import("http").IncomingMessage} IncomingMessage

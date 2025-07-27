@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- build: update to active node versions with packages likewise 2025-07-26
 - build: make machine and user obsolete for self hosted runner 2025-05-18
 - build: require production environment variables set in files 2025-03-22
 - build: update the slack tooling to the latest bolt releasing 2025-03-22

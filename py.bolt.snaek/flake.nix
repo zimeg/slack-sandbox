@@ -18,7 +18,7 @@
         pkgs = import nixpkgs {
           inherit system;
         };
-        pythonEnv = pkgs.python312.withPackages (
+        pythonEnv = pkgs.python313.withPackages (
           ps: with ps; [
             mypy # https://github.com/python/mypy
             packaging # https://github.com/pypa/packaging
@@ -29,12 +29,12 @@
             # https://github.com/slackapi/python-slack-hooks
             (buildPythonPackage {
               pname = "slack_cli_hooks";
-              version = "0.0.3";
+              version = "0.1.0";
               src = pkgs.fetchFromGitHub {
                 owner = "slackapi";
                 repo = "python-slack-hooks";
-                rev = "0.0.3";
-                hash = "sha256-3x4HcPPxXKW2yMVYgtg6BloJShMp75eXI+QINek+riQ=";
+                rev = "0.1.0";
+                hash = "sha256-yaw45RJSo7AwBBYT3RHTeL5a8/kXhrRxKxorPuEQEBE=";
               };
               format = "pyproject";
               buildInputs = [
@@ -44,19 +44,19 @@
             })
           ]
         );
-        # https://api.slack.com/automation/cli
+        # https://github.com/slackapi/slack-cli
         slackcli = pkgs.stdenv.mkDerivation {
           name = "slackcli";
           src =
             if pkgs.stdenv.isDarwin then
               pkgs.fetchurl {
-                url = "https://downloads.slack-edge.com/slack-cli/slack_cli_3.0.0_macOS_64-bit.tar.gz";
-                sha256 = "0xbld1a01354zvh5j8l8cgh4b8lgwrk5ngq04i1vdrfjp981a697";
+                url = "https://downloads.slack-edge.com/slack-cli/slack_cli_3.5.1_macOS_64-bit.tar.gz";
+                sha256 = "0abavvsjp1mi6s9wvbishswwr5jh7s48b71nnafvfhhhv261x56i";
               }
             else
               pkgs.fetchurl {
-                url = "https://downloads.slack-edge.com/slack-cli/slack_cli_3.0.0_linux_64-bit.tar.gz";
-                sha256 = "1lrapyy3lw9gg919nfim6vnnwswmc7kyfr8ywmy3lq5py8gdmgb3";
+                url = "https://downloads.slack-edge.com/slack-cli/slack_cli_3.5.1_linux_64-bit.tar.gz";
+                sha256 = "15h5zsn1h6lz5q0qsy9qhjphrf516npqhpixy9w7f1ill0gk1xn2";
               };
           unpackPhase = "tar -xzf $src";
           installPhase = ''
