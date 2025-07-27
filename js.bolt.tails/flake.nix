@@ -2,7 +2,7 @@
   description = "a twisted task for taking the tube";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-biome.url = "github:NixOS/nixpkgs/0d534853a55b5d02a4ababa1d71921ce8f0aee4c"; # 1.9.4
+    nixpkgs-biome.url = "github:NixOS/nixpkgs/c2d7b8bfc494f234d191322a7c387a9ff67e1786"; # 2.1.2
     flake-utils.url = "github:numtide/flake-utils";
   };
   outputs =
@@ -26,13 +26,13 @@
           src =
             if pkgs.stdenv.isDarwin then
               pkgs.fetchurl {
-                url = "https://downloads.slack-edge.com/slack-cli/slack_cli_3.0.1_macOS_64-bit.tar.gz";
-                sha256 = "0ywmvzixv8dfz7nhdn2sh79amwns87vg06is8xhsl0f41igcnxw5";
+                url = "https://downloads.slack-edge.com/slack-cli/slack_cli_3.5.1_macOS_64-bit.tar.gz";
+                sha256 = "0abavvsjp1mi6s9wvbishswwr5jh7s48b71nnafvfhhhv261x56i";
               }
             else
               pkgs.fetchurl {
-                url = "https://downloads.slack-edge.com/slack-cli/slack_cli_3.0.1_linux_64-bit.tar.gz";
-                sha256 = "1dsfpdqyyklilrzvljj51q6iafmbipvx7fjhwbsn1rcb0jxrg614";
+                url = "https://downloads.slack-edge.com/slack-cli/slack_cli_3.5.1_linux_64-bit.tar.gz";
+                sha256 = "15h5zsn1h6lz5q0qsy9qhjphrf516npqhpixy9w7f1ill0gk1xn2";
               };
           unpackPhase = "tar -xzf $src";
           installPhase = ''
@@ -45,7 +45,7 @@
         devShell = pkgs.mkShell {
           buildInputs = [
             biomepkgs.biome # https://github.com/biomejs/biome
-            pkgs.nodejs_22 # https://github.com/nodejs/node
+            pkgs.nodejs_24 # https://github.com/nodejs/node
             pkgs.typescript # https://github.com/microsoft/TypeScript
             pkgs.yt-dlp # https://github.com/yt-dlp/yt-dlp
             slackcli # https://tools.slack.dev/slack-cli

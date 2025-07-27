@@ -36,17 +36,17 @@
     },
     "nixpkgs-biome": {
       "locked": {
-        "lastModified": 1741715534,
-        "narHash": "sha256-IDtwLhWMKvydW9GrB6ETwhij+vma0hYHln8pR/rTd+U=",
+        "lastModified": 1752762210,
+        "narHash": "sha256-Zgz5m+RXIcRfFJlGir9B7cm9Os/FlujXDW8DAUjkr6w=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "0d534853a55b5d02a4ababa1d71921ce8f0aee4c",
+        "rev": "c2d7b8bfc494f234d191322a7c387a9ff67e1786",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "0d534853a55b5d02a4ababa1d71921ce8f0aee4c",
+        "rev": "c2d7b8bfc494f234d191322a7c387a9ff67e1786",
         "type": "github"
       }
     },
