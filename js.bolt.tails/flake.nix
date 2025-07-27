@@ -21,6 +21,7 @@
         biomepkgs = import nixpkgs-biome {
           inherit system;
         };
+        # https://github.com/slackapi/slack-cli
         slackcli = pkgs.stdenv.mkDerivation {
           name = "slackcli";
           src =
@@ -48,7 +49,7 @@
             pkgs.nodejs_24 # https://github.com/nodejs/node
             pkgs.typescript # https://github.com/microsoft/TypeScript
             pkgs.yt-dlp # https://github.com/yt-dlp/yt-dlp
-            slackcli # https://tools.slack.dev/slack-cli
+            slackcli
           ];
           shellHook = ''
             export SLACK_CONFIG_DIR="$HOME/.config/slack"

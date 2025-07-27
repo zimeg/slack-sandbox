@@ -2,7 +2,7 @@
   "imports": {
     "assert/": "https://deno.land/std@0.224.0/assert/",
     "deno-mock-fetch/": "https://deno.land/x/deno_mock_fetch@1.0.1/",
-    "deno-slack-sdk/": "https://deno.land/x/deno_slack_sdk@2.15.0/",
+    "deno-slack-sdk/": "https://deno.land/x/deno_slack_sdk@2.15.1/",
     "deno-slack-api/": "https://deno.land/x/deno_slack_api@2.8.0/"
   }
 }

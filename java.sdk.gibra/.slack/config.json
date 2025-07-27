@@ -1,3 +1,7 @@
 {
-  "project_id": "db0e9b2a-c947-46a1-8889-83a74b4661a4"
+  "project_id": "db0e9b2a-c947-46a1-8889-83a74b4661a4",
+  "manifest": {
+    "source": "remote"
+  }
 }
+

@@ -2,7 +2,6 @@
   "apps": {
     "T02A074M3U3": {
       "app_id": "A07CYQGDF08",
-      "IsDev": false,
       "team_domain": "slackbox-ez",
       "team_id": "T02A074M3U3"
     }

@@ -29,6 +29,6 @@
     "lock": false,
     "tasks": {
         "test": "deno fmt --check && deno lint && deno test --allow-read",
-        "update": "deno run --allow-read --allow-net --allow-write https://deno.land/x/udd@0.8.2/main.ts import_map.json"
+        "update": "deno run --allow-read --allow-net --allow-write https://deno.land/x/udd@0.8.2/main.ts import_map.json .slack/hooks.json"
     }
 }

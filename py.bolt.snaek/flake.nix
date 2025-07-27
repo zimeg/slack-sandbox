@@ -44,7 +44,7 @@
             })
           ]
         );
-        # https://tools.slack.dev/slack-cli
+        # https://github.com/slackapi/slack-cli
         slackcli = pkgs.stdenv.mkDerivation {
           name = "slackcli";
           src =
