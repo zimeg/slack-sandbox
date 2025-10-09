@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- chore: remove deprecated parameters from the modelfile prompt file 2025-10-04
 - build: update dependencies and the toolset to support python 3.13 2025-07-26
 - ci: check for formatting fixes with an erroring steps in test run 2025-05-18
 - build: remove obsolete machine and username in self hosted runners 2025-03-23

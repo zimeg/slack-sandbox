@@ -1,8 +1,5 @@
 FROM gemma3
 
-PARAMETER mirostat 2
-PARAMETER mirostat_eta 0.2
-PARAMETER mirostat_tau 2.8
 PARAMETER num_ctx 4096
 PARAMETER repeat_last_n -1
 PARAMETER repeat_penalty 1.4

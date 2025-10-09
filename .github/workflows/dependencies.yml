@@ -20,7 +20,7 @@ jobs:
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
       - name: Wait for tests to succeed
-        uses: lewagon/wait-on-check-action@0dceb95e7c4cad8cc7422aee3885998f5cab9c79 # v1.4.0
+        uses: lewagon/wait-on-check-action@3603e826ee561ea102b58accb5ea55a1a7482343 # v1.4.1
         with:
           allowed-conclusions: success
           check-regexp: ^Confirm sensible changes
@@ -72,7 +72,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout this repo
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           persist-credentials: true
           ref: main
@@ -81,7 +81,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
       - name: Install a flaked Nix
-        uses: DeterminateSystems/nix-installer-action@90bb610b90bf290cad97484ba341453bd1cbefea # v19
+        uses: DeterminateSystems/nix-installer-action@786fff0690178f1234e4e1fe9b536e94f5433196 # v20
       - name: Checkout an update
         run: |
           git checkout -b update
@@ -120,7 +120,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
       - name: Wait for testing to complete
         if: steps.diff.outputs.changed == 'true'
-        uses: lewagon/wait-on-check-action@0dceb95e7c4cad8cc7422aee3885998f5cab9c79 # v1.4.0
+        uses: lewagon/wait-on-check-action@3603e826ee561ea102b58accb5ea55a1a7482343 # v1.4.1
         with:
           allowed-conclusions: success
           check-regexp: ^Confirm sensible changes
