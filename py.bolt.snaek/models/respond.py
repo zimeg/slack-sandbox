@@ -20,7 +20,11 @@ def response_generate(
     if authorization is None:
         return
     channel_id = event.get("channel")
+    if channel_id is None:
+        return
     message = event.get("text")
+    if message is None:
+        return
     team_id = authorization.team_id
     thread_ts = messaging.get_event_thread_ts(event)
     user_id = authorization.user_id
