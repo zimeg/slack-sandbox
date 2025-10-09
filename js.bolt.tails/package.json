@@ -31,11 +31,11 @@
     "url": "https://github.com/zimeg/slack-sandbox/issues"
   },
   "dependencies": {
-    "@slack/bolt": "^4.4.0"
+    "@slack/bolt": "^4.5.0"
   },
   "devDependencies": {
     "@slack/cli-hooks": "^1.2.1",
-    "@types/node": "^24.6.2",
+    "@types/node": "^24.7.0",
     "nodemon": "^3.1.10"
   }
 }
