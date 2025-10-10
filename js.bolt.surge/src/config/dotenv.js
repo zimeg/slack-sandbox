@@ -1,4 +1,4 @@
-import bolt from "@slack/bolt";
+import { LogLevel } from "@slack/bolt";
 import {
   EnvironmentVariableInvalidError,
   EnvironmentVariableMissingError,
@@ -37,7 +37,7 @@ export default class Dotenv {
    * @prop {string} clientSecret
    * @prop {string | undefined} databaseUrl
    * @prop {string | undefined} fileInstallationStore
-   * @prop {bolt.LogLevel | undefined} logLevel
+   * @prop {LogLevel | undefined} logLevel
    * @prop {number | undefined} port
    * @prop {string} signingSecret
    * @prop {string} stateSecret
@@ -116,7 +116,7 @@ export default class Dotenv {
   /**
    * Collect the log level from the environment variable.
    * @param {string} env SLACK_LOG_LEVEL
-   * @returns {bolt.LogLevel=} amount of noise from the application.
+   * @returns {LogLevel=} amount of noise from the application.
    * @throws {EnvironmentVariableMissingError}
    */
   getLogLevel(env) {
@@ -124,18 +124,18 @@ export default class Dotenv {
       return;
     }
     /**
-     * @type {bolt.LogLevel[]}
+     * @type {LogLevel[]}
      */
     const options = [
-      bolt.LogLevel.DEBUG,
-      bolt.LogLevel.INFO,
-      bolt.LogLevel.WARN,
-      bolt.LogLevel.ERROR,
+      LogLevel.DEBUG,
+      LogLevel.INFO,
+      LogLevel.WARN,
+      LogLevel.ERROR,
     ];
     if (!options.filter((level) => level === process.env[env])) {
       throw new EnvironmentVariableInvalidError(env);
     } else {
-      return /** @type bolt.LogLevel */ (process.env[env]);
+      return /** @type LogLevel */ (process.env[env]);
     }
   }
   /**
