@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- fix: import typehints separate from the bolt app itself 2025-10-10
 - build: update node to the latest version to match flake 2025-07-26
 - ci: separate production environments during release run 2025-05-18
 - build: guard against important manifest object override 2025-03-15

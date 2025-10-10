@@ -1,4 +1,4 @@
-import bolt from "@slack/bolt";
+import { LogLevel } from "@slack/bolt";
 import Database from "../database/index.js";
 import OAuth from "../oauth/index.js";
 import Routes from "../routes/index.js";
@@ -48,7 +48,7 @@ export default class Options {
   /**
    * Collect the log level for corresponding environment.
    * @param {Dotenv} env
-   * @returns {bolt.LogLevel}
+   * @returns {LogLevel}
    */
   getLogLevel(env) {
     if (env.vars.logLevel) {
@@ -56,11 +56,11 @@ export default class Options {
     }
     switch (env.vars.tag) {
       case tags.PRODUCTION:
-        return bolt.LogLevel.INFO;
+        return LogLevel.INFO;
       case tags.DEVELOPMENT:
-        return bolt.LogLevel.DEBUG;
+        return LogLevel.DEBUG;
       default:
-        return bolt.LogLevel.DEBUG;
+        return LogLevel.DEBUG;
     }
   }
 }

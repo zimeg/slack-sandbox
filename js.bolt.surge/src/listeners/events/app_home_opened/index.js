@@ -1,8 +1,6 @@
-import bolt from "@slack/bolt";
-
 /**
  * Respond to visitors of app home with a published view.
- * @param {bolt.AllMiddlewareArgs & bolt.SlackEventMiddlewareArgs<'app_home_opened'>}
+ * @param {import("@slack/bolt").AllMiddlewareArgs & import("@slack/bolt").SlackEventMiddlewareArgs<'app_home_opened'>}
  *   arguments - middleware arguments.
  */
 export default async function appHomeOpenedCallback({ client, event, logger }) {
