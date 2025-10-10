@@ -1,6 +1,6 @@
 from logging import Logger
 
-from slack_bolt import App, Assistant, Say
+from slack_bolt import App, Assistant, BoltContext, Say
 from slack_sdk import WebClient
 
 from models.respond import response_generate
@@ -19,10 +19,11 @@ def start_assistant_thread(
 @assistant.user_message
 def user_message_callback(
     client: WebClient,
+    context: BoltContext,
     event: ChatEvent,
     logger: Logger,
 ) -> None:
-    response_generate(client, event, logger, stream=False)
+    response_generate(client, context, event, logger)
 
 
 def register(

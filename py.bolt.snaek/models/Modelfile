@@ -1,6 +1,7 @@
 FROM gemma3
 
 PARAMETER num_ctx 4096
+PARAMETER num_predict 2048
 PARAMETER repeat_last_n -1
 PARAMETER repeat_penalty 1.4
 PARAMETER temperature 0.6
