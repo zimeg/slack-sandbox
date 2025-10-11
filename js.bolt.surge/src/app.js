@@ -1,4 +1,4 @@
-import bolt from "@slack/bolt";
+import { App } from "@slack/bolt";
 import logger from "@slack/logger";
 import Dotenv from "./config/dotenv.js";
 import Options from "./config/options.js";
@@ -8,7 +8,7 @@ import events from "./listeners/events/index.js";
 const env = new Dotenv();
 const db = new Database(env);
 const options = new Options(env, db);
-const app = new bolt.App(options.config);
+const app = new App(options.config);
 
 events(app);
 

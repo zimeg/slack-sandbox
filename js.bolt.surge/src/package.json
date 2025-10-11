@@ -9,9 +9,9 @@
     "node": "22.17.0"
   },
   "dependencies": {
-    "@slack/bolt": "^4.4.0",
+    "@slack/bolt": "^4.5.0",
     "@slack/logger": "^4.0.0",
-    "@slack/oauth": "^3.0.3",
+    "@slack/oauth": "^3.0.4",
     "ejs": "^3.1.10",
     "pg": "^8.16.3"
   },
