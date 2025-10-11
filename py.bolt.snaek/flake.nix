@@ -1,7 +1,7 @@
 {
   description = "a strange and slithery Slack app";
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/26bf57a02d5d108631983a154b909a67cee65718";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     zimeg.url = "github:zimeg/nur-packages";
   };
