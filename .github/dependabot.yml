@@ -26,6 +26,10 @@ updates:
     labels:
       - "dependencies"
       - "proj:java.sdk.gibra"
+    groups:
+      slack:
+        patterns:
+          - "com.slack.api*"
   - package-ecosystem: "npm"
     directory: "js.bolt.surge"
     schedule:
