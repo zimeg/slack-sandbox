@@ -6,6 +6,6 @@
   },
   "type": "module",
   "engines": {
-    "node": "22.20.0"
+    "node": "22.21.1"
   }
 }
