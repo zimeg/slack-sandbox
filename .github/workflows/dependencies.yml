@@ -74,6 +74,7 @@ jobs:
       - name: Checkout this repo
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
+          fetch-depth: 0
           persist-credentials: true
           ref: main
       - name: Configure git credentials
@@ -82,9 +83,6 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
       - name: Install a flaked Nix
         uses: DeterminateSystems/nix-installer-action@c5a866b6ab867e88becbed4467b93592bce69f8a # v21
-      - name: Checkout an update
-        run: |
-          git checkout -b update
       - name: Update to the latest
         run: |
           cd deno.sdk.begut && nix flake update && cd ..
@@ -105,8 +103,12 @@ jobs:
       - name: Save the flake locks
         if: steps.diff.outputs.changed == 'true'
         run: |
+          git rev-parse --verify --quiet origin/update >/dev/null &&
+            [ "$(git rev-list --count origin/main..origin/update 2>/dev/null)" -ne 1 ] &&
+            exit 1
+          git switch --force-create update origin/main
           git commit --all --message "chore(deps): automatic version bump to the most recent packages"
-          git push -u origin update
+          git push -f origin update
       - name: Start the tests
         if: steps.diff.outputs.changed == 'true'
         run: |
