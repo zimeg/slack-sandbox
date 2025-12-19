@@ -8,6 +8,8 @@ updates:
       interval: cron
     commit-message:
       prefix: "devcontainer(chore)"
+    cooldown:
+      default-days: 7
     labels:
       - "dependencies"
   - package-ecosystem: "github-actions"
@@ -17,6 +19,10 @@ updates:
       interval: cron
     commit-message:
       prefix: "actions(chore)"
+    cooldown:
+      default-days: 7
+      exclude:
+        - "slackapi/slack-github-action"
     labels:
       - "dependencies"
       - "proj:actions"
@@ -27,6 +33,10 @@ updates:
       interval: cron
     commit-message:
       prefix: "java.sdk.gibra(chore)"
+    cooldown:
+      default-days: 7
+      exclude:
+        - "com.slack.api*"
     labels:
       - "dependencies"
       - "proj:java.sdk.gibra"
@@ -41,6 +51,10 @@ updates:
       interval: cron
     commit-message:
       prefix: "js.bolt.surge(chore)"
+    cooldown:
+      default-days: 7
+      exclude:
+        - "@slack/*"
     labels:
       - "dependencies"
       - "proj:js.bolt.surge"
@@ -52,6 +66,8 @@ updates:
       interval: cron
     commit-message:
       prefix: "js.bolt.surge(chore)"
+    cooldown:
+      default-days: 7
     labels:
       - "dependencies"
       - "proj:js.bolt.surge"
@@ -62,6 +78,10 @@ updates:
       interval: cron
     commit-message:
       prefix: "js.bolt.surge(chore)"
+    cooldown:
+      default-days: 7
+      exclude:
+        - "@slack/*"
     labels:
       - "dependencies"
       - "proj:js.bolt.surge"
@@ -76,6 +96,10 @@ updates:
       interval: cron
     commit-message:
       prefix: "js.bolt.tails(chore)"
+    cooldown:
+      default-days: 7
+      exclude:
+        - "@slack/*"
     labels:
       - "dependencies"
       - "proj:js.bolt.tails"
@@ -87,6 +111,8 @@ updates:
       interval: cron
     commit-message:
       prefix: "py.sdk.sdkai(chore)"
+    cooldown:
+      default-days: 7
     labels:
       - "dependencies"
       - "proj:py.sdk.sdkai"
