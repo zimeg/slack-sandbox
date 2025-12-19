@@ -61,6 +61,9 @@ updates:
     versioning-strategy: increase
   - package-ecosystem: "npm"
     directory: "js.bolt.tails"
+    ignore:
+      - dependency-name: "@types/node"
+        versions: ["25.x"]
     schedule:
       interval: "daily"
     commit-message:
