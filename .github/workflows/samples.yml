@@ -129,15 +129,17 @@ jobs:
           directory: ${{ matrix.app }}
           flags: ${{ matrix.app }}
           token: ${{ secrets.CODECOV_TOKEN }}
+          report_type: coverage
           verbose: true
       - name: Upload results
         if: ${{ !cancelled() }}
-        uses: codecov/test-results-action@0fa95f0e1eeaafde2c782583b36b28ad0d8c77d3 # v1.2.1
+        uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de # v5.5.2
         with:
           binary: ${{ steps.codecov.outputs.path }}
           directory: ${{ matrix.app }}
           flags: ${{ matrix.app }}
           token: ${{ secrets.CODECOV_TOKEN }}
+          report_type: test_results
           verbose: true
   synchronize:
     name: Update remote branches
