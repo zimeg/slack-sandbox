@@ -118,29 +118,6 @@ jobs:
           TF_VAR_slack_log_level: ${{ vars.SLACK_LOG_LEVEL }}
           TF_VAR_slack_signing_secret: ${{ secrets.SLACK_SIGNING_SECRET }}
           TF_VAR_slack_state_secret: ${{ secrets.SLACK_STATE_SECRET }}
-      - name: Lookup Codecov
-        id: codecov
-        run: |
-          echo "path=$(nix develop -c which codecov)" >> "$GITHUB_OUTPUT"
-      - name: Upload coverage
-        uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de # v5.5.2
-        with:
-          binary: ${{ steps.codecov.outputs.path }}
-          directory: ${{ matrix.app }}
-          flags: ${{ matrix.app }}
-          token: ${{ secrets.CODECOV_TOKEN }}
-          report_type: coverage
-          verbose: true
-      - name: Upload results
-        if: ${{ !cancelled() }}
-        uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de # v5.5.2
-        with:
-          binary: ${{ steps.codecov.outputs.path }}
-          directory: ${{ matrix.app }}
-          flags: ${{ matrix.app }}
-          token: ${{ secrets.CODECOV_TOKEN }}
-          report_type: test_results
-          verbose: true
   synchronize:
     name: Update remote branches
     if: github.ref == 'refs/heads/main'
