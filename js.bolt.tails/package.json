@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@slack/cli-hooks": "^1.2.1",
-    "@types/node": "^24.10.6",
+    "@types/node": "^24.10.7",
     "nodemon": "^3.1.11"
   }
 }
