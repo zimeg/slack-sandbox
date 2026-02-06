@@ -10,6 +10,7 @@
 - Always add relevant labels (use `gh label list` to see available)
 - Use a single emoji in the PR body (e.g., `:hamsa:`, `:space_invader:`)
 - Use lowercase for PR titles
+- When merging with `gh pr merge`, use `--auto` to wait for CI - never `--admin`
 
 ## Architecture
 
