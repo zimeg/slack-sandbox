@@ -30,16 +30,9 @@
   "bugs": {
     "url": "https://github.com/zimeg/slack-sandbox/issues"
   },
-  "engines": {
-    "node": ">=22.0.0"
-  },
-  "dependencies": {
-    "@slack/bolt": "^4.6.0",
-    "@slack/logger": "^4.0.0",
-    "@slack/oauth": "^3.0.4",
-    "ejs": "^3.1.10",
-    "pg": "^8.16.3"
-  },
+  "workspaces": [
+    "src"
+  ],
   "devDependencies": {
     "@slack/cli-hooks": "1.3.0",
     "@types/ejs": "^3.1.5",

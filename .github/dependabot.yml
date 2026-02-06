@@ -45,7 +45,9 @@ updates:
         patterns:
           - "com.slack.api*"
   - package-ecosystem: "npm"
-    directory: "js.bolt.surge"
+    directories:
+      - "js.bolt.surge"
+      - "js.bolt.surge/src"
     schedule:
       cronjob: 4 2 * * *
       interval: cron
