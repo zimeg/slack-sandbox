@@ -66,6 +66,14 @@
         };
       in
       {
+        apps.default = {
+          type = "app";
+          program = "${pkgs.writeShellScript "snaek" ''
+            cd ${./.}
+            ${pkgs.ollama}/bin/ollama create snaek --file models/Modelfile
+            ${pythonEnv}/bin/python3 app.py
+          ''}";
+        };
         devShell = pkgs.mkShell {
           buildInputs = [
             pkgs.curl # https://github.com/curl/curl
