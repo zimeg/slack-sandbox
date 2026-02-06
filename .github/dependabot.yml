@@ -72,21 +72,6 @@ updates:
       - "dependencies"
       - "proj:js.bolt.surge"
   - package-ecosystem: "npm"
-    directory: "js.bolt.surge/src"
-    schedule:
-      cronjob: 4 2 * * *
-      interval: cron
-    commit-message:
-      prefix: "js.bolt.surge(chore)"
-    cooldown:
-      default-days: 7
-      exclude:
-        - "@slack/*"
-    labels:
-      - "dependencies"
-      - "proj:js.bolt.surge"
-    versioning-strategy: increase
-  - package-ecosystem: "npm"
     directory: "js.bolt.tails"
     ignore:
       - dependency-name: "@types/node"
