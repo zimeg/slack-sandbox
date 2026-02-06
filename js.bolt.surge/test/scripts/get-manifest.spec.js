@@ -28,6 +28,11 @@ describe("scripts", () => {
       process.env.SLACK_ENVIRONMENT_TAG = "production";
       const manifest = getManifest();
       const expected = {
+        $schema:
+          "https://raw.githubusercontent.com/slackapi/manifest-schema/main/manifest.schema.json",
+        _metadata: {
+          major_version: 1,
+        },
         display_information: {
           name: "surge",
           description: "the simple sorter of streaming mail",

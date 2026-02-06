@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- build: coil the schema and metadata into the manifest for slithers 2026-02-05
 - feat: stream chat responses with loading states prior as a serpent 2025-10-08
 - chore: remove deprecated parameters from the modelfile prompt file 2025-10-04
 - build: update dependencies and the toolset to support python 3.13 2025-07-26

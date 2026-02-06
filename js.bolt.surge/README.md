@@ -22,8 +22,8 @@ $ npm run logs                                     # Inspect activities
 Different apps use credentials that change and app manifests might not be the
 same.
 
-Learn about different environments from the `.env.example` file and `manifest`
-path.
+Learn about different environments from the `.env.example` file and manifest
+files.
 
 ### Managing infrastructure
 
@@ -47,11 +47,10 @@ provide details on server setups.
 The entry point into this application. Other app logic can also be found in this
 directory.
 
-### `manifest/manifeset.*.json`
+### `manifest.*.json`
 
-The coded configurations and subtle settings of a Slack app. Updates to this
-file are automatically applied to an app installation when using the `run` or
-`deploy` commands of the Slack CLI.
+Complete app manifests for each environment. Updates to these files are applied
+to an app installation with the `run` or `deploy` commands of the Slack CLI.
 
 ### `slack.json`
 

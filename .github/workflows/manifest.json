@@ -1,27 +1,28 @@
 {
-    "display_information": {
-        "name": "saga",
-        "description": "automation behind workflow",
-        "background_color": "#6e2b6e",
-        "long_description": "jobs of actions and steps in a workflow made of functions that run on servers somewhere. the happenings here happen when something happens on github but more action might happen elsewhere."
-    },
-    "features": {
-        "bot_user": {
-            "display_name": "saga",
-            "always_online": true
-        }
-    },
-    "oauth_config": {
-        "scopes": {
-            "bot": [
-                "reactions:write",
-                "chat:write"
-            ]
-        }
-    },
-    "settings": {
-        "org_deploy_enabled": false,
-        "socket_mode_enabled": false,
-        "token_rotation_enabled": false
+  "$schema": "https://raw.githubusercontent.com/slackapi/manifest-schema/main/manifest.schema.json",
+  "_metadata": {
+    "major_version": 1
+  },
+  "display_information": {
+    "name": "saga",
+    "description": "automation behind workflow",
+    "background_color": "#6e2b6e",
+    "long_description": "jobs of actions and steps in a workflow made of functions that run on servers somewhere. the happenings here happen when something happens on github but more action might happen elsewhere."
+  },
+  "features": {
+    "bot_user": {
+      "display_name": "saga",
+      "always_online": true
     }
+  },
+  "oauth_config": {
+    "scopes": {
+      "bot": ["reactions:write", "chat:write"]
+    }
+  },
+  "settings": {
+    "org_deploy_enabled": false,
+    "socket_mode_enabled": false,
+    "token_rotation_enabled": false
+  }
 }
