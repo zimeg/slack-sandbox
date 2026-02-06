@@ -1,9 +1,11 @@
 # 🛰️ surge
 
+> 🔗 [**https://surgem.ai/**][surgemail]
+
 An email organizer that moves the right messages across channels from the sights
 of a satellite. Powered with [Bolt for JavaScript][bolt] on [Heroku][heroku].
 
-> 🔗 [**https://surgem.ai/**][surgemail]
+<img src="./assets/icon.png" title="surge scans signals" alt="a satellite in orbit" width="400" height="400" />
 
 ## Getting started
 
