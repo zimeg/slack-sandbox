@@ -115,7 +115,7 @@ jobs:
         run: |
           gh pr create --base main --head update \
             --title "chore(deps): automatic version bump to the most recent packages" \
-            --body ":dependabot:" \
+            --body ":space_invader:" \
             --label "dependencies" || true
           gh pr merge update --auto --squash
         env:
