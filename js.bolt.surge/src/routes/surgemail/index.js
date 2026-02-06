@@ -15,7 +15,7 @@ import path from "path";
 export default function receiver(_req, res, data) {
   const templatePath = path.join(
     process.env.PWD ?? ".",
-    "src",
+    process.env.SLACK_ENVIRONMENT_TAG === "production" ? "" : "src",
     "routes",
     "templates",
     "index.html",
