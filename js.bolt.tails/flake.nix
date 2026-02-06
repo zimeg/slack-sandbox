@@ -43,6 +43,17 @@
         };
       in
       {
+        apps.default = {
+          type = "app";
+          program = "${pkgs.writeShellScript "tails" ''
+            tmp=$(mktemp -d)
+            cp -r ${./.}/* $tmp
+            cd $tmp
+            ${pkgs.nodejs_24}/bin/npm ci --omit=dev --omit=optional
+            ${pkgs.typescript}/bin/tsc
+            ${pkgs.nodejs_24}/bin/node dist/app.js
+          ''}";
+        };
         devShell = pkgs.mkShell {
           buildInputs = [
             biomepkgs.biome # https://github.com/biomejs/biome
