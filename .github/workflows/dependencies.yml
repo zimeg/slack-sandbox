@@ -9,7 +9,7 @@ jobs:
   dependabot:
     name: Merge automatic pull requests
     if: github.event.pull_request.user.login == 'dependabot[bot]'
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     permissions:
       contents: write
       pull-requests: write
@@ -66,7 +66,7 @@ jobs:
   flake:
     name: Freeze the latest lockfile
     if: github.event_name != 'pull_request'
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     permissions:
       actions: write
       contents: write
@@ -81,8 +81,6 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-      - name: Install a flaked Nix
-        uses: DeterminateSystems/nix-installer-action@c5a866b6ab867e88becbed4467b93592bce69f8a # v21
       - name: Update to the latest
         run: |
           cd deno.sdk.begut && nix flake update && cd ..

@@ -55,13 +55,6 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
-      - name: Reflect existing Nix
-        id: nixos
-        continue-on-error: true
-        run: uname -a | grep NixOS
-      - name: Install a flaked Nix
-        if: ${{ steps.nixos.outcome != 'success' }}
-        uses: DeterminateSystems/nix-installer-action@c5a866b6ab867e88becbed4467b93592bce69f8a # v21
       - name: Install dependencies
         if: ${{ matrix.deps }}
         run: |
@@ -81,9 +74,6 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
-      - name: Setup Tofu tooling
-        if: ${{ matrix.infra == 'tofu' && steps.nixos.outcome != 'success' }}
-        uses: opentofu/setup-opentofu@9d84900f3238fab8cd84ce47d658d25dd008be2f # v1.0.8
       - name: Setup infrastructure updates
         if: ${{ matrix.infra == 'tofu' }}
         run: |
