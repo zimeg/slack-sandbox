@@ -4,6 +4,8 @@ A strange and slithery app with some superb powers. Depending on who you ask.
 
 Made with [Bolt for Python][bolt] and your own language model.
 
+<img src="./assets/icon.jpg" title="snaek slithers silently" alt="a serpentine snake" width="400" height="400" />
+
 ## Speaking with the serpent
 
 Responses are received for any message involving this app, whether that be from
