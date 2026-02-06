@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- feat: add iconic of a satellite orbiting around the earth 2026-02-05
 - fix: import typehints separate from the bolt app itself 2025-10-10
 - build: update node to the latest version to match flake 2025-07-26
 - ci: separate production environments during release run 2025-05-18
