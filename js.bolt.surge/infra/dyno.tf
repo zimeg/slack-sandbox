@@ -26,7 +26,7 @@ resource "heroku_build" "project" {
   app_id = heroku_app.surged.id
 
   source {
-    path = "../src"
+    path = ".."
   }
 }
 
