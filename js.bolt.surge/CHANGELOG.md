@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- build: remove workspaces from app packaging commandsets 2026-02-06
 - feat: add iconic of a satellite orbiting around the earth 2026-02-05
 - fix: import typehints separate from the bolt app itself 2025-10-10
 - build: update node to the latest version to match flake 2025-07-26
