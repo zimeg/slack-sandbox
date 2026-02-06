@@ -1,6 +1,6 @@
 {
   "hooks": {
-    "deploy": "systemctl restart slack:tails.service",
+    "deploy": "sudo /run/current-system/sw/bin/systemctl restart tails.service",
     "get-hooks": "npx -q --no-install -p @slack/bolt slack-cli-get-hooks",
     "start": "npm run watch"
   }
