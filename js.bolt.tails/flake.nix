@@ -51,7 +51,7 @@
             cd $tmp
             ${pkgs.nodejs_24}/bin/npm ci --omit=dev --omit=optional
             ${pkgs.typescript}/bin/tsc
-            ${pkgs.nodejs_24}/bin/npm run start
+            ${pkgs.nodejs_24}/bin/node dist/app.js
           ''}";
         };
         devShell = pkgs.mkShell {
