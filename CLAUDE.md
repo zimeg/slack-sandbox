@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Overview
 
-This is a Slack sandbox monorepo containing experimental apps across multiple languages/frameworks for testing Slack APIs. Each subdirectory is a standalone app that can be deployed independently.
+A polyglot monorepo for experimenting with Slack APIs. Contains independent projects using different Slack SDKs and frameworks. Each subdirectory is a standalone app that can be deployed independently.
 
 ## Project Structure
 
@@ -12,10 +12,10 @@ This is a Slack sandbox monorepo containing experimental apps across multiple la
 |-----------|-------|---------|
 | `deno.sdk.begut` | Deno Slack SDK | Budget/expense tracking |
 | `deno.sdk.chanl` | Deno Slack SDK | Ephemeral channel creation |
-| `java.sdk.gibra` | Java Slack SDK + Gradle | API method testing |
-| `js.bolt.surge` | Bolt for JavaScript | Email organizer (Heroku) |
-| `js.bolt.tails` | Bolt for JavaScript + TypeScript | Video archival with yt-dlp |
-| `py.bolt.snaek` | Bolt for Python | LLM chat bot (Ollama) |
+| `java.sdk.gibra` | Java Slack SDK + Gradle + JDK 21 | API method testing |
+| `js.bolt.surge` | Bolt JS + Node 22 + PostgreSQL + Heroku | Email organizer |
+| `js.bolt.tails` | Bolt JS + TypeScript + yt-dlp | Video archival |
+| `py.bolt.snaek` | Bolt Python + Ollama | LLM chat bot |
 | `py.sdk.sdkai` | Python Slack SDK | SDK snippet testing |
 
 ## Git
@@ -30,6 +30,14 @@ This is a Slack sandbox monorepo containing experimental apps across multiple la
 - Use lowercase for PR titles
 - When merging with `gh pr merge`, use `--auto` to wait for CI - never `--admin`
 
+## Architecture Patterns
+
+**Bolt Apps** (js.bolt.surge, js.bolt.tails, py.bolt.snaek): Use Socket Mode with listener/handler registration pattern. Entry point is `app.js` or `app.py`.
+
+**Deno Apps** (deno.sdk.begut, deno.sdk.chanl): Manifest-driven with `manifest.ts`. Functions in `functions/`, workflows in `workflows/`, triggers in `triggers/`.
+
+**SDK Direct** (java.sdk.gibra, py.sdk.sdkai): Direct API calls without Bolt framework.
+
 ## Development Commands
 
 All apps use Nix flakes for reproducible dev environments. Enter a shell with `nix develop` in any project directory.
@@ -40,29 +48,47 @@ slack run      # Start local development server (Socket Mode)
 slack deploy   # Deploy to production
 ```
 
-### js.bolt.surge
+### JavaScript (js.bolt.surge, js.bolt.tails)
 ```sh
-npm run lint        # Biome check
-npm run lint:fix    # Biome fix
-npm run check       # TypeScript type check
-npm run test        # Run tests with c8/mocha
-npm run logs        # Tail Heroku logs
+npm install           # Install dependencies
+npm start             # Run the app
+npm test              # Lint + type check + run tests
+npm run lint          # Check with Biome
+npm run lint:fix      # Fix linting issues
+npm run watch         # Dev mode with nodemon
+npm run logs          # Tail Heroku logs (surge only)
 ```
 
-### js.bolt.tails
+### Python (py.bolt.snaek)
 ```sh
-npm run build       # Compile TypeScript
-npm run lint        # Biome check
-npm run test:ci     # Type check + lint
+make test             # Format check + lint + type check
+make lint             # Format and lint with ruff
+make schema           # Validate manifest against schema
+make clean            # Remove cache files
+python3 app.py        # Run the app
 ```
 
-### py.bolt.snaek
+### Java (java.sdk.gibra)
 ```sh
-make test      # Format check + lint + mypy
-make lint      # ruff format + check
-make schema    # Validate manifest against schema
-make clean     # Remove cache directories
+./gradlew build       # Build the project
+./gradlew run         # Run the app
+./gradlew run -Pargs="--help"  # Run with arguments
+./gradlew shadowJar   # Build fat JAR
 ```
+
+### Deno (deno.sdk.begut, deno.sdk.chanl)
+```sh
+deno task test        # Format check + lint + tests
+slack run             # Run locally with Slack CLI
+slack deploy          # Deploy to Slack
+```
+
+## Linting/Formatting
+
+- **JavaScript/TypeScript**: Biome (spaces, import organization)
+- **Python**: Ruff (format + check)
+- **Deno**: Built-in `deno fmt` and `deno lint`
+- **Java**: No configured linter
 
 ## Local Development Setup
 
@@ -78,9 +104,12 @@ tools/            # Sibling directory
 
 ## Environment Configuration
 
-- Apps use `.env` files for credentials (see `.env.example` in each project)
-- Workflow tokens are configured at repository level for GitHub Actions
+Apps use `.env` files for credentials (see `.env.example` in each project). Common variables:
+- `SLACK_BOT_TOKEN` - Bot user OAuth token
+- `SLACK_APP_TOKEN` - App-level token for Socket Mode
+- `SLACK_SIGNING_SECRET` - Request verification
 - `SLACK_CONFIG_DIR` is set to `~/.config/slack` in Nix shells
+- Workflow tokens are configured at repository level for GitHub Actions
 
 ## Architecture
 
