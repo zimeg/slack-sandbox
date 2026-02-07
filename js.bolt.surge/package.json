@@ -14,7 +14,7 @@
     "logs:web": "heroku logs --tail --app surged | grep heroku",
     "pretest": "npm run lint && npm run check",
     "start": "node src/app.js",
-    "test": "c8 --config ./test/.c8rc.json mocha --config ./test/.mocharc.json test/**/*.spec.js",
+    "test": "node --test --experimental-test-coverage test/**/*.spec.js",
     "watch": "npx nodemon --exec npm run start"
   },
   "author": "@zimeg",
@@ -37,10 +37,6 @@
     "@slack/cli-hooks": "1.3.0",
     "@types/ejs": "^3.1.5",
     "@types/pg": "^8.16.0",
-    "c8": "10.1.3",
-    "mocha": "11.7.5",
-    "mocha-junit-reporter": "^2.2.1",
-    "mocha-multi-reporters": "^1.5.1",
     "nodemon": "3.1.11",
     "typescript": "^5.9.3"
   }
