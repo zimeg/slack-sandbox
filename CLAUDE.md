@@ -1,5 +1,23 @@
 # CLAUDE.md
 
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Repository Overview
+
+This is a Slack sandbox monorepo containing experimental apps across multiple languages/frameworks for testing Slack APIs. Each subdirectory is a standalone app that can be deployed independently.
+
+## Project Structure
+
+| Directory | Stack | Purpose |
+|-----------|-------|---------|
+| `deno.sdk.begut` | Deno Slack SDK | Budget/expense tracking |
+| `deno.sdk.chanl` | Deno Slack SDK | Ephemeral channel creation |
+| `java.sdk.gibra` | Java Slack SDK + Gradle | API method testing |
+| `js.bolt.surge` | Bolt for JavaScript | Email organizer (Heroku) |
+| `js.bolt.tails` | Bolt for JavaScript + TypeScript | Video archival with yt-dlp |
+| `py.bolt.snaek` | Bolt for Python | LLM chat bot (Ollama) |
+| `py.sdk.sdkai` | Python Slack SDK | SDK snippet testing |
+
 ## Git
 
 - Never push directly to main
@@ -12,13 +30,59 @@
 - Use lowercase for PR titles
 - When merging with `gh pr merge`, use `--auto` to wait for CI - never `--admin`
 
-## Architecture
+## Development Commands
 
-Each subdirectory is a separate Slack app with its own flake:
-- `deno.sdk.*` - Deno SDK apps
-- `java.sdk.*` - Java SDK apps
-- `js.bolt.*` - JavaScript Bolt apps
-- `py.bolt.*` - Python Bolt apps
+All apps use Nix flakes for reproducible dev environments. Enter a shell with `nix develop` in any project directory.
+
+### Common Slack CLI Commands
+```sh
+slack run      # Start local development server (Socket Mode)
+slack deploy   # Deploy to production
+```
+
+### js.bolt.surge
+```sh
+npm run lint        # Biome check
+npm run lint:fix    # Biome fix
+npm run check       # TypeScript type check
+npm run test        # Run tests with c8/mocha
+npm run logs        # Tail Heroku logs
+```
+
+### js.bolt.tails
+```sh
+npm run build       # Compile TypeScript
+npm run lint        # Biome check
+npm run test:ci     # Type check + lint
+```
+
+### py.bolt.snaek
+```sh
+make test      # Format check + lint + mypy
+make lint      # ruff format + check
+make schema    # Validate manifest against schema
+make clean     # Remove cache directories
+```
+
+## Local Development Setup
+
+Some apps reference local Slack library clones from a sibling `../tools` directory:
+```
+sandbox/          # This repo
+  py.bolt.snaek/
+  py.sdk.sdkai/
+tools/            # Sibling directory
+  bolt-python/
+  python-slack-sdk/
+```
+
+## Environment Configuration
+
+- Apps use `.env` files for credentials (see `.env.example` in each project)
+- Workflow tokens are configured at repository level for GitHub Actions
+- `SLACK_CONFIG_DIR` is set to `~/.config/slack` in Nix shells
+
+## Architecture
 
 ### Workflows
 
