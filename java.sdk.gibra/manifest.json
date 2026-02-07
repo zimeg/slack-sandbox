@@ -1,4 +1,8 @@
 {
+  "$schema": "https://raw.githubusercontent.com/slackapi/manifest-schema/main/manifest.schema.json",
+  "_metadata": {
+    "major_version": 1
+  },
   "display_information": {
     "name": "gibra",
     "description": "the curious coffee caller",

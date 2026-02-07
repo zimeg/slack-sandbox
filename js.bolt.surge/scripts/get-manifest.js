@@ -9,7 +9,7 @@ if (fs.realpathSync(process.argv[1]) === fileURLToPath(import.meta.url)) {
 }
 
 /**
- * Retrieve a tagged manifest or fallback to a default.
+ * Retrieve a tagged manifest for the environment.
  */
 export default function getManifest() {
   const tag = process.env.SLACK_ENVIRONMENT_TAG;
@@ -22,5 +22,5 @@ export default function getManifest() {
     const file = fs.readFileSync(manifest, "utf8");
     return JSON.parse(file);
   }
-  throw new Error("No manifest file found");
+  throw new Error(`No manifest file found for environment: ${tag}`);
 }

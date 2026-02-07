@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- build: set the manifest schema to version one with editor checks 2026-02-05
 - refactor: simplify manifests into per environment files 2026-02-07
 - fix: revert to minimal workspace for smaller heroku slugs 2026-02-06
 - build: remove workspaces from app packaging commandsets 2026-02-06

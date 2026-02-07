@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- build: zap the schema and metadata versioning into manifests 2026-02-05
 - build: run app server packaged and exported from a nix flake 2026-02-05
 - build: update to active node versions with packages likewise 2025-07-26
 - build: make machine and user obsolete for self hosted runner 2025-05-18

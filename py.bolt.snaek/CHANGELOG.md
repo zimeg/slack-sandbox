@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- build: coil the schema and metadata into the manifest for slithers 2026-02-05
 - feat: add iconic of a slithering snake moving through text prompts 2026-02-05
 - build: slither into production serving using the nix flake command 2026-02-05
 - feat: stream chat responses with loading states prior as a serpent 2025-10-08
