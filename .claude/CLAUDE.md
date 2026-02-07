@@ -29,6 +29,15 @@ A polyglot monorepo for experimenting with Slack APIs. Contains independent proj
 - Use a single emoji in the PR body (e.g., `:hamsa:`, `:space_invader:`)
 - Use lowercase for PR titles
 - When merging with `gh pr merge`, use `--auto` to wait for CI - never `--admin`
+- Never force push - if a branch needs to be reset, use `@dependabot recreate` comment instead
+
+## Dependabot
+
+When Dependabot PRs need lockfile updates or other fixes:
+1. Comment `@dependabot recreate` to have Dependabot recreate the PR fresh
+2. Fetch and checkout the new branch
+3. Make necessary changes (e.g., `npm install` to sync lockfile)
+4. Commit and push (no force push needed on a fresh branch)
 
 ## Architecture Patterns
 
