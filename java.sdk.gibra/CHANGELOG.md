@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- build: brew a purer nix blend without the flake utils grounds 2026-02-07
 - feat: add iconic of a giraffe caffeinating with steaming java 2026-02-05
 - build: update development tooling and packaging to the latest 2025-07-26
 - build: downgrade the gradle version to match the java version 2024-11-17

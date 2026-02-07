@@ -33,6 +33,7 @@ A polyglot monorepo for experimenting with Slack APIs. Contains independent proj
 - Never force push - if a branch needs to be reset, use `@dependabot recreate` comment instead
 - CLAUDE.md updates should be included in regular work PRs, not separate PRs - add notes for significant learnings, errors of understanding, or long-term decisions
 - If a CHANGELOG.md exists in the app directory, add an entry matching the existing format and line length
+- Changelog entries should avoid dashes within words (use "flake utils" not "flake-utils") and avoid the letter "y" unless dire
 
 ## Dependabot
 
