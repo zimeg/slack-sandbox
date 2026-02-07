@@ -1,20 +1,31 @@
 {
   "permissions": {
     "allow": [
+      "Bash(gh label list:*)",
       "Bash(gh pr checks:*)",
       "Bash(gh pr create:*)",
+      "Bash(gh pr edit:*)",
       "Bash(gh pr merge:*)",
       "Bash(gh pr view:*)",
+      "Bash(git branch:*)",
       "Bash(git commit:*)",
       "Bash(git fetch:*)",
+      "Bash(git log:*)",
       "Bash(git mv:*)",
       "Bash(git pull:*)",
       "Bash(git push:*)",
       "Bash(git rebase:*)",
       "Bash(git reset:*)",
       "Bash(git rm:*)",
+      "Bash(git stash:*)",
+      "Bash(git stash pop:*)",
+      "Bash(nix-prefetch-url:*)",
       "Bash(npm install:*)",
-      "Bash(npm ls:*)"
+      "Bash(npm ls:*)",
+      "Bash(npm test:*)",
+      "WebFetch(domain:docs.slack.dev)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:surgem.ai)"
     ]
   }
 }
