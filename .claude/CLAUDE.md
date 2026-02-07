@@ -22,7 +22,7 @@ A polyglot monorepo for experimenting with Slack APIs. Contains independent proj
 
 - Never push directly to main
 - Always create PRs from feature branches
-- Use git worktrees in `.claude/worktrees/` for parallel work
+- Use git worktrees in `.claude/worktrees/` for parallel work (named `a`, `b`, `c`, ...)
 
 ## Pull Requests
 
