@@ -30,7 +30,7 @@ A polyglot monorepo for experimenting with Slack APIs. Contains independent proj
 - Use lowercase for PR titles
 - When merging with `gh pr merge`, use `--auto` to wait for CI - never `--admin`
 - Never force push - if a branch needs to be reset, use `@dependabot recreate` comment instead
-- For CLAUDE.md updates: prefix with `chore(claude):` and merge with `--auto --squash`
+- For CLAUDE.md updates: prefix with `chore(claude):` and merge with `--auto`
 
 ## Dependabot
 
