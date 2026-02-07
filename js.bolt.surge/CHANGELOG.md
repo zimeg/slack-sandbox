@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- build: teach the flake to fly solo without the utils training wheels 2026-02-07
 - test: replace test runner with node defaults for coverage 2026-02-07
 - refactor: simplify manifests into per environment files 2026-02-07
 - fix: revert to minimal workspace for smaller heroku slugs 2026-02-06

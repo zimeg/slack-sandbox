@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- build: balance the budget by cutting flake-utils from the ledger 2026-02-07
 - build: update to the latest runtime version and developer tools 2025-07-26
 - chore(deps): patch version of the latest slack tooling release 2025-03-23
 - chore(deps): bump versions of slack tooling to latest releases 2025-03-10
