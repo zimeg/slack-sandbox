@@ -51,7 +51,7 @@ When Dependabot PRs need lockfile updates or other fixes:
 
 ## Development Commands
 
-All apps use Nix flakes for reproducible dev environments. Enter a shell with `nix develop` in any project directory.
+All apps use Nix flakes for reproducible dev environments. Enter a shell with `nix develop` in any project directory. Use `nix develop -c <command>` to run commands in the dev environment (e.g., `nix develop -c npm test`).
 
 ### Common Slack CLI Commands
 ```sh
