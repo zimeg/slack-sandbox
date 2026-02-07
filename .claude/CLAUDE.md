@@ -22,6 +22,7 @@ A polyglot monorepo for experimenting with Slack APIs. Contains independent proj
 
 - Never push directly to main
 - Always create PRs from feature branches
+- Use git worktrees in `.claude/worktrees/` for parallel work
 
 ## Pull Requests
 
@@ -30,7 +31,7 @@ A polyglot monorepo for experimenting with Slack APIs. Contains independent proj
 - Use lowercase for PR titles
 - When merging with `gh pr merge`, use `--auto` to wait for CI - never `--admin`
 - Never force push - if a branch needs to be reset, use `@dependabot recreate` comment instead
-- For CLAUDE.md updates: prefix with `chore(claude):` and merge with `--auto`
+- CLAUDE.md updates should be included in regular work PRs, not separate PRs - add notes for significant learnings, errors of understanding, or long-term decisions
 
 ## Dependabot
 
