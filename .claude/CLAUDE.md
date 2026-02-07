@@ -28,10 +28,11 @@ A polyglot monorepo for experimenting with Slack APIs. Contains independent proj
 
 - Always add relevant labels (use `gh label list` to see available)
 - Use a single emoji in the PR body (e.g., `:hamsa:`, `:space_invader:`)
-- Use lowercase for PR titles
+- PR title format: `project(tag): description` (e.g., `js.bolt.surge(feat): add login flow`)
 - When merging with `gh pr merge`, use `--auto` to wait for CI - never `--admin`
 - Never force push - if a branch needs to be reset, use `@dependabot recreate` comment instead
 - CLAUDE.md updates should be included in regular work PRs, not separate PRs - add notes for significant learnings, errors of understanding, or long-term decisions
+- If a CHANGELOG.md exists in the app directory, add an entry matching the existing format and line length
 
 ## Dependabot
 
