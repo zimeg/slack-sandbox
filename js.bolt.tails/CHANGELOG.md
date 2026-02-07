@@ -7,7 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
-- build: let the flake spread its wings and drop the utility crutches 2026-02-07
+- build: let flake spread free and drop the utilities crutches 2026-02-07
 - build: run app server packaged and exported from a nix flake 2026-02-05
 - build: update to active node versions with packages likewise 2025-07-26
 - build: make machine and user obsolete for self hosted runner 2025-05-18
