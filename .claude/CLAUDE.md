@@ -96,7 +96,7 @@ slack deploy          # Deploy to Slack
 
 ## Linting/Formatting
 
-- **JavaScript/TypeScript**: Biome (spaces, import organization)
+- **JavaScript/TypeScript**: Biome (spaces, import organization). If biome.json schema version doesn't match the CLI, run `biome migrate --write` to update.
 - **Python**: Ruff (format + check)
 - **Deno**: Built-in `deno fmt` and `deno lint`
 - **Java**: No configured linter
