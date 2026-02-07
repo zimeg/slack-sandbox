@@ -8,6 +8,7 @@ versioned with [calendar versioning][calver].
 ## Changes
 
 - build: brew fresh schema and metadata into manifest for beans 2026-02-05
+- feat: add iconic of a giraffe caffeinating with steaming java 2026-02-05
 - build: update development tooling and packaging to the latest 2025-07-26
 - build: downgrade the gradle version to match the java version 2024-11-17
 - build: set java language toolchain to a matching major version 2024-11-17

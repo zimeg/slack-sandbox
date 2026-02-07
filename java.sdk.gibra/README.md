@@ -2,6 +2,8 @@
 
 A caffeinated app using [Gradle][gradle] and the [Slack SDK for Java][sdk].
 
+<img src="./assets/icon.jpg" title="gibra brews code" alt="a caffeinated giraffe" width="400" height="400" />
+
 ## Getting started
 
 Depending on the path of the sun, this app behaves in different ways. Scripted
