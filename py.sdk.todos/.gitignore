@@ -2,4 +2,9 @@
 .env
 
 # Development artifacts
+.direnv
+
+# Python compilations
 .venv
+__pycache__
+todos.egg-info

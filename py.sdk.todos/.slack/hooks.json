@@ -1,0 +1,19 @@
+{
+  "hooks": {
+    "deploy": "systemctl restart todos:production",
+    "get-manifest": "cat manifest.development.json #",
+    "start": "PORT=8083 nix run .#server"
+  },
+  "config": {
+    "sdk-managed-connection-enabled": true,
+    "watch": {
+      "app": {
+        "filter-regex": "\\.py$",
+        "paths": ["."]
+      },
+      "manifest": {
+        "paths": ["manifest.development.json"]
+      }
+    }
+  }
+}
