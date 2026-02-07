@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- refactor: simplify manifests into per environment files 2026-02-07
 - fix: revert to minimal workspace for smaller heroku slugs 2026-02-06
 - build: remove workspaces from app packaging commandsets 2026-02-06
 - feat: add iconic of a satellite orbiting around the earth 2026-02-05
