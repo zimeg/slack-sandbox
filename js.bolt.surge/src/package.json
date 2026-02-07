@@ -13,7 +13,7 @@
     "@slack/logger": "^4.0.0",
     "@slack/oauth": "^3.0.4",
     "ejs": "^3.1.10",
-    "pg": "^8.16.3"
+    "pg": "^8.18.0"
   },
   "devDependencies": {
     "@types/ejs": "^3.1.5",
