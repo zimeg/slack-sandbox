@@ -15,7 +15,7 @@ jobs:
       contents: write
     strategy:
       fail-fast: false
-      max-parallel: 1
+      max-parallel: 3
       matrix:
         include:
           - app: deno.sdk.begut
