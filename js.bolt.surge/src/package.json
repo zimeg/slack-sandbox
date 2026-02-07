@@ -6,7 +6,7 @@
   },
   "type": "module",
   "engines": {
-    "node": ">=22.0.0"
+    "node": "22.22.0"
   },
   "dependencies": {
     "@slack/bolt": "^4.6.0",
