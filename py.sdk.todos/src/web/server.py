@@ -65,6 +65,10 @@ class Handler(BaseHTTPRequestHandler):
         state = params.get("state", [""])[0]
         redirect_uri = params.get("redirect_uri", [REDIRECT_URI])[0]
 
+        # Sanitize values used in HTTP headers to prevent response splitting
+        state = state.replace("\r", "").replace("\n", "")
+        redirect_uri = redirect_uri.replace("\r", "").replace("\n", "")
+
         if not state:
             self._send_html(
                 "<h1>CLI Required</h1>"
