@@ -24,6 +24,7 @@ jobs:
           - app: js.bolt.surge
           - app: js.bolt.tails
           - app: py.bolt.snaek
+          - app: py.sdk.todos
     steps:
       - name: Checkout this repo
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -102,6 +103,10 @@ jobs:
             deploy: |
               slack deploy --app $SLACK_APP_ID --token $SLACK_CLI_TOKEN --force
             test: make test
+          - app: py.sdk.todos
+            deploy: |
+              slack deploy --app $SLACK_APP_ID --token $SLACK_CLI_TOKEN --force
+            test: ruff check src/
     environment: ${{ matrix.app }}
     defaults:
       run:
