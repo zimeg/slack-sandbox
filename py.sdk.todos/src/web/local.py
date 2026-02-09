@@ -117,10 +117,8 @@ class OAuthHandler(BaseHTTPRequestHandler):
             if data.get("ok"):
                 return {"token": data.get("access_token")}
             else:
-                print(f"OAuth error: {data.get('error')}")
                 return None
-        except Exception as e:
-            print(f"Token exchange error: {e}")
+        except Exception:
             return None
 
     def _send_html(self, body: str, status: int = 200) -> None:
