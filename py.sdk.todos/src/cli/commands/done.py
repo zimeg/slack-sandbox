@@ -2,41 +2,34 @@
 
 import sys
 
-from api import get_token, get_list_id, SlackLists
-from cli.display import DIM, GREEN, RED, RESET, get_name, is_completed
+from api import SlackLists
+from cli.display import GREEN, RED, RESET, get_name
 
 
 def run(args: list[str]) -> None:
     """Mark a todo as complete."""
     if not args:
-        print(f"{RED}Error: No todo number provided{RESET}")
-        print("Usage: todos done <number>")
+        print(f"{RED}Error: No record ID provided{RESET}")
+        print("Usage: todos done <rec_id>")
         sys.exit(1)
 
-    try:
-        num = int(args[0])
-    except ValueError:
-        print(f"{RED}Error: Invalid todo number{RESET}")
+    rec_id = args[0]
+    lists = SlackLists()
+
+    items = lists.list_items()
+    item = next((i for i in items if i.get("id") == rec_id), None)
+
+    if not item:
+        print(f"{RED}Error: Todo {rec_id} not found{RESET}")
         sys.exit(1)
 
-    token = get_token()
-    list_id = get_list_id()
-    lists = SlackLists(token)
-
-    items = lists.list_items(list_id)
-    print(f"{DIM}{items}{RESET}")
-
-    incomplete = [i for i in items if not is_completed(i)]
-
-    if num < 1 or num > len(incomplete):
-        print(f"{RED}Error: Todo #{num} not found{RESET}")
-        sys.exit(1)
-
-    item = incomplete[num - 1]
-    item_id = item.get("id")
-
-    result = lists.update_item(list_id, item_id, cells=[
-        {"column_id": "Col00", "checkbox": True},
-    ])
-    print(f"{DIM}{result}{RESET}")
+    lists.update_item(
+        cells=[
+            {
+                "row_id": rec_id,
+                "column_id": "Col00",
+                "checkbox": True,
+            },
+        ],
+    )
     print(f"{GREEN}Completed:{RESET} {get_name(item)}")

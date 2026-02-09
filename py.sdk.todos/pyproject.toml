@@ -18,3 +18,6 @@ server = "web.server:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+"web.templates" = ["*.html"]

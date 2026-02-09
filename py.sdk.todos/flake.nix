@@ -50,8 +50,8 @@
                   slack-sdk # https://github.com/slackapi/python-slack-sdk
                 ]
               ))
-              pkgs.ollama # https://github.com/ollama/ollama
               pkgs.ruff # https://github.com/astral-sh/ruff
+              pkgs.sops # https://github.com/getsops/sops
               slackcli
             ];
             shellHook = ''

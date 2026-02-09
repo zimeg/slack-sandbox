@@ -3,25 +3,25 @@
 Starts a temporary server to handle OAuth redirects and save credentials.
 """
 
-import json
 import os
 import secrets
 import webbrowser
-from http.server import HTTPServer, BaseHTTPRequestHandler
-from pathlib import Path
+from http.server import BaseHTTPRequestHandler, HTTPServer
+from importlib import resources
 from urllib.parse import parse_qs, urlparse
 
 import requests
 
+import config
+from cli.display import DIM, RESET
+
 # OAuth configuration
 LOCAL_PORT = 9876
 REDIRECT_URI = f"http://localhost:{LOCAL_PORT}/callback"
-CREDENTIALS_PATH = Path.home() / ".config" / "slack" / "todos" / "credentials.json"
+SERVER_URL = os.getenv("OAUTH_SERVER_URL", "https://todos.guide")
 
-# OAuth configuration
-CLIENT_ID = os.getenv("SLACK_CLIENT_ID", "")
-CLIENT_SECRET = os.getenv("SLACK_CLIENT_SECRET", "")
-LOGIN_URL = os.getenv("OAUTH_LOGIN_URL", "https://todos.guide/login")
+# Templates
+CALLBACK_PAGE = resources.files("web.templates").joinpath("callback.html").read_text()
 
 
 class OAuthHandler(BaseHTTPRequestHandler):
@@ -78,8 +78,7 @@ class OAuthHandler(BaseHTTPRequestHandler):
         # Verify state to prevent CSRF
         if state != self.server_instance.oauth_state:
             self._send_html(
-                "<h1>Invalid State</h1>"
-                "<p>State mismatch. Please try again.</p>",
+                "<h1>Invalid State</h1><p>State mismatch. Please try again.</p>",
                 status=400,
             )
             return
@@ -106,29 +105,17 @@ class OAuthHandler(BaseHTTPRequestHandler):
         self.server_instance.should_stop = True
 
     def _exchange_code(self, code: str) -> dict | None:
-        """Exchange authorization code for access token."""
+        """Exchange authorization code via server."""
         try:
             response = requests.post(
-                "https://slack.com/api/oauth.v2.access",
-                data={
-                    "client_id": CLIENT_ID,
-                    "client_secret": CLIENT_SECRET,
-                    "code": code,
-                    "redirect_uri": REDIRECT_URI,
-                },
+                f"{SERVER_URL}/oauth/exchange",
+                json={"code": code, "redirect_uri": REDIRECT_URI},
                 timeout=30,
             )
             data = response.json()
 
             if data.get("ok"):
-                return {
-                    "access_token": data.get("authed_user", {}).get("access_token"),
-                    "token_type": data.get("authed_user", {}).get("token_type"),
-                    "scope": data.get("authed_user", {}).get("scope"),
-                    "team_id": data.get("team", {}).get("id"),
-                    "team_name": data.get("team", {}).get("name"),
-                    "user_id": data.get("authed_user", {}).get("id"),
-                }
+                return {"token": data.get("access_token")}
             else:
                 print(f"OAuth error: {data.get('error')}")
                 return None
@@ -138,24 +125,7 @@ class OAuthHandler(BaseHTTPRequestHandler):
 
     def _send_html(self, body: str, status: int = 200) -> None:
         """Send HTML response."""
-        html = f"""<!DOCTYPE html>
-<html>
-<head>
-    <title>Todo's Guide</title>
-    <style>
-        body {{
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            max-width: 600px;
-            margin: 100px auto;
-            padding: 20px;
-            text-align: center;
-            color: #1d1c1d;
-        }}
-        h1 {{ color: #4A154B; }}
-    </style>
-</head>
-<body>{body}</body>
-</html>"""
+        html = CALLBACK_PAGE.format(body=body)
         self.send_response(status)
         self.send_header("Content-Type", "text/html")
         self.send_header("Content-Length", str(len(html)))
@@ -176,38 +146,19 @@ class OAuthServer(HTTPServer):
         OAuthHandler.server_instance = self
 
 
-def get_authorization_url(state: str) -> str:
-    """Build authorization URL via the online server's login page."""
-    return (
-        f"{LOGIN_URL}"
-        f"?redirect_uri={REDIRECT_URI}"
-        f"&state={state}"
-    )
-
-
-def save_credentials(token_data: dict) -> Path:
-    """Save credentials to config file."""
-    CREDENTIALS_PATH.parent.mkdir(parents=True, exist_ok=True)
-    with open(CREDENTIALS_PATH, "w") as f:
-        json.dump(token_data, f, indent=2)
-    # Secure the file
-    os.chmod(CREDENTIALS_PATH, 0o600)
-    return CREDENTIALS_PATH
-
-
 def run_oauth_flow() -> dict | None:
     """Run the complete OAuth flow.
 
     Returns token data on success, None on failure.
     """
     server = OAuthServer()
-    auth_url = get_authorization_url(server.oauth_state)
+    auth_url = f"{SERVER_URL}/login?state={server.oauth_state}"
 
-    print(f"Opening browser for Slack authorization...")
+    print(f"{DIM}Opening browser for Slack authorization...")
     print(f"If browser doesn't open, visit: {auth_url}")
     webbrowser.open(auth_url)
 
-    print(f"Waiting for authorization on http://localhost:{LOCAL_PORT}...")
+    print(f"Waiting for authorization on http://localhost:{LOCAL_PORT}...{RESET}")
 
     # Serve until callback received
     while not server.should_stop:
@@ -220,8 +171,8 @@ def run_oauth_flow() -> dict | None:
         return None
 
     if server.token_data:
-        path = save_credentials(server.token_data)
-        print(f"Credentials saved to {path}")
+        path = config.token.save(server.token_data["token"])
+        print(f"{DIM}Credentials saved to {path}{RESET}")
         return server.token_data
 
     return None

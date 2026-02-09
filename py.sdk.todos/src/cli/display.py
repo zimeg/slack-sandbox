@@ -1,6 +1,6 @@
 """Display helpers for terminal output."""
 
-from datetime import date, datetime, timedelta
+from datetime import date, datetime
 from typing import Any
 
 BOLD = "\x1b[1m"
@@ -25,12 +25,6 @@ def get_name(item: dict[str, Any]) -> str:
     return get_field(item, "name").get("text", "Untitled")
 
 
-def is_completed(item: dict[str, Any]) -> bool:
-    """Check if an item is completed."""
-    field = get_field(item, "todo_completed")
-    return bool(field.get("checkbox", field.get("value", False)))
-
-
 def get_due_date(item: dict[str, Any]) -> str | None:
     """Get the due date string from an item."""
     field = get_field(item, "todo_due_date")
@@ -40,23 +34,18 @@ def get_due_date(item: dict[str, Any]) -> str | None:
 
 def categorize_todos(
     items: list[dict[str, Any]],
-) -> tuple[list, list, list, list]:
-    """Categorize todos into overdue, stale, active, and completed."""
+) -> tuple[list, list]:
+    """Categorize todos into overdue and active."""
     today = date.today()
-    stale_threshold = today - timedelta(days=7)
 
     overdue = []
-    stale = []
     active = []
-    completed = []
 
     for item in items:
-        if is_completed(item):
-            completed.append(item)
+        if get_field(item, "todo_completed").get("checkbox", False):
             continue
 
         due_str = get_due_date(item)
-        created_ts = item.get("date_created")
 
         if due_str:
             try:
@@ -67,18 +56,9 @@ def categorize_todos(
             except ValueError:
                 pass
 
-        if created_ts:
-            try:
-                created_date = datetime.fromtimestamp(created_ts).date()
-                if created_date < stale_threshold:
-                    stale.append(item)
-                    continue
-            except (ValueError, OSError):
-                pass
-
         active.append(item)
 
-    return overdue, stale, active, completed
+    return overdue, active
 
 
 def format_due_date(due_str: str | None) -> str:
@@ -91,7 +71,9 @@ def format_due_date(due_str: str | None) -> str:
         diff = (due_date - today).days
 
         if diff < 0:
-            return f"{RED}due: {abs(diff)} day{'s' if abs(diff) != 1 else ''} ago{RESET}"
+            return (
+                f"{RED}due: {abs(diff)} day{'s' if abs(diff) != 1 else ''} ago{RESET}"
+            )
         elif diff == 0:
             return f"{YELLOW}due: today{RESET}"
         elif diff == 1:
@@ -102,12 +84,13 @@ def format_due_date(due_str: str | None) -> str:
         return f"due: {due_str}"
 
 
-def display_item(num: int, item: dict[str, Any], prefix: str = "[ ]") -> None:
+def display_item(item: dict[str, Any], prefix: str = "·") -> None:
     """Display a single todo item."""
+    rec_id = item.get("id", "")
     name = get_name(item)
     due_str = get_due_date(item)
 
-    parts = [f"{prefix} #{num}: {name}"]
+    parts = [f"{prefix} {DIM}{rec_id}{RESET} {name}"]
 
     if due_str:
         parts.append(format_due_date(due_str))

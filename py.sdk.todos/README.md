@@ -1,62 +1,37 @@
 # Todo's Guide
 
-> _toh-doh_ — like the bird, but with better priorities.
+> _toh-doh_ — like the flightless bird
 
-A collaborative task management companion powered by [Slack Lists](https://slack.com/help/articles/27452748828179-Use-lists-in-Slack) and [Ollama](https://ollama.com/) intelligence.
+The endangered task management CLI for collaboration and orchestration using [Slack Lists](https://slack.com/help/articles/27452748828179-Use-lists-in-Slack).
 
-## Getting started
+> 🔗 [**https://todos.guide/**](https://todos.guide/)
 
-```sh
-# First-time setup: create your todos list
-todos init
+## Preview
 
-# View your todos with smart categorization
-todos
-
-# Add a task
-todos add "Fix authentication bug" -p1
-
-# Mark complete
-todos done 1
+```
+$ todos
+Overdue
+! Rec0ADN3PKWMB Review the docs due: 3 days ago
+Todo
+· Rec0ADJT656UR Ship the feature due: today
+· Rec0ADA32CE9M Write tests
+· Rec0AD619U6HY Deploy to prod
 ```
 
 ## Commands
 
-| Command             | Description                                                       |
-| ------------------- | ----------------------------------------------------------------- |
-| `todos`             | Smart list with overdue/stale highlights                          |
-| `todos add <title>` | Add a todo (`-p0` to `-p3` for priority, `-d YYYY-MM-DD` for due) |
-| `todos done <id>`   | Mark complete                                                     |
-| `todos edit <id>`   | Edit via `$EDITOR` with natural language                          |
-| `todos suggest`     | Get AI suggestions (requires Ollama)                              |
-| `todos init`        | Create the todos list (first-time setup)                          |
-
-## Smart display
-
+```sh
+todos               # Show todos
+todos add <title>   # Add a todo (-d YYYY-MM-DD)
+todos done <id>     # Mark todo as complete
+todos init          # Authenticate with Slack
 ```
-=== OVERDUE ===
-[!] #2: Fix authentication bug (due: 2 days ago) [P1]
-
-=== STALE (7+ days) ===
-[?] #5: Update documentation [P2]
-
-=== TODO ===
-[ ] #3: Add unit tests [P2]
-```
-
-## Environment variables
-
-| Variable              | Description                                           |
-| --------------------- | ----------------------------------------------------- |
-| `SLACK_USER_TOKEN`    | User token with `lists:read` and `lists:write` scopes |
-| `SLACK_TODOS_LIST_ID` | List ID (set by `todos init`)                         |
-| `OLLAMA_MODEL`        | Model for AI features (default: `llama3.2`)           |
-| `OLLAMA_URL`          | Ollama API URL (default: `http://localhost:11434`)    |
 
 ## Setup
 
-1. [Create a new app](https://api.slack.com/apps) using the `manifest.json`
-2. Install the app and get a user token with `lists:read` and `lists:write` scopes
-3. Export your token: `export SLACK_USER_TOKEN=xoxp-...`
-4. Run `todos init` to create your list and get the list ID
-5. Export the list ID: `export SLACK_TODOS_LIST_ID=L...`
+```sh
+$ nix run github:zimeg/slacks/py.sdk.todos#todos -- init
+$ nix run github:zimeg/slacks/py.sdk.todos#todos
+$ nix run github:zimeg/slacks/py.sdk.todos#todos -- add "My first task"
+$ nix run github:zimeg/slacks/py.sdk.todos#todos -- done Rec0ADN3PKWMB
+```

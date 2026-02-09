@@ -2,15 +2,15 @@
 
 import sys
 
-from api import get_token, get_list_id, SlackLists
-from cli.display import DIM, GREEN, RED, RESET, format_due_date
+from api import SlackLists
+from cli.display import GREEN, RED, RESET, format_due_date
 
 
 def run(args: list[str]) -> None:
     """Add a new todo."""
     if not args:
         print(f"{RED}Error: No title provided{RESET}")
-        print("Usage: todos add <title> [-p0|-p1|-p2|-p3] [-d YYYY-MM-DD]")
+        print("Usage: todos add <title> [-d YYYY-MM-DD]")
         sys.exit(1)
 
     title_parts = []
@@ -31,16 +31,12 @@ def run(args: list[str]) -> None:
         print(f"{RED}Error: No title provided{RESET}")
         sys.exit(1)
 
-    token = get_token()
-    list_id = get_list_id()
-    lists = SlackLists(token)
+    lists = SlackLists()
 
-    result = lists.create_item(
-        list_id=list_id,
+    lists.create_item(
         title=title,
         due_date=due_date,
     )
-    print(f"{DIM}{result}{RESET}")
 
     print(f"{GREEN}Added:{RESET} {title}")
     if due_date:
