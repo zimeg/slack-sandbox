@@ -167,7 +167,7 @@ def run_oauth_flow() -> dict | None:
     server.server_close()
 
     if server.oauth_error:
-        print(f"Authorization failed: {server.oauth_error}")
+        print("Authorization failed. Please try again.")
         return None
 
     if server.token_data:
