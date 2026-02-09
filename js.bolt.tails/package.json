@@ -7,12 +7,11 @@
     "build": "tsc",
     "build:check": "tsc --noemit --module commonjs --project ./tsconfig.json",
     "build:clean": "rm -rf dist",
+    "build:watch": "tsc --watch",
     "lint": "biome check --verbose",
     "lint:fix": "biome check --verbose --write",
-    "prestart": "npm run build",
     "start": "node dist/app.js",
-    "test:ci": "npm run build:check && npm run lint",
-    "watch": "npx nodemon --watch 'src' --ext 'ts' --exec npm run start"
+    "test:ci": "npm run build:check && npm run lint"
   },
   "author": "@zimeg",
   "license": "MIT",
@@ -34,8 +33,7 @@
     "@slack/bolt": "^4.6.0"
   },
   "devDependencies": {
-    "@slack/cli-hooks": "^1.2.1",
-    "@types/node": "^24.10.4",
-    "nodemon": "^3.1.11"
+    "@slack/cli-hooks": "^1.3.0",
+    "@types/node": "^24.10.9"
   }
 }

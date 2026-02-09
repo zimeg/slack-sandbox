@@ -7,6 +7,12 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- build: teach flake be without training utilities wheels 2026-02-07
+- test: replace test runner with node defaults for coverage 2026-02-07
+- refactor: simplify manifests into per environment files 2026-02-07
+- fix: revert to minimal workspace for smaller heroku slugs 2026-02-06
+- build: remove workspaces from app packaging commandsets 2026-02-06
+- feat: add iconic of a satellite orbiting around the earth 2026-02-05
 - fix: import typehints separate from the bolt app itself 2025-10-10
 - build: update node to the latest version to match flake 2025-07-26
 - ci: separate production environments during release run 2025-05-18

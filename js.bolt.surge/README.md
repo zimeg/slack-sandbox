@@ -1,9 +1,11 @@
 # 🛰️ surge
 
+> 🔗 [**https://surgem.ai/**][surgemail]
+
 An email organizer that moves the right messages across channels from the sights
 of a satellite. Powered with [Bolt for JavaScript][bolt] on [Heroku][heroku].
 
-> 🔗 [**https://surgem.ai/**][surgemail]
+<img src="./assets/icon.png" title="surge scans signals" alt="a satellite in orbit" width="400" height="400" />
 
 ## Getting started
 
@@ -22,8 +24,8 @@ $ npm run logs                                     # Inspect activities
 Different apps use credentials that change and app manifests might not be the
 same.
 
-Learn about different environments from the `.env.example` file and `manifest`
-path.
+Learn about different environments from the `.env.example` file and
+`manifest.*.json` files.
 
 ### Managing infrastructure
 
@@ -47,11 +49,11 @@ provide details on server setups.
 The entry point into this application. Other app logic can also be found in this
 directory.
 
-### `manifest/manifeset.*.json`
+### `manifest.*.json`
 
-The coded configurations and subtle settings of a Slack app. Updates to this
-file are automatically applied to an app installation when using the `run` or
-`deploy` commands of the Slack CLI.
+The coded configurations and subtle settings of a Slack app per environment.
+Updates to these files are automatically applied to an app installation when
+using the `run` or `deploy` commands of the Slack CLI.
 
 ### `slack.json`
 

@@ -2,23 +2,21 @@
   description = "a strange and slithery Slack app";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
-    zimeg.url = "github:zimeg/nur-packages";
   };
   outputs =
-    {
-      nixpkgs,
-      flake-utils,
-      zimeg,
-      ...
-    }:
-    flake-utils.lib.eachDefaultSystem (
-      system:
-      let
-        pkgs = import nixpkgs {
-          inherit system;
-        };
-        pythonEnv = pkgs.python313.withPackages (
+    { nixpkgs, ... }:
+    let
+      each =
+        function:
+        nixpkgs.lib.genAttrs [
+          "x86_64-darwin"
+          "x86_64-linux"
+          "aarch64-darwin"
+          "aarch64-linux"
+        ] (system: function nixpkgs.legacyPackages.${system});
+      pythonEnv =
+        pkgs:
+        pkgs.python313.withPackages (
           ps: with ps; [
             mypy # https://github.com/python/mypy
             packaging # https://github.com/pypa/packaging
@@ -27,14 +25,14 @@
             slack-sdk # https://github.com/slackapi/python-slack-sdk
             types-requests # https://github.com/python/typeshed/tree/main/stubs/requests/requests
             # https://github.com/slackapi/python-slack-hooks
-            (buildPythonPackage {
+            (buildPythonPackage rec {
               pname = "slack_cli_hooks";
-              version = "0.1.0";
+              version = "0.3.0";
               src = pkgs.fetchFromGitHub {
                 owner = "slackapi";
                 repo = "python-slack-hooks";
-                rev = "0.1.0";
-                hash = "sha256-yaw45RJSo7AwBBYT3RHTeL5a8/kXhrRxKxorPuEQEBE=";
+                rev = "v${version}";
+                hash = "sha256-o0cKuUZ7G5XpoqOes2o38A45Rx2z7sYDB4AsAuS3Z18=";
               };
               format = "pyproject";
               buildInputs = [
@@ -44,43 +42,61 @@
             })
           ]
         );
-        # https://github.com/slackapi/slack-cli
-        slackcli = pkgs.stdenv.mkDerivation {
-          name = "slackcli";
-          src =
-            if pkgs.stdenv.isDarwin then
-              pkgs.fetchurl {
-                url = "https://downloads.slack-edge.com/slack-cli/slack_cli_3.5.1_macOS_64-bit.tar.gz";
-                sha256 = "0abavvsjp1mi6s9wvbishswwr5jh7s48b71nnafvfhhhv261x56i";
-              }
-            else
-              pkgs.fetchurl {
-                url = "https://downloads.slack-edge.com/slack-cli/slack_cli_3.5.1_linux_64-bit.tar.gz";
-                sha256 = "15h5zsn1h6lz5q0qsy9qhjphrf516npqhpixy9w7f1ill0gk1xn2";
-              };
-          unpackPhase = "tar -xzf $src";
-          installPhase = ''
-            mkdir -p $out/bin
-            cp -r bin/slack $out/bin/slack
-          '';
-        };
-      in
-      {
-        devShell = pkgs.mkShell {
-          buildInputs = [
-            pkgs.curl # https://github.com/curl/curl
-            pkgs.gnumake # https://github.com/mirror/make
-            pkgs.ruff # http://github.com/astral-sh/ruff
-            pkgs.yajsv # https://github.com/neilpa/yajsv
-            pythonEnv
-            slackcli
-            zimeg.packages.${system}.jurigged # https://github.com/breuleux/jurigged
-          ];
-          shellHook = ''
-            export SLACK_CONFIG_DIR="$HOME/.config/slack"
-            mkdir -p $SLACK_CONFIG_DIR
-          '';
-        };
-      }
-    );
+    in
+    {
+      apps = each (
+        pkgs:
+        {
+          default = {
+            type = "app";
+            program = "${pkgs.writeShellScript "snaek" ''
+              cd ${./.}
+              ${pkgs.ollama}/bin/ollama create snaek --file models/Modelfile
+              ${(pythonEnv pkgs)}/bin/python3 app.py
+            ''}";
+          };
+        }
+      );
+      devShells = each (
+        pkgs:
+        let
+          # https://github.com/slackapi/slack-cli
+          slackcli = pkgs.stdenv.mkDerivation {
+            name = "slackcli";
+            src =
+              if pkgs.stdenv.isDarwin then
+                pkgs.fetchurl {
+                  url = "https://downloads.slack-edge.com/slack-cli/slack_cli_3.12.0_macOS_64-bit.tar.gz";
+                  hash = "sha256-reQ2cB/BeFqXxbF3JYBzI3nwO+Jk1KgjuMjCm3qgNX0=";
+                }
+              else
+                pkgs.fetchurl {
+                  url = "https://downloads.slack-edge.com/slack-cli/slack_cli_3.12.0_linux_64-bit.tar.gz";
+                  hash = "sha256-A0QELxVKAZgPgjopWCleQFVzv2mBM3L57zZLMga0yHg=";
+                };
+            unpackPhase = "tar -xzf $src";
+            installPhase = ''
+              mkdir -p $out/bin
+              cp -r bin/slack $out/bin/slack
+            '';
+          };
+        in
+        {
+          default = pkgs.mkShell {
+            buildInputs = [
+              pkgs.curl # https://github.com/curl/curl
+              pkgs.gnumake # https://github.com/mirror/make
+              pkgs.ruff # http://github.com/astral-sh/ruff
+              pkgs.yajsv # https://github.com/neilpa/yajsv
+              (pythonEnv pkgs)
+              slackcli
+            ];
+            shellHook = ''
+              export SLACK_CONFIG_DIR="$HOME/.config/slack"
+              mkdir -p $SLACK_CONFIG_DIR
+            '';
+          };
+        }
+      );
+    };
 }
