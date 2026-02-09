@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "deploy": "systemctl restart todos:production",
+    "get-manifest": "cat manifest.development.json #",
+    "start": "sops exec-env secrets.development.yaml 'nix run .#server'"
+  },
+  "config": {
+    "sdk-managed-connection-enabled": true,
+    "watch": {
+      "manifest": {
+        "paths": ["manifest.development.json"]
+      }
+    }
+  }
+}

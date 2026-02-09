@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Todo's Guide</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+            line-height: 1.6;
+            color: #e8e8e8;
+            background: #0d0d0d;
+        }
+        a { color: #c4a77d; }
+        .container { max-width: 720px; margin: 0 auto; padding: 40px 20px; }
+        header {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+        header .logo {
+            font-size: 80px;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+        header .text {
+            text-align: left;
+        }
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 400;
+            color: #c4a77d;
+            margin-bottom: 8px;
+        }
+        header p {
+            color: #888;
+            font-size: 1rem;
+        }
+        .pronunciation {
+            font-style: italic;
+            color: #666;
+            margin-top: 4px;
+            font-size: 0.9rem;
+        }
+        section {
+            padding: 30px 0;
+        }
+        h2 {
+            color: #c4a77d;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 16px;
+        }
+        .terminal {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .terminal-header {
+            background: #2d2d2d;
+            padding: 8px 12px;
+            display: flex;
+            gap: 6px;
+        }
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .terminal-dot.red { background: #ff5f56; }
+        .terminal-dot.yellow { background: #ffbd2e; }
+        .terminal-dot.green { background: #27c93f; }
+        .terminal-body {
+            padding: 16px 20px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .terminal-body .prompt { color: #888; }
+        .terminal-body .cmd { color: #fff; }
+        .terminal-body .comment { color: #666; }
+        .terminal-body .section { color: #fff; font-weight: bold; margin-top: 12px; }
+        .terminal-body .section.overdue { color: #ff6b6b; }
+        .terminal-body .item { color: #e8e8e8; }
+        .terminal-body .item .prefix { margin-right: 4px; }
+        .terminal-body .item .prefix.bang { color: #ff6b6b; }
+        .terminal-body .id { color: #666; }
+        .terminal-body .due { color: #ff6b6b; }
+        .terminal-body .due.today { color: #ffd43b; }
+        .terminal-body .success { color: #51cf66; }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        .feature {
+            padding: 16px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 6px;
+        }
+        .feature strong {
+            color: #c4a77d;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .feature p { color: #888; font-size: 0.9rem; }
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #444;
+            font-size: 0.85rem;
+        }
+        @media (max-width: 600px) {
+            .features { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <span class="logo">🦤</span>
+        <div class="text">
+            <h1>Todo's Guide</h1>
+            <p>The endangered task management CLI for collaboration and orchestration using <a href="https://slack.com/help/articles/27452748828179-Use-lists-in-Slack" target="_blank">Slack Lists</a></p>
+            <p class="pronunciation">Called "toh-doh" like the flightless bird</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <section>
+            <h2>Preview</h2>
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="terminal-dot red"></div>
+                    <div class="terminal-dot yellow"></div>
+                    <div class="terminal-dot green"></div>
+                </div>
+                <div class="terminal-body">
+                    <div><span class="prompt">$</span> <span class="cmd">todos</span></div>
+                    <div class="section overdue">Overdue</div>
+                    <div class="item"><span class="prefix bang">!</span> <span class="id">Rec0ADN3PKWMB</span> Review the docs <span class="due">due: 3 days ago</span></div>
+                    <div class="section">Todo</div>
+                    <div class="item"><span class="prefix">·</span> <span class="id">Rec0ADJT656UR</span> Ship the feature <span class="due today">due: today</span></div>
+                    <div class="item"><span class="prefix">·</span> <span class="id">Rec0ADA32CE9M</span> Write tests</div>
+                    <div class="item"><span class="prefix">·</span> <span class="id">Rec0AD619U6HY</span> Deploy to prod</div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Commands</h2>
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="terminal-dot red"></div>
+                    <div class="terminal-dot yellow"></div>
+                    <div class="terminal-dot green"></div>
+                </div>
+                <div class="terminal-body">
+                    <div><span class="prompt">$</span> <span class="cmd">todos</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># Show todos</span></div>
+                    <div><span class="prompt">$</span> <span class="cmd">todos add &lt;title&gt;</span>&nbsp;&nbsp;<span class="comment"># Add a todo (-d YYYY-MM-DD)</span></div>
+                    <div><span class="prompt">$</span> <span class="cmd">todos done &lt;id&gt;</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># Mark todo as complete</span></div>
+                    <div><span class="prompt">$</span> <span class="cmd">todos init</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># Authenticate with Slack</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Features</h2>
+            <div class="features">
+                <div class="feature">
+                    <strong>Smart categories</strong>
+                    <p>Overdue due date detection</p>
+                </div>
+                <div class="feature">
+                    <strong>Built for Slack</strong>
+                    <p>Conversations continue in thread</p>
+                </div>
+                <div class="feature">
+                    <strong>Fast CLI</strong>
+                    <p>Manage tasks from the terminal</p>
+                </div>
+                <div class="feature">
+                    <strong><a href="https://slack.com/help/articles/17542172840595-Build-a-workflow--Create-a-workflow-in-Slack" target="_blank">Connect to workflows</a></strong>
+                    <p>Automate a response to change</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Get started</h2>
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="terminal-dot red"></div>
+                    <div class="terminal-dot yellow"></div>
+                    <div class="terminal-dot green"></div>
+                </div>
+                <div class="terminal-body">
+                    <div><span class="comment"># Install from <a href="https://github.com/zimeg/slack-sandbox/tree/main/py.sdk.todos" target="_blank">github.com/zimeg/slack-sandbox</a></span></div>
+                    <div style="margin-top: 12px;"><span class="prompt">$</span> <span class="cmd">todos init</span></div>
+                    <div style="margin-top: 8px; color: #444;">Opening browser for Slack authorization...</div>
+                    <div style="color: #444;">Credentials saved to ~/.config/slack/extensions/todos/credentials.json</div>
+                    <div style="margin-top: 8px;"><span class="success">✓</span> Connected to Acme Corp</div>
+                    <div><span class="success">✓</span> Gathered list https://acme.slack.com/lists/F0AD5VAE0BU</div>
+                    <div><span class="success">✓</span> You're all set!</div>
+                    <div style="margin-top: 8px;">Try: todos add "My first task"</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        Todo's Guide
+    </footer>
+</body>
+</html>
