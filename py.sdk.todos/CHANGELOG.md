@@ -3,9 +3,11 @@
 Most notable changes to this project will be documented in this file.
 
 Updates follow a [conventional commit][commits] style and the project is
-versioned with [calendar versioning][calver].
+versioned with [semantic versioning][semver].
 
-- feat: package scripts as commands to manage tasks in lists 2026-02-08
+## Unreleased
 
-[calver]: https://calver.org
+- feat: package scripts as commands to view and update tasks in lists
+
+[semver]: https://semver.org
 [commits]: https://www.conventionalcommits.org/en/v1.0.0/
