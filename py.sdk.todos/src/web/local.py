@@ -17,8 +17,8 @@ from cli.display import DIM, RESET
 
 # OAuth configuration
 LOCAL_PORT = 9876
-REDIRECT_URI = f"http://localhost:{LOCAL_PORT}/callback"
 SERVER_URL = os.getenv("OAUTH_SERVER_URL", "https://todos.guide")
+SERVER_REDIRECT_URI = f"{SERVER_URL}/callback"
 
 # Templates
 CALLBACK_PAGE = resources.files("web.templates").joinpath("callback.html").read_text()
@@ -37,7 +37,7 @@ class OAuthHandler(BaseHTTPRequestHandler):
         """Handle GET requests."""
         parsed = urlparse(self.path)
 
-        if parsed.path == "/callback":
+        if parsed.path == "/finish":
             self._handle_callback(parsed.query)
         elif parsed.path == "/":
             self._send_html(
@@ -75,6 +75,10 @@ class OAuthHandler(BaseHTTPRequestHandler):
         code = params["code"][0]
         state = params.get("state", [None])[0]
 
+        # Strip port suffix if present (from server-proxied flow)
+        if state and ":" in state:
+            state = state.rsplit(":", 1)[0]
+
         # Verify state to prevent CSRF
         if state != self.server_instance.oauth_state:
             self._send_html(
@@ -109,7 +113,7 @@ class OAuthHandler(BaseHTTPRequestHandler):
         try:
             response = requests.post(
                 f"{SERVER_URL}/oauth/exchange",
-                json={"code": code, "redirect_uri": REDIRECT_URI},
+                json={"code": code, "redirect_uri": SERVER_REDIRECT_URI},
                 timeout=30,
             )
             data = response.json()
@@ -150,7 +154,7 @@ def run_oauth_flow() -> dict | None:
     Returns token data on success, None on failure.
     """
     server = OAuthServer()
-    auth_url = f"{SERVER_URL}/login?state={server.oauth_state}"
+    auth_url = f"{SERVER_URL}/login?state={server.oauth_state}&local_port={LOCAL_PORT}"
 
     print(f"{DIM}Opening browser for Slack authorization...")
     print(f"If browser doesn't open, visit: {auth_url}")

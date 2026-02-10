@@ -11,6 +11,10 @@ versioned with [semantic versioning][semver].
 
 - feat: package scripts as commands to view and update tasks in lists
 
+### Bug fixes
+
+- fix: redirect authentications through the server for secured proxies
+
 ### Documentation
 
 - docs: add uv tool install instructions to the landing page and readme
