@@ -12,7 +12,7 @@ of a satellite. Powered with [Bolt for JavaScript][bolt] on [Heroku][heroku].
 Development with the [Slack CLI][cli] is encouraged but requires customization:
 
 ```sh
-$ slack create surge -t zimeg/slacks -b js.bolt.surge
+$ slack create surge -t zimeg/slacks -b surge
 $ cd surge
 $ SLACK_ENVIRONMENT_TAG="development" slack run    # Local development
 $ SLACK_ENVIRONMENT_TAG="production" slack deploy  # Push to production

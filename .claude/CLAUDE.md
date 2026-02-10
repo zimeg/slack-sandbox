@@ -148,4 +148,4 @@ Located in `{app}/.slack/hooks.json`. The `deploy` hook runs after `slack deploy
 
 ### Downstream Repo
 
-The `synchronize` job pushes each app to `zimeg/slacks` as separate branches. Services on tom pull from these branches (e.g., `github:zimeg/slacks/py.bolt.snaek`).
+The `synchronize` job pushes each app to `zimeg/slacks` as separate branches. Services on tom pull from these branches (e.g., `github:zimeg/slacks/snaek`).

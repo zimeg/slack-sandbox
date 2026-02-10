@@ -19,12 +19,19 @@ jobs:
       matrix:
         include:
           - app: deno.sdk.begut
+            branch: begut
           - app: deno.sdk.chanl
+            branch: chanl
           - app: java.sdk.gibra
+            branch: gibra
           - app: js.bolt.surge
+            branch: surge
           - app: js.bolt.tails
+            branch: tails
           - app: py.bolt.snaek
+            branch: snaek
           - app: py.sdk.todos
+            branch: todos
     steps:
       - name: Checkout this repo
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -46,14 +53,14 @@ jobs:
       - name: Update ${{ matrix.app }}
         run: |
           cd samples
-          git checkout --orphan ${{ matrix.app }}
+          git checkout --orphan ${{ matrix.branch }}
           rsync -av --delete --exclude=".git" ../sandbox/${{ matrix.app }}/ .
           rm -f .slack/apps.json
           rm -f .slack/apps.*.json
           cp ../sandbox/LICENSE .
           git add .
           git commit -m "chore(sync): update sample with the latest upstream changes"
-          git push -u origin ${{ matrix.app }} --force
+          git push -u origin ${{ matrix.branch }} --force
       - name: Send a notification of completion
         uses: slackapi/slack-github-action@91efab103c0de0a537f72a35f6b8cda0ee76bf0a # v2.1.1
         with:
@@ -61,7 +68,7 @@ jobs:
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
           payload: |
             channel: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
-            text: "${{ matrix.app }}(chore): downstream now mirrors changes"
+            text: "${{ matrix.branch }}(chore): downstream now mirrors changes"
   publish:
     name: Package sensible changes
     needs: synchronize

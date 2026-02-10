@@ -30,8 +30,9 @@ todos init          # Authenticate with Slack
 ## Setup
 
 ```sh
-$ nix run github:zimeg/slacks/py.sdk.todos# -- init
-$ nix run github:zimeg/slacks/py.sdk.todos#
-$ nix run github:zimeg/slacks/py.sdk.todos# -- add "My first task"
-$ nix run github:zimeg/slacks/py.sdk.todos# -- done Rec0ADN3PKWMB
+$ uv tool install git+https://github.com/zimeg/slacks@todos
+$ todos init
+$ todos
+$ todos add "My first task"
+$ todos done Rec0ADN3PKWMB
 ```

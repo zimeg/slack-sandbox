@@ -7,6 +7,8 @@
       "Bash(gh pr edit:*)",
       "Bash(gh pr merge:*)",
       "Bash(gh pr view:*)",
+      "Bash(gh run list:*)",
+      "Bash(gh run view:*)",
       "Bash(git branch:*)",
       "Bash(git commit:*)",
       "Bash(git fetch:*)",
