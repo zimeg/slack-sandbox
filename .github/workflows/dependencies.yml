@@ -60,7 +60,6 @@ jobs:
     if: github.event_name != 'pull_request'
     runs-on: self-hosted
     permissions:
-      actions: write
       contents: write
       pull-requests: write
     steps:
@@ -70,6 +69,7 @@ jobs:
           fetch-depth: 0
           persist-credentials: true
           ref: main
+          token: ${{ secrets.SANDBOX_ACCESS_TOKEN }}
       - name: Configure git credentials
         run: |
           git config user.name 'github-actions[bot]'
@@ -97,17 +97,6 @@ jobs:
           git switch --force-create update origin/main
           git commit --all --message "chore(deps): automatic version bump to the most recent packages"
           git push -f origin update
-      - name: Start the tests
-        if: steps.diff.outputs.changed == 'true'
-        run: |
-          gh api \
-            --method POST \
-            -H "Accept: application/vnd.github+json" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            /repos/${{ github.repository }}/actions/workflows/samples.yml/dispatches \
-            -f "ref=update"
-        env:
-          GH_TOKEN: ${{ github.token }}
       - name: Create pull request
         if: steps.diff.outputs.changed == 'true'
         run: |
