@@ -80,9 +80,9 @@
           server = pkgs.writeShellApplication {
             name = "server";
             runtimeInputs = [
-              (pkgs.python3.withPackages (_: [ todos ]))
+              todos
             ];
-            text = "python -m web.server \"$@\"";
+            text = "todos-server \"$@\"";
           };
           default = todos;
         }
