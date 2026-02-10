@@ -82,7 +82,7 @@
             runtimeInputs = [
               todos
             ];
-            text = "server \"$@\"";
+            text = "python -m web.server \"$@\"";
           };
           default = todos;
         }
