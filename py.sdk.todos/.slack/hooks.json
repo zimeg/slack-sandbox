@@ -1,6 +1,6 @@
 {
   "hooks": {
-    "deploy": "systemctl restart todos:production",
+    "deploy": "systemctl restart todos",
     "get-manifest": "cat manifest.development.json #",
     "start": "sops exec-env secrets.development.yaml 'nix run .#server'"
   },
