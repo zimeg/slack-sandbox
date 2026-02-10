@@ -68,7 +68,7 @@ jobs:
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
           payload: |
             channel: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
-            text: "${{ matrix.branch }}(chore): downstream now mirrors changes"
+            text: "${{ matrix.app }}(chore): downstream now mirrors changes"
   publish:
     name: Package sensible changes
     needs: synchronize
