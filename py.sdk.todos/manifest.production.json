@@ -1,0 +1,21 @@
+{
+  "display_information": {
+    "name": "Todo's Guide",
+    "description": "For birds with better priorities",
+    "long_description": "Todo's Guide (pronounced \"toh-doh\") helps you feather your nest of tasks. No more winging it — TG brings order to the flock, one checkbox at a time.\n\nFeatures:\n• Smart lists that know when you're nesting on tasks too long\n• AI-powered suggestions to help you take flight\n• Overdue alerts (the early bird catches the deadline)\n• Priority levels from P3 (\"whenever\") to P0 (\"the sky is falling\")\n\nWhether you're migrating projects or just trying not to ruffle feathers, Todo's Guide has your wing. Now fly forth and conquer that backlog!",
+    "background_color": "#4A154B"
+  },
+  "oauth_config": {
+    "redirect_urls": [
+      "http://localhost:9876/callback"
+    ],
+    "scopes": {
+      "user": ["lists:read", "lists:write"]
+    }
+  },
+  "settings": {
+    "org_deploy_enabled": false,
+    "socket_mode_enabled": false,
+    "token_rotation_enabled": false
+  }
+}

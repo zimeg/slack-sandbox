@@ -12,7 +12,7 @@ languages on various frameworks or libraries or sdks or whatever else.
 * [Java Slack SDK][sdk_java]: `java.sdk.gibra`
 * [Bolt for JavaScript][bolt_js]: `js.bolt.tails`
 * [Bolt for Python][bolt_python]: `py.bolt.snaek`
-* [Python Slack SDK][sdk_python]: `py.sdk.sdkai`
+* [Python Slack SDK][sdk_python]: `py.sdk.todos`
 
 Each subdirectory will have more information on getting started and references
 to related documentation. Be warned that the apps might not make much sense.
@@ -28,7 +28,7 @@ structure like so (with this repo being called `sandbox`):
 ```
  | sandbox/
  | - py.bolt.snaek/
- | - py.sdk.sdkai/
+ | - py.sdk.todos/
  | tools/
  | - bolt-python/
  | - python-slack-sdk/
