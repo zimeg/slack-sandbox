@@ -7,7 +7,7 @@
   },
   "oauth_config": {
     "redirect_urls": [
-      "http://localhost:9876/callback"
+      "http://localhost:8083/callback"
     ],
     "scopes": {
       "user": ["lists:read", "lists:write"]

@@ -22,7 +22,8 @@ HOST = os.getenv("HOST", "0.0.0.0")
 # OAuth configuration
 CLIENT_ID = os.getenv("SLACK_CLIENT_ID", "")
 CLIENT_SECRET = os.getenv("SLACK_CLIENT_SECRET", "")
-REDIRECT_URI = os.getenv("OAUTH_REDIRECT_URI", "http://localhost:9876/callback")
+SERVER_REDIRECT_URI = os.getenv("OAUTH_REDIRECT_URI", "https://todos.guide/callback")
+DEFAULT_LOCAL_PORT = 9876
 
 # Templates
 LANDING_PAGE = resources.files("web.templates").joinpath("landing.html").read_text()
@@ -44,6 +45,8 @@ class Handler(BaseHTTPRequestHandler):
             self._send_html(LANDING_PAGE)
         elif path == "/login":
             self._handle_oauth_start(parsed.query)
+        elif path == "/callback":
+            self._handle_oauth_callback(parsed.query)
         else:
             self.send_error(404)
 
@@ -63,11 +66,11 @@ class Handler(BaseHTTPRequestHandler):
         """Redirect to Slack OAuth (requires state from CLI)."""
         params = parse_qs(query)
         state = params.get("state", [""])[0]
-        redirect_uri = params.get("redirect_uri", [REDIRECT_URI])[0]
+        local_port = params.get("local_port", [str(DEFAULT_LOCAL_PORT)])[0]
 
         # Sanitize values used in HTTP headers to prevent response splitting
         state = state.replace("\r", "").replace("\n", "")
-        redirect_uri = redirect_uri.replace("\r", "").replace("\n", "")
+        local_port = local_port.replace("\r", "").replace("\n", "")
 
         if not state:
             self._send_html(
@@ -81,16 +84,51 @@ class Handler(BaseHTTPRequestHandler):
             self._send_html("<h1>Error</h1><p>Server not configured</p>", 500)
             return
 
+        # Encode local_port in state for retrieval in callback
+        combined_state = f"{state}:{local_port}"
+
         auth_url = (
             "https://slack.com/oauth/v2/authorize"
             f"?client_id={CLIENT_ID}"
             f"&scope="
             f"&user_scope=lists:read,lists:write"
-            f"&redirect_uri={redirect_uri}"
-            f"&state={state}"
+            f"&redirect_uri={SERVER_REDIRECT_URI}"
+            f"&state={combined_state}"
         )
         self.send_response(302)
         self.send_header("Location", auth_url)
+        self.end_headers()
+
+    def _handle_oauth_callback(self, query: str) -> None:
+        """Forward OAuth callback to local CLI server."""
+        params = parse_qs(query)
+
+        # Extract local_port from combined state (format: "original_state:port")
+        combined_state = params.get("state", [""])[0]
+        if ":" in combined_state:
+            original_state, local_port = combined_state.rsplit(":", 1)
+        else:
+            original_state = combined_state
+            local_port = str(DEFAULT_LOCAL_PORT)
+
+        # Sanitize to prevent header injection
+        local_port = local_port.replace("\r", "").replace("\n", "")
+        original_state = original_state.replace("\r", "").replace("\n", "")
+
+        # Build params to forward
+        forward_params = []
+        if "code" in params:
+            code = params["code"][0].replace("\r", "").replace("\n", "")
+            forward_params.append(f"code={code}")
+        if "error" in params:
+            error = params["error"][0].replace("\r", "").replace("\n", "")
+            forward_params.append(f"error={error}")
+        forward_params.append(f"state={original_state}")
+
+        local_url = f"http://localhost:{local_port}/finish?{'&'.join(forward_params)}"
+
+        self.send_response(302)
+        self.send_header("Location", local_url)
         self.end_headers()
 
     def _handle_oauth_exchange(self, body: bytes) -> None:
@@ -142,7 +180,6 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("Content-Length", str(len(body)))
         self.end_headers()
         self.wfile.write(body.encode())
-
 
 
 def main() -> None:
