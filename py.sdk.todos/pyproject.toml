@@ -14,6 +14,7 @@ dependencies = [
 
 [project.scripts]
 todos = "cli.main:main"
+todos-server = "web.server:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

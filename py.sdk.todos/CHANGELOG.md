@@ -18,7 +18,7 @@ versioned with [semantic versioning][semver].
 
 ### Maintenance
 
-- chore: remove server script from installed commands
+- chore: rename server script to todos-server
 - ci: use short branch names for downstream sample repositories
 - ci: run tests and republish changes after merges of feature branches
 
