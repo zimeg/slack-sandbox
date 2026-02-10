@@ -13,7 +13,7 @@ that downloads both audio and visuals called [`yt-dlp`][ytdlp].
 Download [the Slack CLI][cli] for quick installations then follow these steps:
 
 ```sh
-$ slack create tails --template zimeg/slacks --branch js.bolt.tails
+$ slack create tails --template zimeg/slacks --branch tails
 $ cd tails
 $ slack run     # Start a development server
 ```

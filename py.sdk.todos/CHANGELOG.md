@@ -13,10 +13,13 @@ versioned with [semantic versioning][semver].
 
 ### Documentation
 
+- docs: add uv tool install instructions to the landing page and readme
 - docs: remove particular package in running default nix run program
 
 ### Maintenance
 
+- chore: remove server script from installed commands
+- ci: use short branch names for downstream sample repositories
 - ci: run tests and republish changes after merges of feature branches
 
 [semver]: https://semver.org
