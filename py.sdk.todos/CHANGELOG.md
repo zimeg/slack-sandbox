@@ -22,6 +22,7 @@ versioned with [semantic versioning][semver].
 
 ### Maintenance
 
+- ci: use the production manifest when making change on merge
 - chore: rename server script to todos-server
 - ci: use short branch names for downstream sample repositories
 - ci: run tests and republish changes after merges of feature branches
