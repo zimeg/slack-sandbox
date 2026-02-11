@@ -6,8 +6,12 @@ from ollama import Client
 from ollama._types import Message
 from slack_bolt import BoltContext
 from slack_sdk import WebClient
-from slack_sdk.models.blocks import (ContextActionsBlock, FeedbackButtonObject,
-                                     FeedbackButtonsElement, UrlSourceElement)
+from slack_sdk.models.blocks import (
+    ContextActionsBlock,
+    FeedbackButtonObject,
+    FeedbackButtonsElement,
+    UrlSourceElement,
+)
 from slack_sdk.models.messages.chunk import PlanUpdateChunk, TaskUpdateChunk
 
 from agent.tools import get_gregorian_time, get_quintus_time
