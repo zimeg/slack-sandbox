@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- feat: gather time from various calendars using tools and thinking 2026-02-11
 - build: shed flake utilies skin for a sleeker serpentine derivation 2026-02-07
 - feat: add iconic of a slithering snake moving through text prompts 2026-02-05
 - build: slither into production serving using the nix flake command 2026-02-05

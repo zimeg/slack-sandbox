@@ -2,9 +2,17 @@
   description = "a strange and slithery Slack app";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    python-slack-sdk = {
+      url = "github:slackapi/python-slack-sdk/v3.40.0";
+      flake = false;
+    };
   };
   outputs =
-    { nixpkgs, ... }:
+    {
+      nixpkgs,
+      python-slack-sdk,
+      ...
+    }:
     let
       each =
         function:
@@ -16,30 +24,59 @@
         ] (system: function nixpkgs.legacyPackages.${system});
       pythonEnv =
         pkgs:
+        let
+          ps = pkgs.python313.pkgs;
+          # https://github.com/slackapi/python-slack-sdk
+          slack_sdk = ps.buildPythonPackage {
+            pname = "slack_sdk";
+            version = "3.40.0";
+            src = python-slack-sdk;
+            format = "pyproject";
+            buildInputs = [ ps.setuptools ];
+          };
+          # https://github.com/slackapi/bolt-python
+          slack_bolt = ps.buildPythonPackage rec {
+            pname = "slack_bolt";
+            version = "1.24.0";
+            src = pkgs.fetchFromGitHub {
+              owner = "slackapi";
+              repo = "bolt-python";
+              rev = "v${version}";
+              hash = "sha256-n2A4Vr+sbRicS7OfQ/1dMEw1jHLDnfgoaZCBQl9XFYo=";
+            };
+            format = "pyproject";
+            buildInputs = [ ps.setuptools ];
+            dependencies = [ slack_sdk ];
+            doCheck = false;
+            postPatch = ''
+              substituteInPlace pyproject.toml --replace-fail ", \"pytest-runner==6.0.1\"" ""
+            '';
+          };
+          # https://github.com/slackapi/python-slack-hooks
+          slack_cli_hooks = ps.buildPythonPackage rec {
+            pname = "slack_cli_hooks";
+            version = "0.3.0";
+            src = pkgs.fetchFromGitHub {
+              owner = "slackapi";
+              repo = "python-slack-hooks";
+              rev = "v${version}";
+              hash = "sha256-o0cKuUZ7G5XpoqOes2o38A45Rx2z7sYDB4AsAuS3Z18=";
+            };
+            format = "pyproject";
+            buildInputs = [ ps.setuptools ];
+            dependencies = [ slack_bolt ];
+          };
+        in
         pkgs.python313.withPackages (
-          ps: with ps; [
-            mypy # https://github.com/python/mypy
-            packaging # https://github.com/pypa/packaging
-            requests # https://github.com/psf/requests
-            slack-bolt # http://github.com/slackapi/bolt-python
-            slack-sdk # https://github.com/slackapi/python-slack-sdk
-            types-requests # https://github.com/python/typeshed/tree/main/stubs/requests/requests
-            # https://github.com/slackapi/python-slack-hooks
-            (buildPythonPackage rec {
-              pname = "slack_cli_hooks";
-              version = "0.3.0";
-              src = pkgs.fetchFromGitHub {
-                owner = "slackapi";
-                repo = "python-slack-hooks";
-                rev = "v${version}";
-                hash = "sha256-o0cKuUZ7G5XpoqOes2o38A45Rx2z7sYDB4AsAuS3Z18=";
-              };
-              format = "pyproject";
-              buildInputs = [
-                setuptools
-                slack-bolt
-              ];
-            })
+          _: [
+            ps.mypy # https://github.com/python/mypy
+            ps.ollama # https://github.com/ollama/ollama-python
+            ps.packaging # https://github.com/pypa/packaging
+            ps.requests # https://github.com/psf/requests
+            ps.types-requests # https://github.com/python/typeshed/tree/main/stubs/requests/requests
+            slack_sdk
+            slack_bolt
+            slack_cli_hooks
           ]
         );
     in
@@ -51,7 +88,7 @@
             type = "app";
             program = "${pkgs.writeShellScript "snaek" ''
               cd ${./.}
-              ${pkgs.ollama}/bin/ollama create snaek --file models/Modelfile
+              ${pkgs.ollama}/bin/ollama create snaek --file agent/Modelfile
               ${(pythonEnv pkgs)}/bin/python3 app.py
             ''}";
           };

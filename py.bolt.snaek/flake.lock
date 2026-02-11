@@ -16,9 +16,27 @@
         "type": "github"
       }
     },
+    "python-slack-sdk": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1770761083,
+        "narHash": "sha256-laGYC53w7MwwkOkZnxornR/0PGTaTlLuzPBDGEGE4xU=",
+        "owner": "slackapi",
+        "repo": "python-slack-sdk",
+        "rev": "8b0bd0b50128acb2da1b766d0a74d1897d173f7b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "slackapi",
+        "ref": "v3.40.0",
+        "repo": "python-slack-sdk",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "python-slack-sdk": "python-slack-sdk"
       }
     }
   },
