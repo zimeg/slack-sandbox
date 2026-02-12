@@ -14,7 +14,7 @@
     "logs:web": "heroku logs --tail --app surged | grep heroku",
     "pretest": "npm run lint && npm run check",
     "start": "node src/app.js",
-    "test": "node --test --experimental-test-coverage test/**/*.spec.js",
+    "test": "node --test --experimental-test-coverage **/*.spec.js",
     "watch": "npx nodemon --exec npm run start"
   },
   "author": "@zimeg",
