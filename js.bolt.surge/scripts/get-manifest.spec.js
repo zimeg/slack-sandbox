@@ -1,6 +1,6 @@
 import assert from "node:assert";
 import { afterEach, beforeEach, describe, it } from "node:test";
-import getManifest from "../../scripts/get-manifest.js";
+import getManifest from "./get-manifest.js";
 
 describe("scripts", () => {
   describe("get-manifest", () => {
