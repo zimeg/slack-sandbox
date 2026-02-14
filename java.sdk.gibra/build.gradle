@@ -17,7 +17,7 @@ repositories {
     mavenCentral()
 }
 dependencies {
-    implementation("ch.qos.logback:logback-classic:1.5.27")
+    implementation("ch.qos.logback:logback-classic:1.5.28")
     implementation("com.slack.api:bolt-socket-mode:1.47.0")
     implementation("com.slack.api:slack-api-client:1.47.0")
     implementation("commons-cli:commons-cli:1.11.0")
