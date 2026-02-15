@@ -4,8 +4,14 @@ node_modules
 
 # Secrets and similar things
 .env*
-!.env.example
+!.env.development.example
+!.env.production.example
 store
 
 # Testing tooling
 coverage
+
+# Build output
+.output
+.nitro
+.vercel

@@ -50,10 +50,9 @@
             buildInputs = [
               pkgs.bash # https://git.savannah.gnu.org/cgit/bash.git
               biomepkgs.biome # https://github.com/biomejs/biome
-              pkgs.heroku # https://github.com/heroku/cli
               pkgs.jq # https://github.com/jqlang/jq
-              pkgs.nodejs_22 # https://github.com/nodejs/node
-              pkgs.opentofu # https://github.com/opentofu/opentofu
+              pkgs.nodejs_24 # https://github.com/nodejs/node
+              pkgs.sops # https://github.com/getsops/sops
               slackcli
               pkgs.typescript # https://github.com/microsoft/typescript
             ];
