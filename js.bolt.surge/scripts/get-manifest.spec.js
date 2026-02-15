@@ -39,7 +39,7 @@ describe("scripts", () => {
         features: {
           app_home: {
             home_tab_enabled: true,
-            messages_tab_enabled: true,
+            messages_tab_enabled: false,
             messages_tab_read_only_enabled: true,
           },
           bot_user: {
@@ -50,14 +50,19 @@ describe("scripts", () => {
         oauth_config: {
           redirect_urls: ["https://surgem.ai/slack/oauth_redirect"],
           scopes: {
-            bot: ["channels:history", "chat:write"],
+            bot: [
+              "canvases:write",
+              "channels:history",
+              "chat:write",
+              "files:read",
+            ],
           },
         },
         settings: {
           org_deploy_enabled: true,
           event_subscriptions: {
             request_url: "https://surgem.ai/slack/events",
-            bot_events: ["app_home_opened", "message.channels"],
+            bot_events: ["app_home_opened", "file_shared", "message.channels"],
           },
           token_rotation_enabled: false,
         },
