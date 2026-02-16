@@ -51,10 +51,11 @@
   },
   "settings": {
     "event_subscriptions": {
+      "request_url": "https://surgemail-git-b-zimeg.vercel.app/api/slack/events",
       "bot_events": ["app_home_opened", "file_shared"]
     },
     "org_deploy_enabled": true,
-    "socket_mode_enabled": true,
+    "socket_mode_enabled": false,
     "token_rotation_enabled": false
   }
 }
