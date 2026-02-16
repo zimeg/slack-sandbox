@@ -1,0 +1,60 @@
+{
+  "display_information": {
+    "name": "surge - staging",
+    "background_color": "#1a1a10",
+    "description": "the simple sorter of streaming mail",
+    "long_description": "@surge delivers email as markdown to channels around. some sorting and set settings can be applied to tilt orderings in various directions.\r\n\r\nConfigure an inbox then decide what should go where as new messages arrive!"
+  },
+  "features": {
+    "app_home": {
+      "home_tab_enabled": true,
+      "messages_tab_enabled": true,
+      "messages_tab_read_only_enabled": false
+    },
+    "bot_user": {
+      "display_name": "surge - staging",
+      "always_online": true
+    }
+  },
+  "oauth_config": {
+    "redirect_urls": [
+      "https://surgemail-git-a-zimeg.vercel.app/api/slack/oauth_redirect",
+      "https://surgemail-git-b-zimeg.vercel.app/api/slack/oauth_redirect",
+      "https://surgemail-git-c-zimeg.vercel.app/api/slack/oauth_redirect",
+      "https://surgemail-git-d-zimeg.vercel.app/api/slack/oauth_redirect",
+      "https://surgemail-git-e-zimeg.vercel.app/api/slack/oauth_redirect",
+      "https://surgemail-git-f-zimeg.vercel.app/api/slack/oauth_redirect",
+      "https://surgemail-git-g-zimeg.vercel.app/api/slack/oauth_redirect",
+      "https://surgemail-git-h-zimeg.vercel.app/api/slack/oauth_redirect",
+      "https://surgemail-git-i-zimeg.vercel.app/api/slack/oauth_redirect",
+      "https://surgemail-git-j-zimeg.vercel.app/api/slack/oauth_redirect",
+      "https://surgemail-git-k-zimeg.vercel.app/api/slack/oauth_redirect",
+      "https://surgemail-git-l-zimeg.vercel.app/api/slack/oauth_redirect",
+      "https://surgemail-git-m-zimeg.vercel.app/api/slack/oauth_redirect",
+      "https://surgemail-git-n-zimeg.vercel.app/api/slack/oauth_redirect",
+      "https://surgemail-git-o-zimeg.vercel.app/api/slack/oauth_redirect",
+      "https://surgemail-git-p-zimeg.vercel.app/api/slack/oauth_redirect",
+      "https://surgemail-git-q-zimeg.vercel.app/api/slack/oauth_redirect",
+      "https://surgemail-git-r-zimeg.vercel.app/api/slack/oauth_redirect",
+      "https://surgemail-git-s-zimeg.vercel.app/api/slack/oauth_redirect",
+      "https://surgemail-git-t-zimeg.vercel.app/api/slack/oauth_redirect",
+      "https://surgemail-git-u-zimeg.vercel.app/api/slack/oauth_redirect",
+      "https://surgemail-git-v-zimeg.vercel.app/api/slack/oauth_redirect",
+      "https://surgemail-git-w-zimeg.vercel.app/api/slack/oauth_redirect",
+      "https://surgemail-git-x-zimeg.vercel.app/api/slack/oauth_redirect",
+      "https://surgemail-git-y-zimeg.vercel.app/api/slack/oauth_redirect",
+      "https://surgemail-git-z-zimeg.vercel.app/api/slack/oauth_redirect"
+    ],
+    "scopes": {
+      "bot": ["chat:write", "files:read", "files:write"]
+    }
+  },
+  "settings": {
+    "event_subscriptions": {
+      "bot_events": ["app_home_opened", "file_shared"]
+    },
+    "org_deploy_enabled": true,
+    "socket_mode_enabled": true,
+    "token_rotation_enabled": false
+  }
+}

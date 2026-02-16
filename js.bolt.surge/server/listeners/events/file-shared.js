@@ -1,4 +1,3 @@
-import { openai } from "@ai-sdk/openai";
 import { generateText } from "ai";
 
 /**
@@ -46,10 +45,10 @@ export default function fileSharedCallback(options) {
         return;
       }
 
-      const model = "gpt-4o-mini";
+      const model = process.env.AI_MODEL || "anthropic/claude-haiku-4.5";
       const { text, usage } = await generateText({
-        model: openai(model),
-        system: `Convert the following email body into clean, readable markdown. Remove headers (From, To, Subject, Date), tracking pixels, tracking links, footers, unsubscribe links, and unnecessary noise. Just extract the main content. Keep useful links and preserve lists. Be concise.`,
+        model,
+        system: `Convert the following email into markdown. Use verbatim wording. Remove tracking pixels, tracking links, footers, unsubscribe links, and legal boilerplate. Never remove relevant detail.`,
         prompt: file.preview,
       });
 
@@ -67,10 +66,10 @@ export default function fileSharedCallback(options) {
       const subject = file.subject;
 
       const header = [
-        fromStr && `*From:* ${fromStr}`,
-        toStr && `*To:* ${toStr}`,
-        dateStr && `*Date:* ${dateStr}`,
-        subject && `*Subject:* ${subject}`,
+        fromStr && `📤 *From:* ${fromStr}`,
+        toStr && `📥 *To:* ${toStr}`,
+        subject && `📝 *Subject:* ${subject}`,
+        dateStr && `📅 *Date:* ${dateStr}`,
       ]
         .filter(Boolean)
         .join("\n");
@@ -79,26 +78,31 @@ export default function fileSharedCallback(options) {
         logger.warn("AI returned no content for email", event.file_id);
         return;
       }
+      const content = text
+        .replace(/^\s*```\w*\n?/, "")
+        .replace(/\n?```\s*$/, "");
 
       await options.db.deductCredit({
         teamId,
         enterpriseId,
         model,
-        inputTokens: usage?.promptTokens ?? 0,
-        outputTokens: usage?.completionTokens ?? 0,
-        totalTokens:
-          (usage?.promptTokens ?? 0) + (usage?.completionTokens ?? 0),
+        inputTokens: usage?.inputTokens ?? 0,
+        outputTokens: usage?.outputTokens ?? 0,
+        totalTokens: usage?.totalTokens ?? 0,
         referenceId: event.file_id,
       });
 
       const title = file.title || file.name || "(No Subject)";
-      const threadTs = info.file.shares?.public?.[event.channel_id]?.[0]?.ts;
+      const shares = info.file.shares;
+      const threadTs =
+        shares?.public?.[event.channel_id]?.[0]?.ts ??
+        shares?.private?.[event.channel_id]?.[0]?.ts;
 
       if (event.channel_id && threadTs) {
         await client.filesUploadV2({
           channel_id: event.channel_id,
           thread_ts: threadTs,
-          content: text,
+          content,
           filename: `${title}.md`,
           title: `:email: ${title}`,
           initial_comment: header,

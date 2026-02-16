@@ -1,9 +1,7 @@
 import { app } from "../app.js";
 
-const isProduction = process.env.SLACK_ENVIRONMENT_TAG === "production";
-
 export default defineNitroPlugin(async () => {
-  if (isProduction) {
+  if (process.env.VERCEL_ENV) {
     return;
   }
 

@@ -31,13 +31,12 @@
     "node": "24.x"
   },
   "dependencies": {
-    "@ai-sdk/openai": "^1.3.22",
     "@neondatabase/serverless": "^0.10.4",
     "@slack/bolt": "^4.6.0",
     "@slack/logger": "^4.0.0",
     "@slack/oauth": "^3.0.4",
     "@vercel/slack-bolt": "^0.1.4",
-    "ai": "^4.3.16",
+    "ai": "^6.0.86",
     "zod": "^3.25.67"
   },
   "devDependencies": {

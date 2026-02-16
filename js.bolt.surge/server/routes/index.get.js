@@ -11,12 +11,7 @@ export default defineEventHandler(async (event) => {
   const error = query.error;
   const redirect = query.redirect;
 
-  let count = 0;
-  try {
-    count = await db.getMessageCount();
-  } catch {
-    // db not ready
-  }
+  const count = await db.getMessageCount();
 
   setResponseHeader(event, "Content-Type", "text/html");
 
@@ -33,7 +28,7 @@ export default defineEventHandler(async (event) => {
       <div class="status">
         <p><strong>something went wrong.</strong></p>
         <p class="muted">${error}</p>
-        <a href="/" class="btn">try again</a>
+        <a href="/api/slack/install" class="btn">try again</a>
       </div>
     `;
   }
@@ -44,8 +39,7 @@ export default defineEventHandler(async (event) => {
       <header>
         <div class="text">
           <h1><a href="/">surgem.ai/</a></h1>
-          <p class="est">- est. 2024 -</p>
-          <p class="tagline">a slack app that converts<br>emails into markdown.</p>
+          <p class="tagline">email to markdown<br>a slack app that delivers<br>to channels around</p>
         </div>
         <img src="https://github.com/zimeg/slack-sandbox/blob/main/js.bolt.surge/assets/icon.png?raw=true" class="hero-img" alt="surge">
       </header>
@@ -63,7 +57,7 @@ export default defineEventHandler(async (event) => {
         <h2>get started</h2>
         <ol>
           <li>install the app to your workspace</li>
-          <li><a href="https://slack.com/help/articles/206819278-Send-emails-to-Slack">set up email forwarding</a> to a channel</li>
+          <li>set up <a href="https://slack.com/help/articles/206819278-Send-emails-to-Slack">email forwarding</a> to a channel</li>
           <li>invite <span class="accent">@surge</span> to that channel</li>
         </ol>
       </section>

@@ -1,5 +1,11 @@
 {
   "apps": {
+    "E06LPMFSSTU": {
+      "app_id": "A0AFAQGD6LU",
+      "enterprise_id": "E06LPMFSSTU",
+      "team_domain": "tinyspek",
+      "team_id": "E06LPMFSSTU"
+    },
     "T02A074M3U3": {
       "app_id": "A0799T93W91",
       "team_domain": "slackbox-ez",

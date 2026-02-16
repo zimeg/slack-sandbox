@@ -48,13 +48,6 @@ const styles = `
     text-decoration: underline;
   }
 
-  .est {
-    font-size: 0.7rem;
-    color: #999;
-    letter-spacing: 0.08em;
-    margin-bottom: 0.75rem;
-  }
-
   .tagline {
     font-size: 0.9rem;
     color: #555;
@@ -233,6 +226,8 @@ export function layout({ title, content, scripts = "" }) {
     ${content}
   </div>
   ${scripts}
+  <script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="/_vercel/analytics/script.js"></script>
 </body>
 </html>`;
 }

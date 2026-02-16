@@ -32,12 +32,7 @@ export default defineEventHandler(async (event) => {
     ),
     {},
     {
-      scopes: [
-        "canvases:write",
-        "channels:history",
-        "chat:write",
-        "files:read",
-      ],
+      scopes: ["chat:write", "files:read", "files:write"],
       redirectUri: `${origin}/api/slack/oauth_redirect`,
     },
   );

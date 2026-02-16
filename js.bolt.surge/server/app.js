@@ -4,13 +4,16 @@ import { VercelReceiver } from "@vercel/slack-bolt";
 import { db } from "./lib/database/index.js";
 import { createInstallProvider } from "./lib/oauth/index.js";
 import { DatabaseStateStore } from "./lib/oauth/state-store.js";
-import { registerListeners } from "./listeners/events/index.js";
+import { registerListeners } from "./listeners/index.js";
 
 const { App, LogLevel, SocketModeReceiver } = boltPkg;
 const { InstallProvider } = oauthPkg;
 
 const isProduction = process.env.SLACK_ENVIRONMENT_TAG === "production";
-const logLevel = isProduction ? LogLevel.INFO : LogLevel.DEBUG;
+const defaultLogLevel = isProduction ? LogLevel.INFO : LogLevel.DEBUG;
+const logLevel =
+  /** @type {boltPkg.LogLevel | undefined} */ (process.env.LOG_LEVEL) ||
+  defaultLogLevel;
 
 /**
  * Receiver for handling Slack events.
@@ -55,13 +58,7 @@ export const app = new App(
         clientId: process.env.SLACK_CLIENT_ID,
         clientSecret: process.env.SLACK_CLIENT_SECRET,
         stateSecret: process.env.SLACK_STATE_SECRET,
-        scopes: [
-          "canvases:write",
-          "channels:history",
-          "chat:write",
-          "files:read",
-          "files:write",
-        ],
+        scopes: ["chat:write", "files:read", "files:write"],
         installationStore: installProvider.installationStore,
         installerOptions: {
           directInstall: true,

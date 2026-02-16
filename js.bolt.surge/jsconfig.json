@@ -17,7 +17,6 @@
     },
     "include": [
         "server/**/*",
-        "scripts/**/*",
         ".nitro/types/**/*"
     ],
     "exclude": ["node_modules"],

@@ -1,4 +1,4 @@
-import { installer } from "../../app.js";
+import { app, installer } from "../../app.js";
 
 /**
  * Handle OAuth callback from Slack.
@@ -67,6 +67,7 @@ export default defineEventHandler(async (event) => {
     return sendRedirect(event, "/?success=true");
   } catch (err) {
     const error = /** @type {Error} */ (err);
+    app.logger.error("OAuth callback failed", { error: error.message });
     return sendRedirect(event, `/?error=${encodeURIComponent(error.message)}`);
   }
 });

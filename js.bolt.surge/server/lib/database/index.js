@@ -16,7 +16,9 @@ function getSQL() {
  * @property {Function} getMessageCountBySource - Get message counts by source
  * @property {Function} incrementMessageCount - Increment message counter
  * @property {Function} getBalance - Get credit balance for team/enterprise
+ * @property {Function} getUsageCount - Get usage count for team/enterprise
  * @property {Function} grantStarterCredits - Grant initial credits on install
+ * @property {Function} grantBonusCredit - Grant a bonus credit
  * @property {Function} deductCredit - Deduct credit and log usage
  */
 
@@ -26,10 +28,9 @@ function getSQL() {
 async function load() {
   const sql = getSQL();
 
-  // Drop all tables for fresh schema in development
-  if (process.env.SLACK_ENVIRONMENT_TAG !== "production") {
+  // Drop all tables for fresh schema in local development only
+  if (!process.env.VERCEL_ENV) {
     await sql`DROP TABLE IF EXISTS transactions CASCADE`;
-    await sql`DROP TABLE IF EXISTS credits CASCADE`;
     await sql`DROP TABLE IF EXISTS installations CASCADE`;
     await sql`DROP TABLE IF EXISTS states CASCADE`;
     await sql`DROP TABLE IF EXISTS messages CASCADE`;
@@ -78,20 +79,6 @@ async function load() {
     )
   `;
   console.log("Table 'installations' ready");
-
-  await sql`
-    CREATE TABLE IF NOT EXISTS credits (
-      id SERIAL PRIMARY KEY,
-      team_id VARCHAR(20),
-      enterprise_id VARCHAR(20),
-      balance INTEGER NOT NULL DEFAULT 0,
-      created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
-      updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
-      UNIQUE (team_id),
-      UNIQUE (enterprise_id)
-    )
-  `;
-  console.log("Table 'credits' ready");
 
   await sql`
     CREATE TABLE IF NOT EXISTS transactions (
@@ -172,14 +159,10 @@ async function incrementMessageCount(source = "web") {
  */
 async function getBalance({ teamId, enterpriseId }) {
   const sql = getSQL();
-  if (enterpriseId) {
-    const result =
-      await sql`SELECT balance FROM credits WHERE enterprise_id = ${enterpriseId}`;
-    return result[0]?.balance ?? 0;
-  }
-  const result =
-    await sql`SELECT balance FROM credits WHERE team_id = ${teamId} AND enterprise_id IS NULL`;
-  return result[0]?.balance ?? 0;
+  const result = enterpriseId
+    ? await sql`SELECT COALESCE(SUM(amount), 0) as balance FROM transactions WHERE enterprise_id = ${enterpriseId}`
+    : await sql`SELECT COALESCE(SUM(amount), 0) as balance FROM transactions WHERE team_id = ${teamId} AND enterprise_id IS NULL`;
+  return parseInt(result[0]?.balance ?? "0", 10);
 }
 
 /**
@@ -191,35 +174,38 @@ async function getBalance({ teamId, enterpriseId }) {
  */
 async function grantStarterCredits({ teamId, enterpriseId, amount = 50 }) {
   const sql = getSQL();
+  await sql`
+    INSERT INTO transactions (team_id, enterprise_id, type, amount)
+    SELECT ${teamId}, ${enterpriseId ?? null}, 'starter', ${amount}
+    WHERE NOT EXISTS (
+      SELECT 1 FROM transactions
+      WHERE (enterprise_id = ${enterpriseId} OR (team_id = ${teamId} AND enterprise_id IS NULL))
+      AND type = 'starter'
+    )
+  `;
+}
+
+/**
+ * Get usage count for a team or enterprise.
+ * @param {Object} params
+ * @param {string | undefined} params.teamId
+ * @param {string | undefined} params.enterpriseId
+ * @returns {Promise<number>}
+ */
+async function getUsageCount({ teamId, enterpriseId }) {
+  const sql = getSQL();
   if (enterpriseId) {
-    await sql`
-      INSERT INTO credits (enterprise_id, balance)
-      VALUES (${enterpriseId}, ${amount})
-      ON CONFLICT (enterprise_id) DO NOTHING
+    const result = await sql`
+      SELECT COUNT(*) as count FROM transactions
+      WHERE enterprise_id = ${enterpriseId} AND type = 'usage'
     `;
-    await sql`
-      INSERT INTO transactions (team_id, enterprise_id, type, amount)
-      SELECT ${teamId}, ${enterpriseId}, 'starter', ${amount}
-      WHERE NOT EXISTS (
-        SELECT 1 FROM transactions
-        WHERE enterprise_id = ${enterpriseId} AND type = 'starter'
-      )
-    `;
-  } else {
-    await sql`
-      INSERT INTO credits (team_id, balance)
-      VALUES (${teamId}, ${amount})
-      ON CONFLICT (team_id) DO NOTHING
-    `;
-    await sql`
-      INSERT INTO transactions (team_id, type, amount)
-      SELECT ${teamId}, 'starter', ${amount}
-      WHERE NOT EXISTS (
-        SELECT 1 FROM transactions
-        WHERE team_id = ${teamId} AND enterprise_id IS NULL AND type = 'starter'
-      )
-    `;
+    return parseInt(result[0]?.count ?? "0", 10);
   }
+  const result = await sql`
+    SELECT COUNT(*) as count FROM transactions
+    WHERE team_id = ${teamId} AND enterprise_id IS NULL AND type = 'usage'
+  `;
+  return parseInt(result[0]?.count ?? "0", 10);
 }
 
 /**
@@ -243,42 +229,32 @@ async function deductCredit({
   totalTokens,
   referenceId,
 }) {
-  const sql = getSQL();
-  const id = enterpriseId ?? teamId;
-
-  let result;
-  if (enterpriseId) {
-    result = await sql`
-      UPDATE credits
-      SET balance = balance - 1, updated_at = CURRENT_TIMESTAMP
-      WHERE enterprise_id = ${id} AND balance > 0
-      RETURNING balance
-    `;
-  } else {
-    result = await sql`
-      UPDATE credits
-      SET balance = balance - 1, updated_at = CURRENT_TIMESTAMP
-      WHERE team_id = ${id} AND enterprise_id IS NULL AND balance > 0
-      RETURNING balance
-    `;
-  }
-
-  if (result.length === 0) {
+  const balance = await getBalance({ teamId, enterpriseId });
+  if (balance <= 0) {
     return false;
   }
-
+  const sql = getSQL();
   await sql`
-    INSERT INTO transactions (
-      team_id, enterprise_id, type, amount,
-      input_tokens, output_tokens, total_tokens, model, reference_id
-    )
-    VALUES (
-      ${teamId}, ${enterpriseId ?? null}, 'usage', -1,
-      ${inputTokens}, ${outputTokens}, ${totalTokens}, ${model}, ${referenceId}
-    )
+    INSERT INTO transactions (team_id, enterprise_id, type, amount, input_tokens, output_tokens, total_tokens, model, reference_id)
+    VALUES (${teamId}, ${enterpriseId ?? null}, 'usage', -1, ${inputTokens}, ${outputTokens}, ${totalTokens}, ${model}, ${referenceId})
   `;
-
   return true;
+}
+
+/**
+ * Grant a bonus credit.
+ * @param {Object} params
+ * @param {string | undefined} params.teamId
+ * @param {string | undefined} params.enterpriseId
+ * @returns {Promise<number>} new balance
+ */
+async function grantBonusCredit({ teamId, enterpriseId }) {
+  const sql = getSQL();
+  await sql`
+    INSERT INTO transactions (team_id, enterprise_id, type, amount)
+    VALUES (${teamId}, ${enterpriseId ?? null}, 'bonus', 1)
+  `;
+  return getBalance({ teamId, enterpriseId });
 }
 
 /** @type {Database} */
@@ -289,6 +265,8 @@ export const db = {
   getMessageCountBySource,
   incrementMessageCount,
   getBalance,
+  getUsageCount,
   grantStarterCredits,
+  grantBonusCredit,
   deductCredit,
 };

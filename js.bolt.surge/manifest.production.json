@@ -3,7 +3,7 @@
     "name": "surge",
     "background_color": "#1a1a10",
     "description": "the simple sorter of streaming mail",
-    "long_description": "@surge delivers mail as messages to channels around. some sorting and set settings can be applied to tilt orderings in various directions.\r\n\r\nConfigure an inbox then decide what should go where as new messages arrive!"
+    "long_description": "@surge delivers email as markdown to channels around. some sorting and set settings can be applied to tilt orderings in various directions.\r\n\r\nConfigure an inbox then decide what should go where as new messages arrive!"
   },
   "features": {
     "app_home": {
@@ -19,7 +19,7 @@
   "oauth_config": {
     "redirect_urls": ["https://surgem.ai/api/slack/oauth_redirect"],
     "scopes": {
-      "bot": ["canvases:write", "channels:history", "chat:write", "files:read", "files:write"]
+      "bot": ["chat:write", "files:read", "files:write"]
     }
   },
   "settings": {
