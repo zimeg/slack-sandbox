@@ -10,6 +10,7 @@ const { App, LogLevel, SocketModeReceiver } = boltPkg;
 const { InstallProvider } = oauthPkg;
 
 const isProduction = process.env.SLACK_ENVIRONMENT_TAG === "production";
+const isVercel = Boolean(process.env.VERCEL);
 const defaultLogLevel = isProduction ? LogLevel.INFO : LogLevel.DEBUG;
 const logLevel =
   /** @type {boltPkg.LogLevel | undefined} */ (process.env.LOG_LEVEL) ||
@@ -17,10 +18,10 @@ const logLevel =
 
 /**
  * Receiver for handling Slack events.
- * - Production: VercelReceiver (HTTP)
- * - Development: SocketModeReceiver (WebSocket)
+ * - Vercel (production/preview): VercelReceiver (HTTP)
+ * - Local development: SocketModeReceiver (WebSocket)
  */
-export const receiver = isProduction
+export const receiver = isVercel
   ? new VercelReceiver({
       signingSecret: process.env.SLACK_SIGNING_SECRET,
     })
@@ -47,12 +48,12 @@ export const installer = new InstallProvider({
 
 /**
  * The Bolt Slack application.
- * - Production: Vercel serverless with OAuth for multi-workspace
- * - Development: Socket Mode with bot token for single workspace
+ * - Vercel (production/preview): Serverless with OAuth for multi-workspace
+ * - Local development: Socket Mode with bot token for single workspace
  * @type {App}
  */
 export const app = new App(
-  isProduction
+  isVercel
     ? {
         signingSecret: process.env.SLACK_SIGNING_SECRET,
         clientId: process.env.SLACK_CLIENT_ID,
