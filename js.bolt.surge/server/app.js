@@ -24,10 +24,11 @@ const logLevel =
 export const receiver = isVercel
   ? new VercelReceiver({
       signingSecret: process.env.SLACK_SIGNING_SECRET,
+      logLevel,
     })
   : new SocketModeReceiver({
       appToken: /** @type {string} */ (process.env.SLACK_APP_TOKEN),
-      logLevel: LogLevel.DEBUG,
+      logLevel,
     });
 
 /**
