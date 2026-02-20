@@ -27,6 +27,10 @@
       "request_url": "https://surgem.ai/api/slack/events",
       "bot_events": ["app_home_opened", "file_shared"]
     },
+    "interactivity": {
+      "is_enabled": true,
+      "request_url": "https://surgem.ai/api/slack/events"
+    },
     "org_deploy_enabled": true,
     "token_rotation_enabled": false
   }
