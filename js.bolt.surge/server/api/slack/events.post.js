@@ -13,5 +13,13 @@ const handler = createHandler(
  */
 export default defineEventHandler(async (event) => {
   const request = toWebRequest(event);
-  return handler(request);
+  console.log("[events] incoming request", {
+    method: request.method,
+    url: request.url,
+    hasSignature: Boolean(request.headers.get("x-slack-signature")),
+    hasTimestamp: Boolean(request.headers.get("x-slack-request-timestamp")),
+  });
+  const response = await handler(request);
+  console.log("[events] response status", response.status);
+  return response;
 });
