@@ -2,15 +2,6 @@
 .direnv
 node_modules
 
-# Secrets and similar things
-.env*
-!.env.development.example
-!.env.production.example
-store
-
-# Testing tooling
-coverage
-
 # Build output
 .output
 .nitro
