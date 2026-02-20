@@ -55,15 +55,22 @@ export const installer = new InstallProvider({
 export const app = new App(
   isVercel
     ? {
-        signingSecret: process.env.SLACK_SIGNING_SECRET,
-        clientId: process.env.SLACK_CLIENT_ID,
-        clientSecret: process.env.SLACK_CLIENT_SECRET,
-        stateSecret: process.env.SLACK_STATE_SECRET,
-        scopes: ["chat:write", "files:read", "files:write"],
-        installationStore: installProvider.installationStore,
-        installerOptions: {
-          directInstall: true,
+        authorize: async ({ teamId, enterpriseId, isEnterpriseInstall }) => {
+          const installation =
+            await installProvider.installationStore.fetchInstallation({
+              teamId,
+              enterpriseId,
+              isEnterpriseInstall: isEnterpriseInstall ?? false,
+            });
+          return {
+            botToken: installation.bot?.token,
+            botId: installation.bot?.id,
+            botUserId: installation.bot?.userId,
+            teamId: installation.team?.id,
+            enterpriseId: installation.enterprise?.id,
+          };
         },
+        signingSecret: process.env.SLACK_SIGNING_SECRET,
         receiver,
         deferInitialization: true,
         logLevel,
