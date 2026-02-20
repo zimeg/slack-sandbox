@@ -114,29 +114,22 @@ export default class Store {
   async read(lookup) {
     const sql = getSQL();
     /** @type {Ticket[]} */
-    let result;
-    if (!lookup.userId) {
-      result = await sql`
-        SELECT *
-        FROM installations
-        WHERE
-          (enterprise_id IS NULL OR enterprise_id = ${lookup.enterpriseId ?? null}) AND
-          (team_id IS NULL OR team_id = ${lookup.teamId ?? null}) AND
-          deleted_at IS NULL
-        ORDER BY COALESCE(updated_at, created_at) DESC
-      `;
-    } else {
-      result = await sql`
-        SELECT *
-        FROM installations
-        WHERE
-          (enterprise_id IS NULL OR enterprise_id = ${lookup.enterpriseId ?? null}) AND
-          (team_id IS NULL OR team_id = ${lookup.teamId ?? null}) AND
-          (user_id IS NULL OR user_id = ${lookup.userId}) AND
-          deleted_at IS NULL
-        ORDER BY COALESCE(updated_at, created_at) DESC
-      `;
-    }
+    const result = lookup.enterpriseId
+      ? await sql`
+          SELECT * FROM installations
+          WHERE
+            enterprise_id = ${lookup.enterpriseId} AND
+            deleted_at IS NULL
+          ORDER BY COALESCE(updated_at, created_at) DESC
+        `
+      : await sql`
+          SELECT * FROM installations
+          WHERE
+            team_id = ${lookup.teamId} AND
+            enterprise_id IS NULL AND
+            deleted_at IS NULL
+          ORDER BY COALESCE(updated_at, created_at) DESC
+        `;
     return result.map((ticket) => ({
       id: ticket.id,
       installation: {
@@ -174,11 +167,11 @@ export default class Store {
         bot_scopes = ${installation.bot?.scopes ?? null},
         bot_token = ${installation.bot?.token ?? null},
         bot_user_id = ${installation.bot?.userId ?? null},
-        bot_id = ${installation.bot?.id ?? null}
+        bot_id = ${installation.bot?.id ?? null},
+        user_id = ${installation.user.id}
       WHERE
         team_id = ${installation.team?.id ?? null} AND
-        enterprise_id = ${installation.enterprise?.id ?? null} AND
-        user_id = ${installation.user.id}
+        enterprise_id = ${installation.enterprise?.id ?? null}
     `;
   }
 }

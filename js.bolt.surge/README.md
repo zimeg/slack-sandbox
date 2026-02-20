@@ -1,6 +1,6 @@
 # surge
 
-An email reader that converts incoming messages into markdown, from the sights of a satellite. Powered using [Bolt for JavaScript](https://docs.slack.dev/tools/bolt-js/) on [Vercel](https://vercel.com/) with [OpenAI](https://openai.com/).
+An email reader that converts incoming messages into markdown, delivered to channels around. Powered with [Bolt for JavaScript](https://docs.slack.dev/tools/bolt-js/) on [Vercel](https://vercel.com/) and [Anthropic](https://www.anthropic.com/).
 
 > [**https://surgem.ai/**](https://surgem.ai/)
 
@@ -24,20 +24,7 @@ Different apps use credentials that change and app manifests might not be the sa
 
 Learn about different environments from the `.env.*.example` files and `manifest.*.json` files.
 
-### Managing infrastructure
-
-The servers that run a production instance of this app require additional tools and credentials:
-
-- Install [OpenTofu](https://opentofu.org/docs/intro/install) to handle infrastructure updates
-- Create an account on [Vercel](https://vercel.com/) and generate an API token
-
-Details on preparing infrastructure are outlined in [`infra/README.md`](./infra/README.md)
-
 ## Project structure
-
-### `infra/main.tf`
-
-Initializations for the infrastructure providers. Other files in this directory provide details on server setups.
 
 ### `server/app.js`
 
@@ -49,7 +36,11 @@ HTTP event handler that receives Slack events via the Events API.
 
 ### `server/lib/database/index.js`
 
-Database layer using Neon Postgres for installations, credits, and usage tracking.
+Database operations using Neon Postgres for installations, credits, and usage tracking.
+
+### `server/lib/logger.js`
+
+Shared logger using `@slack/logger` with environment-aware log levels.
 
 ### `manifest.*.json`
 

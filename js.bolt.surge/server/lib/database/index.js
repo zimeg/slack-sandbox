@@ -1,4 +1,5 @@
 import { neon } from "@neondatabase/serverless";
+import { logger } from "../logger.js";
 
 /**
  * Get a SQL query function connected to the database.
@@ -34,7 +35,7 @@ async function load() {
     await sql`DROP TABLE IF EXISTS installations CASCADE`;
     await sql`DROP TABLE IF EXISTS states CASCADE`;
     await sql`DROP TABLE IF EXISTS messages CASCADE`;
-    console.log("Dropped existing tables");
+    logger.info("Dropped existing tables");
   }
 
   await sql`
@@ -44,7 +45,7 @@ async function load() {
       created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
     )
   `;
-  console.log("Table 'messages' ready");
+  logger.info("Table 'messages' ready");
 
   await sql`
     CREATE TABLE IF NOT EXISTS states (
@@ -53,7 +54,7 @@ async function load() {
       created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
     )
   `;
-  console.log("Table 'states' ready");
+  logger.info("Table 'states' ready");
 
   await sql`
     CREATE TABLE IF NOT EXISTS installations (
@@ -78,7 +79,7 @@ async function load() {
       bot_id VARCHAR(20)
     )
   `;
-  console.log("Table 'installations' ready");
+  logger.info("Table 'installations' ready");
 
   await sql`
     CREATE TABLE IF NOT EXISTS transactions (
@@ -95,7 +96,7 @@ async function load() {
       created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
     )
   `;
-  console.log("Table 'transactions' ready");
+  logger.info("Table 'transactions' ready");
 }
 
 /**

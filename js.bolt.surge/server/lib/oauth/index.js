@@ -23,7 +23,6 @@ export function createInstallProvider(db) {
       const existing = await store.read({
         teamId: installation.team?.id,
         enterpriseId: installation.enterprise?.id,
-        userId: installation.user.id,
         isEnterpriseInstall: installation.isEnterpriseInstall ?? false,
       });
       if (existing.length > 0) {

@@ -59,6 +59,7 @@ export default defineEventHandler(async (event) => {
           <li>install the app to your workspace</li>
           <li>set up <a href="https://slack.com/help/articles/206819278-Send-emails-to-Slack">email forwarding</a> to a channel</li>
           <li>invite <span class="accent">@surge</span> to that channel</li>
+          <li>wait for emails to arrive as markdown in threads</li>
         </ol>
       </section>
 

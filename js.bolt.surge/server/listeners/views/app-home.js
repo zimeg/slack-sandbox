@@ -30,7 +30,7 @@ export function buildAppHomeBlocks({ botUserId, balance, delivered }) {
       type: "section",
       text: {
         type: "mrkdwn",
-        text: `*Quick Start*\n1. Set up <https://slack.com/help/articles/206819278-Send-emails-to-Slack|email forwarding> to a channel\n2. Invite <@${botUserId}> to that channel\n3. Emails arrive as markdown files in threads`,
+        text: `*Quick Start*\n1. Set up <https://slack.com/help/articles/206819278-Send-emails-to-Slack|email forwarding> to a channel\n2. Invite <@${botUserId}> to that channel\n3. Wait for emails to arrive as markdown in threads`,
       },
     },
     {

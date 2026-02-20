@@ -1,4 +1,5 @@
 import { db } from "../../lib/database/index.js";
+import { logger } from "../../lib/logger.js";
 
 /**
  * Increment mail count.
@@ -9,7 +10,7 @@ export default defineEventHandler(async () => {
     const count = await db.incrementMessageCount();
     return { count };
   } catch (error) {
-    console.error("Failed to increment count:", error);
+    logger.error("Failed to increment count:", error);
     throw error;
   }
 });

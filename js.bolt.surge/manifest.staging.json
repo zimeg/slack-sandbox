@@ -3,7 +3,7 @@
     "name": "surge - staging",
     "background_color": "#1a1a10",
     "description": "the simple sorter of streaming mail",
-    "long_description": "@surge delivers email as markdown to channels around. some sorting and set settings can be applied to tilt orderings in various directions.\r\n\r\nConfigure an inbox then decide what should go where as new messages arrive!"
+    "long_description": "@surge delivers email as markdown to channels around. Incoming messages are converted with a stamp per email and threads keep conversations organized.\r\n\r\nInstall the app, set up email forwarding to a channel, and invite @surge to get started!"
   },
   "features": {
     "app_home": {
