@@ -3,12 +3,12 @@
     "name": "surge",
     "background_color": "#1a1a10",
     "description": "the simple sorter of streaming mail",
-    "long_description": "@surge delivers mail as messages to channels around. some sorting and set settings can be applied to tilt orderings in various directions.\r\n\r\nConfigure an inbox then decide what should go where as new messages arrive!"
+    "long_description": "@surge delivers email as markdown to channels around. Incoming messages are converted with a stamp per email and threads keep conversations organized.\r\n\r\nInstall the app, set up email forwarding to a channel, and invite @surge to get started!"
   },
   "features": {
     "app_home": {
       "home_tab_enabled": true,
-      "messages_tab_enabled": true,
+      "messages_tab_enabled": false,
       "messages_tab_read_only_enabled": true
     },
     "bot_user": {
@@ -17,15 +17,19 @@
     }
   },
   "oauth_config": {
-    "redirect_urls": ["https://surgem.ai/slack/oauth_redirect"],
+    "redirect_urls": ["https://surgem.ai/api/slack/oauth_redirect"],
     "scopes": {
-      "bot": ["channels:history", "chat:write"]
+      "bot": ["chat:write", "files:read", "files:write"]
     }
   },
   "settings": {
     "event_subscriptions": {
-      "request_url": "https://surgem.ai/slack/events",
-      "bot_events": ["app_home_opened", "message.channels"]
+      "request_url": "https://surgem.ai/api/slack/events",
+      "bot_events": ["app_home_opened", "file_shared"]
+    },
+    "interactivity": {
+      "is_enabled": true,
+      "request_url": "https://surgem.ai/api/slack/events"
     },
     "org_deploy_enabled": true,
     "token_rotation_enabled": false

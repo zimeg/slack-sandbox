@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- feat: convert incoming emails to kind markdown content 2026-02-14
 - chore: move spec file to scripts folder for colocation 2026-02-12
 - build: teach flake be without training utilities wheels 2026-02-07
 - test: replace test runner with node defaults for coverage 2026-02-07

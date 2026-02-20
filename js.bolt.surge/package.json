@@ -3,19 +3,15 @@
   "version": "2024.12.10",
   "description": "a powerful online email application",
   "homepage": "https://surgem.ai",
-  "main": "src/app.js",
   "type": "module",
   "scripts": {
-    "check": "tsc --noemit --module es2022 --project ./jsconfig.json",
+    "build": "nitro build",
+    "dev": "nitro dev",
     "lint": "biome check --verbose",
     "lint:fix": "biome check --verbose --write",
-    "logs": "heroku logs --tail --app surged",
-    "logs:slack": "heroku logs --tail --app surged | grep app",
-    "logs:web": "heroku logs --tail --app surged | grep heroku",
-    "pretest": "npm run lint && npm run check",
-    "start": "node src/app.js",
-    "test": "node --test --experimental-test-coverage **/*.spec.js",
-    "watch": "npx nodemon --exec npm run start"
+    "pretest": "npm run lint",
+    "start": "node .output/server/index.mjs",
+    "test": "node --test --experimental-test-coverage **/*.spec.js"
   },
   "author": "@zimeg",
   "license": "MIT",
@@ -30,10 +26,19 @@
   "bugs": {
     "url": "https://github.com/zimeg/slack-sandbox/issues"
   },
-  "workspaces": [
-    "src"
-  ],
+  "engines": {
+    "node": "24.x"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.0.2",
+    "@slack/bolt": "^4.6.0",
+    "@slack/logger": "^4.0.0",
+    "@slack/oauth": "^3.0.4",
+    "@vercel/slack-bolt": "^1.1.0",
+    "ai": "^6.0.94"
+  },
   "devDependencies": {
-    "@slack/cli-hooks": "1.3.0"
+    "@slack/cli-hooks": "1.3.0",
+    "nitropack": "^2.13.1"
   }
 }

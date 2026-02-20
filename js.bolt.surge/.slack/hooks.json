@@ -1,12 +1,16 @@
 {
   "hooks": {
     "get-hooks": "npx -p @slack/bolt slack-cli-get-hooks",
-    "get-manifest": "node scripts/get-manifest.js",
-    "deploy": "tofu -chdir=infra apply -auto-approve"
+    "get-manifest": "cat manifest.$SLACK_ENVIRONMENT_TAG.json #",
+    "start": "sops exec-env secrets.development.yaml 'npm run dev'",
+    "deploy": "echo https://vercel.com/zimeg/surgemail"
   },
   "config": {
     "protocol-version": ["default"],
     "watch": {
+      "app": {
+        "paths": []
+      },
       "manifest": {
         "paths": ["manifest.development.json"]
       }

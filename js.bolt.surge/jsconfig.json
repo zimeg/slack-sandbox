@@ -11,14 +11,15 @@
         "noFallthroughCasesInSwitch": true,
         "baseUrl": ".",
         "paths": {
-            "*": [
-                "./types/*"
-            ]
-        }
+            "#imports": ["./.nitro/types/nitro-imports.d.ts"]
+        },
+        "types": ["nitropack"]
     },
     "include": [
-        "src/**/*"
+        "server/**/*",
+        ".nitro/types/**/*"
     ],
+    "exclude": ["node_modules"],
     "jsdoc": {
         "out": "support/jsdoc",
         "access": "public"

@@ -1,4 +1,0 @@
-# Deployment keys
-.terraform
-tofu.auto.tfvars.json
-terraform.tfstate*

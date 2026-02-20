@@ -99,7 +99,6 @@ jobs:
             deploy: |
               slack deploy --app $SLACK_APP_ID --token $SLACK_CLI_TOKEN --force
             deps: npm ci --verbose
-            infra: tofu
             test: npm run test
           - app: js.bolt.tails
             deploy: |
@@ -135,33 +134,6 @@ jobs:
         if: ${{ matrix.test }}
         run: |
           nix develop --command bash -c "${{ matrix.test }}"
-      - name: Configure AWS credentials
-        if: ${{ matrix.infra == 'tofu' }}
-        uses: aws-actions/configure-aws-credentials@8df5847569e6427dd6c4fb1cf565c83acfa8afa7 # v6.0.0
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
-      - name: Setup infrastructure updates
-        if: ${{ matrix.infra == 'tofu' }}
-        run: |
-          cd infra
-          nix develop -c tofu init
-          nix develop -c tofu fmt -check
-          nix develop -c tofu validate
-      - name: Plan infrastructure changes
-        if: ${{ matrix.infra == 'tofu' && github.event_name == 'pull_request' }}
-        run: |
-          cd infra
-          nix develop -c tofu plan
-        env:
-          TF_VAR_database_url: ${{ secrets.DATABASE_URL }}
-          TF_VAR_heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          TF_VAR_slack_client_id: ${{ vars.SLACK_CLIENT_ID }}
-          TF_VAR_slack_client_secret: ${{ secrets.SLACK_CLIENT_SECRET }}
-          TF_VAR_slack_log_level: ${{ vars.SLACK_LOG_LEVEL }}
-          TF_VAR_slack_signing_secret: ${{ secrets.SLACK_SIGNING_SECRET }}
-          TF_VAR_slack_state_secret: ${{ secrets.SLACK_STATE_SECRET }}
       - name: Deploy ${{ matrix.app }}
         if: ${{ matrix.deploy && github.event_name != 'pull_request' }}
         run: nix develop --command bash -c "${{ matrix.deploy }}"
@@ -169,10 +141,3 @@ jobs:
           SLACK_APP_ID: ${{ vars.SLACK_APP_ID }}
           SLACK_CLI_TOKEN: ${{ secrets.SLACK_CLI_TOKEN }}
           SLACK_ENVIRONMENT_TAG: ${{ vars.SLACK_ENVIRONMENT_TAG }}
-          TF_VAR_database_url: ${{ secrets.DATABASE_URL }}
-          TF_VAR_heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          TF_VAR_slack_client_id: ${{ vars.SLACK_CLIENT_ID }}
-          TF_VAR_slack_client_secret: ${{ secrets.SLACK_CLIENT_SECRET }}
-          TF_VAR_slack_log_level: ${{ vars.SLACK_LOG_LEVEL }}
-          TF_VAR_slack_signing_secret: ${{ secrets.SLACK_SIGNING_SECRET }}
-          TF_VAR_slack_state_secret: ${{ secrets.SLACK_STATE_SECRET }}
