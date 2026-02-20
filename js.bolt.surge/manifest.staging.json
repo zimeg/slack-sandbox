@@ -51,12 +51,12 @@
   },
   "settings": {
     "event_subscriptions": {
-      "request_url": "https://surgemail-git-b-zimeg.vercel.app/api/slack/events",
+      "request_url": "https://surgemail-git-b-zimeg.vercel.app/api/slack/events?x-vercel-protection-bypass=$VERCEL_AUTOMATION_BYPASS_SECRET",
       "bot_events": ["app_home_opened", "file_shared"]
     },
     "interactivity": {
       "is_enabled": true,
-      "request_url": "https://surgemail-git-b-zimeg.vercel.app/api/slack/events"
+      "request_url": "https://surgemail-git-b-zimeg.vercel.app/api/slack/events?x-vercel-protection-bypass=$VERCEL_AUTOMATION_BYPASS_SECRET"
     },
     "org_deploy_enabled": true,
     "socket_mode_enabled": false,
