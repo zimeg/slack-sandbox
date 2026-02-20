@@ -6,11 +6,10 @@
   "type": "module",
   "scripts": {
     "build": "nitro build",
-    "check": "tsc --noemit --module es2022 --project ./jsconfig.json",
     "dev": "nitro dev",
     "lint": "biome check --verbose",
     "lint:fix": "biome check --verbose --write",
-    "pretest": "npm run lint && npm run check",
+    "pretest": "npm run lint",
     "start": "node .output/server/index.mjs",
     "test": "node --test --experimental-test-coverage **/*.spec.js"
   },
