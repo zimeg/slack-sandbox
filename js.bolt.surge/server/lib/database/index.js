@@ -21,6 +21,7 @@ function getSQL() {
  * @property {Function} grantStarterStamps - Grant initial stamps on install
  * @property {Function} grantBonusStamp - Grant a bonus stamp
  * @property {Function} deductStamp - Deduct a stamp and log usage
+ * @property {Function} logRetryUsage - Log a retry attempt without deducting
  * @property {Function} saveFeedback - Save delivery feedback
  * @property {Function} updateFeedbackDetails - Update feedback details and options
  */
@@ -265,6 +266,35 @@ async function deductStamp({
 }
 
 /**
+ * Log a retry attempt without deducting a stamp.
+ * @param {Object} params
+ * @param {string} [params.teamId]
+ * @param {string} [params.enterpriseId]
+ * @param {string} [params.userId]
+ * @param {string} params.model
+ * @param {number} params.inputTokens
+ * @param {number} params.outputTokens
+ * @param {number} params.totalTokens
+ * @param {string} params.referenceId
+ */
+async function logRetryUsage({
+  teamId,
+  enterpriseId,
+  userId,
+  model,
+  inputTokens,
+  outputTokens,
+  totalTokens,
+  referenceId,
+}) {
+  const sql = getSQL();
+  await sql`
+    INSERT INTO stamps (team_id, enterprise_id, user_id, type, amount, input_tokens, output_tokens, total_tokens, model, reference_id)
+    VALUES (${teamId}, ${enterpriseId ?? null}, ${userId ?? null}, 'retry', 0, ${inputTokens}, ${outputTokens}, ${totalTokens}, ${model}, ${referenceId})
+  `;
+}
+
+/**
  * Grant a bonus stamp.
  * @param {Object} params
  * @param {string} [params.teamId]
@@ -339,6 +369,7 @@ export const db = {
   grantStarterStamps,
   grantBonusStamp,
   deductStamp,
+  logRetryUsage,
   saveFeedback,
   updateFeedbackDetails,
 };

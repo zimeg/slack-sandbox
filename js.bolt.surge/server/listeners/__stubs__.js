@@ -160,6 +160,10 @@ export function createDb(returns = {}) {
       calls.push({ method: "deductStamp", args: [params] });
       return true;
     },
+    /** @param {{ teamId?: string, enterpriseId?: string, userId?: string, model: string, inputTokens: number, outputTokens: number, totalTokens: number, referenceId: string }} params */
+    logRetryUsage: async (params) => {
+      calls.push({ method: "logRetryUsage", args: [params] });
+    },
     /** @param {{ teamId?: string, enterpriseId?: string, userId: string, fileId: string, rating: string, details?: string }} params */
     saveFeedback: async (params) => {
       calls.push({ method: "saveFeedback", args: [params] });

@@ -92,5 +92,9 @@ describe("deliveryFeedbackViewCallback", () => {
 
     const deduct = db.calls.find((c) => c.method === "deductStamp");
     assert.equal(deduct, undefined, "no stamp deducted for resend");
+
+    const retry = db.calls.find((c) => c.method === "logRetryUsage");
+    assert.ok(retry, "logRetryUsage was called");
+    assert.equal(retry.args[0].referenceId, "F0123456789");
   });
 });

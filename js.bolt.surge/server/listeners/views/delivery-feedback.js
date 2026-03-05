@@ -19,9 +19,8 @@ export default function deliveryFeedbackViewCallback(options) {
   return async ({ ack, body, view, client, logger }) => {
     await ack();
     try {
-      const { feedbackId, channelId, threadTs, fileId } = JSON.parse(
-        view.private_metadata,
-      );
+      const { feedbackId, channelId, threadTs, fileId, teamId, enterpriseId } =
+        JSON.parse(view.private_metadata);
       const details =
         view.state.values.feedback_details?.details?.value ?? null;
       const selectedOptions =
@@ -45,12 +44,16 @@ export default function deliveryFeedbackViewCallback(options) {
       });
       if (resend && fileId && details) {
         await resendDelivery({
+          db: options.db,
           generate: options.generate,
           client,
           fileId,
           channelId,
           threadTs,
           notes: details,
+          userId: body.user.id,
+          teamId,
+          enterpriseId,
           logger,
         });
       }
@@ -63,21 +66,29 @@ export default function deliveryFeedbackViewCallback(options) {
 /**
  * Resend an email-to-markdown conversion with feedback notes.
  * @param {Object} params
+ * @param {import("../../lib/database/index.js").Database} params.db
  * @param {Function} params.generate - Text generation function
  * @param {any} params.client
  * @param {string} params.fileId
  * @param {string} params.channelId
  * @param {string} params.threadTs
  * @param {string} params.notes
+ * @param {string} params.userId
+ * @param {string} [params.teamId]
+ * @param {string} [params.enterpriseId]
  * @param {any} params.logger
  */
 async function resendDelivery({
+  db,
   generate,
   client,
   fileId,
   channelId,
   threadTs,
   notes,
+  userId,
+  teamId,
+  enterpriseId,
   logger,
 }) {
   const info = await client.files.info({ file: fileId });
@@ -91,8 +102,6 @@ async function resendDelivery({
     logger.warn("Email file has no content for resend", fileId);
     return;
   }
-  // Resends are free — no stamp deducted since the original conversion
-  // consumed a stamp and this is a correction attempt.
   const result = await convertEmailToMarkdown({
     emailContent,
     generate,
@@ -102,6 +111,16 @@ async function resendDelivery({
     logger.warn("AI returned no content for resend", fileId);
     return;
   }
+  await db.logRetryUsage({
+    teamId,
+    enterpriseId,
+    userId,
+    model: result.model,
+    inputTokens: result.usage?.inputTokens ?? 0,
+    outputTokens: result.usage?.outputTokens ?? 0,
+    totalTokens: result.usage?.totalTokens ?? 0,
+    referenceId: fileId,
+  });
   const title = decodeEntities(file.title || file.name) || "(No Subject)";
   const header = buildEmailHeader(file);
 
