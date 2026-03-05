@@ -290,7 +290,7 @@ async function logRetryUsage({
   const sql = getSQL();
   await sql`
     INSERT INTO stamps (team_id, enterprise_id, user_id, type, amount, input_tokens, output_tokens, total_tokens, model, reference_id)
-    VALUES (${teamId}, ${enterpriseId ?? null}, ${userId ?? null}, 'retry', 0, ${inputTokens}, ${outputTokens}, ${totalTokens}, ${model}, ${referenceId})
+    VALUES (${teamId}, ${enterpriseId ?? null}, ${userId ?? null}, 'resend', 0, ${inputTokens}, ${outputTokens}, ${totalTokens}, ${model}, ${referenceId})
   `;
 }
 
