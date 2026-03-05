@@ -8,6 +8,7 @@ versioned with [calendar versioning][calver].
 ## Changes
 
 - feat: collect feedback after email deliveries arriving 2026-03-04
+- docs: add development icon for testing in multiple app 2026-02-23
 - ci: remove install update script command from automtic 2026-02-20
 - feat: convert incoming emails to kind markdown content 2026-02-14
 - chore: move spec file to scripts folder for colocation 2026-02-12
