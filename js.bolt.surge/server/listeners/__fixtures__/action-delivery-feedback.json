@@ -1,0 +1,32 @@
+{
+  "action": {
+    "action_id": "email_delivery_feedback",
+    "block_id": "feedback_buttons",
+    "text": {
+      "type": "plain_text",
+      "text": "+1"
+    },
+    "value": "F0123456789",
+    "type": "button"
+  },
+  "body": {
+    "user": {
+      "id": "U0123456789"
+    },
+    "channel": {
+      "id": "C0123456789"
+    },
+    "message": {
+      "ts": "1709300000.000100"
+    },
+    "trigger_id": "111.222.abc",
+    "team": {
+      "id": "T0123456789"
+    },
+    "is_enterprise_install": false
+  },
+  "context": {
+    "teamId": "T0123456789",
+    "isEnterpriseInstall": false
+  }
+}

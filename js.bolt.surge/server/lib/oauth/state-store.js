@@ -23,7 +23,7 @@ export class DatabaseStateStore {
     const sql = getSQL();
     const state = crypto.randomUUID();
     // JSONB columns accept objects directly - no need to stringify
-    await sql`INSERT INTO states (state, options, created_at)
+    await sql`INSERT INTO logins (state, options, created_at)
               VALUES (${state}, ${installOptions}, ${now.toISOString()})`;
     return state;
   }
@@ -40,7 +40,7 @@ export class DatabaseStateStore {
 
     const result =
       /** @type {{options: import("@slack/oauth").InstallURLOptions}[]} */ (
-        await sql`DELETE FROM states
+        await sql`DELETE FROM logins
                 WHERE state = ${state} AND created_at > ${minTime}
                 RETURNING options`
       );

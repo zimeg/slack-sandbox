@@ -6,7 +6,7 @@
       "Bash(gh pr checks:*)",
       "Bash(gh pr create:*)",
       "Bash(gh pr edit:*)",
-      "Bash(gh pr merge:*)",
+      "Bash(gh pr list:*)",
       "Bash(gh pr view:*)",
       "Bash(gh run list:*)",
       "Bash(gh run view:*)",
@@ -27,14 +27,10 @@
       "Bash(grep:*)",
       "Bash(ls:*)",
       "Bash(nix-prefetch-url:*)",
-      "Bash(npm install:*)",
-      "Bash(npm ls:*)",
-      "Bash(npm test:*)",
       "Bash(tree:*)",
       "WebFetch(domain:docs.slack.dev)",
       "WebFetch(domain:github.com)",
       "WebFetch(domain:raw.githubusercontent.com)",
-      "WebFetch(domain:surgem.ai)",
       "WebSearch"
     ]
   }

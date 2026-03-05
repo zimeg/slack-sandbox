@@ -12,7 +12,7 @@ import { buildAppHomeBlocks } from "../views/app-home.js";
  */
 export default function appHomeOpenedCallback(options) {
   return async ({ client, event, context, logger }) => {
-    if (event.tab !== "home") {
+    if (event.tab !== "home" || !context.botUserId) {
       return;
     }
     try {
@@ -27,7 +27,7 @@ export default function appHomeOpenedCallback(options) {
         enterpriseId,
       });
 
-      const response = await client.views.publish({
+      await client.views.publish({
         user_id: event.user,
         view: {
           type: "home",
@@ -38,11 +38,8 @@ export default function appHomeOpenedCallback(options) {
           }),
         },
       });
-      if (!response.ok) {
-        throw new Error(response.error);
-      }
     } catch (error) {
-      logger.error(error);
+      logger.error("Failed to publish app home view", error);
     }
   };
 }
