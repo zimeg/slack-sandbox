@@ -1,6 +1,7 @@
 import boltPkg from "@slack/bolt";
 import oauthPkg from "@slack/oauth";
 import { VercelReceiver } from "@vercel/slack-bolt";
+import { generateText } from "ai";
 import { db } from "./lib/database/index.js";
 import { createInstallProvider } from "./lib/oauth/index.js";
 import { DatabaseStateStore } from "./lib/oauth/state-store.js";
@@ -82,4 +83,4 @@ export const app = new App(
       },
 );
 
-registerListeners(app, { db });
+registerListeners(app, { db, generate: generateText });

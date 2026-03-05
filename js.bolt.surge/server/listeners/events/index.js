@@ -4,6 +4,7 @@ import fileSharedCallback from "./file-shared.js";
 /**
  * @typedef {Object} EventOptions
  * @property {import("../../lib/database/index.js").Database} db
+ * @property {Function} generate - Text generation function
  */
 
 /**

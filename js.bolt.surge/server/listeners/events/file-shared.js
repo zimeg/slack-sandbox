@@ -1,8 +1,13 @@
-import { generateText } from "ai";
+import {
+  convertEmailToMarkdown,
+  extractEmailContent,
+} from "../../lib/email/convert.js";
+import { buildEmailHeader, decodeEntities } from "../../lib/email/format.js";
 
 /**
  * @typedef {Object} FileSharedOptions
  * @property {import("../../lib/database/index.js").Database} db
+ * @property {Function} generate - Text generation function
  */
 
 /**
@@ -11,7 +16,7 @@ import { generateText } from "ai";
  * @returns {import("@slack/bolt").Middleware<import("@slack/bolt").SlackEventMiddlewareArgs<'file_shared'>>}
  */
 export default function fileSharedCallback(options) {
-  return async ({ client, event, logger, context }) => {
+  return async ({ client, event, context, logger }) => {
     try {
       const info = await client.files.info({ file: event.file_id });
       if (!info.ok || !info.file) {
@@ -22,8 +27,9 @@ export default function fileSharedCallback(options) {
       if (file.filetype !== "email") {
         return;
       }
-      if (!file.preview) {
-        logger.warn("Email file has no preview content", event.file_id);
+      const emailContent = extractEmailContent(file);
+      if (!emailContent) {
+        logger.warn("Email file has no content", event.file_id);
         return;
       }
 
@@ -34,65 +40,40 @@ export default function fileSharedCallback(options) {
 
       const balance = await options.db.getBalance({ teamId, enterpriseId });
       if (balance <= 0) {
-        logger.info("No credits available", { teamId, enterpriseId });
+        logger.info("No stamps available", { teamId, enterpriseId });
         if (event.channel_id) {
           await client.chat.postMessage({
             channel: event.channel_id,
             thread_ts: info.file.shares?.public?.[event.channel_id]?.[0]?.ts,
-            text: "Failed to convert email - no credits remain. Order more at https://surgem.ai/",
+            text: "No stamps remaining! Visit the App Home to order more stamps.",
           });
         }
         return;
       }
 
-      const model = process.env.AI_MODEL || "anthropic/claude-haiku-4.5";
-      const { text, usage } = await generateText({
-        model,
-        system: `Convert the following email into markdown. Use verbatim wording. Remove tracking pixels, tracking links, footers, unsubscribe links, and legal boilerplate. Never remove relevant detail.`,
-        prompt: file.preview,
+      const result = await convertEmailToMarkdown({
+        emailContent,
+        generate: options.generate,
       });
-
-      const fromAddr = file.from?.[0];
-      const toAddr = file.to?.[0];
-      const fromStr =
-        fromAddr?.name && fromAddr?.address
-          ? `${fromAddr.name} <${fromAddr.address}>`
-          : fromAddr?.name || fromAddr?.address;
-      const toStr =
-        toAddr?.name && toAddr?.address
-          ? `${toAddr.name} <${toAddr.address}>`
-          : toAddr?.name || toAddr?.address;
-      const dateStr = file.headers?.date;
-      const subject = file.subject;
-
-      const header = [
-        fromStr && `📤 *From:* ${fromStr}`,
-        toStr && `📥 *To:* ${toStr}`,
-        subject && `📝 *Subject:* ${subject}`,
-        dateStr && `📅 *Date:* ${dateStr}`,
-      ]
-        .filter(Boolean)
-        .join("\n");
-
-      if (!text) {
+      if (!result) {
         logger.warn("AI returned no content for email", event.file_id);
         return;
       }
-      const content = text
-        .replace(/^\s*```\w*\n?/, "")
-        .replace(/\n?```\s*$/, "");
 
-      await options.db.deductCredit({
+      const header = buildEmailHeader(file);
+
+      await options.db.deductStamp({
         teamId,
         enterpriseId,
-        model,
-        inputTokens: usage?.inputTokens ?? 0,
-        outputTokens: usage?.outputTokens ?? 0,
-        totalTokens: usage?.totalTokens ?? 0,
+        userId: file.user,
+        model: result.model,
+        inputTokens: result.usage?.inputTokens ?? 0,
+        outputTokens: result.usage?.outputTokens ?? 0,
+        totalTokens: result.usage?.totalTokens ?? 0,
         referenceId: event.file_id,
       });
 
-      const title = file.title || file.name || "(No Subject)";
+      const title = decodeEntities(file.title || file.name) || "(No Subject)";
       const shares = info.file.shares;
       const threadTs =
         shares?.public?.[event.channel_id]?.[0]?.ts ??
@@ -102,10 +83,32 @@ export default function fileSharedCallback(options) {
         await client.filesUploadV2({
           channel_id: event.channel_id,
           thread_ts: threadTs,
-          content,
+          content: result.content,
           filename: `${title}.md`,
           title: `:email: ${title}`,
-          initial_comment: header,
+          blocks: [
+            {
+              type: "section",
+              text: { type: "mrkdwn", text: header },
+            },
+            {
+              type: "context_actions",
+              elements: [
+                {
+                  type: "feedback_buttons",
+                  action_id: "email_delivery_feedback",
+                  positive_button: {
+                    text: { type: "plain_text", text: "+1" },
+                    value: event.file_id,
+                  },
+                  negative_button: {
+                    text: { type: "plain_text", text: "-1" },
+                    value: event.file_id,
+                  },
+                },
+              ],
+            },
+          ],
         });
         await options.db.incrementMessageCount("slack");
       }

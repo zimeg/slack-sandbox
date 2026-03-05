@@ -1,0 +1,13 @@
+{
+  "action": {
+    "action_id": "delivery_feedback_details",
+    "type": "button",
+    "value": "{\"feedbackId\":42,\"rating\":\"+1\",\"channelId\":\"C0123456789\",\"threadTs\":\"1709300000.000100\",\"fileId\":\"F0123456789\",\"teamId\":\"T0123456789\"}"
+  },
+  "body": {
+    "user": {
+      "id": "U0123456789"
+    },
+    "trigger_id": "333.444.def"
+  }
+}

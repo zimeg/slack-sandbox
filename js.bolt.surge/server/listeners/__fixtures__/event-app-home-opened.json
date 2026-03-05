@@ -1,0 +1,12 @@
+{
+  "event": {
+    "type": "app_home_opened",
+    "user": "U0123456789",
+    "tab": "home"
+  },
+  "context": {
+    "teamId": "T0123456789",
+    "isEnterpriseInstall": false,
+    "botUserId": "U0101010101"
+  }
+}

@@ -4,7 +4,7 @@
  * @param {string} params.botUserId
  * @param {number} params.balance
  * @param {number} params.delivered
- * @returns {import("@slack/bolt").KnownBlock[]}
+ * @returns {import("@slack/types").KnownBlock[]}
  */
 export function buildAppHomeBlocks({ botUserId, balance, delivered }) {
   return [
