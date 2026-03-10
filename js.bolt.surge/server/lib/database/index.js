@@ -16,11 +16,14 @@ function getSQL() {
  * @property {Function} getMessageCount - Get total message count
  * @property {Function} getMessageCountBySource - Get message counts by source
  * @property {Function} incrementMessageCount - Increment message counter
- * @property {Function} getBalance - Get credit balance for team/enterprise
+ * @property {Function} getBalance - Get stamp balance for team/enterprise
  * @property {Function} getUsageCount - Get usage count for team/enterprise
- * @property {Function} grantStarterCredits - Grant initial credits on install
- * @property {Function} grantBonusCredit - Grant a bonus credit
- * @property {Function} deductCredit - Deduct credit and log usage
+ * @property {Function} grantStarterStamps - Grant initial stamps on install
+ * @property {Function} grantBonusStamp - Grant a bonus stamp
+ * @property {Function} deductStamp - Deduct a stamp and log usage
+ * @property {Function} logRetryUsage - Log a retry attempt without deducting
+ * @property {Function} saveFeedback - Save delivery feedback
+ * @property {Function} updateFeedbackDetails - Update feedback details and options
  */
 
 /**
@@ -31,30 +34,31 @@ async function load() {
 
   // Drop all tables for fresh schema in local development only
   if (!process.env.VERCEL_ENV) {
-    await sql`DROP TABLE IF EXISTS transactions CASCADE`;
+    await sql`DROP TABLE IF EXISTS stamps CASCADE`;
     await sql`DROP TABLE IF EXISTS installations CASCADE`;
-    await sql`DROP TABLE IF EXISTS states CASCADE`;
-    await sql`DROP TABLE IF EXISTS messages CASCADE`;
+    await sql`DROP TABLE IF EXISTS logins CASCADE`;
+    await sql`DROP TABLE IF EXISTS deliveries CASCADE`;
+    await sql`DROP TABLE IF EXISTS feedback CASCADE`;
     logger.info("Dropped existing tables");
   }
 
   await sql`
-    CREATE TABLE IF NOT EXISTS messages (
+    CREATE TABLE IF NOT EXISTS deliveries (
       id SERIAL PRIMARY KEY,
       source VARCHAR(20) DEFAULT 'web',
       created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
     )
   `;
-  logger.info("Table 'messages' ready");
+  logger.info("Table 'deliveries' ready");
 
   await sql`
-    CREATE TABLE IF NOT EXISTS states (
+    CREATE TABLE IF NOT EXISTS logins (
       state VARCHAR(255) PRIMARY KEY,
       options JSONB,
       created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
     )
   `;
-  logger.info("Table 'states' ready");
+  logger.info("Table 'logins' ready");
 
   await sql`
     CREATE TABLE IF NOT EXISTS installations (
@@ -82,10 +86,11 @@ async function load() {
   logger.info("Table 'installations' ready");
 
   await sql`
-    CREATE TABLE IF NOT EXISTS transactions (
+    CREATE TABLE IF NOT EXISTS stamps (
       id SERIAL PRIMARY KEY,
       team_id VARCHAR(20),
       enterprise_id VARCHAR(20),
+      user_id VARCHAR(20),
       type VARCHAR(20) NOT NULL,
       amount INTEGER NOT NULL,
       input_tokens INTEGER,
@@ -96,7 +101,23 @@ async function load() {
       created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
     )
   `;
-  logger.info("Table 'transactions' ready");
+  logger.info("Table 'stamps' ready");
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS feedback (
+      id SERIAL PRIMARY KEY,
+      team_id VARCHAR(20),
+      enterprise_id VARCHAR(20),
+      user_id VARCHAR(20) NOT NULL,
+      file_id VARCHAR(20) NOT NULL,
+      rating VARCHAR(10) NOT NULL,
+      details TEXT,
+      resend BOOLEAN DEFAULT FALSE,
+      consent_to_review BOOLEAN DEFAULT FALSE,
+      created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+    )
+  `;
+  logger.info("Table 'feedback' ready");
 }
 
 /**
@@ -115,7 +136,7 @@ async function query(strings, ...values) {
  */
 async function getMessageCount() {
   const sql = getSQL();
-  const result = await sql`SELECT COUNT(*) as count FROM messages`;
+  const result = await sql`SELECT COUNT(*) as count FROM deliveries`;
   return parseInt(result[0]?.count ?? "0", 10);
 }
 
@@ -130,7 +151,7 @@ async function getMessageCountBySource() {
       COUNT(*) as total,
       COUNT(*) FILTER (WHERE source = 'web') as web,
       COUNT(*) FILTER (WHERE source = 'slack') as slack
-    FROM messages
+    FROM deliveries
   `;
   const row = result[0];
   return {
@@ -147,39 +168,39 @@ async function getMessageCountBySource() {
  */
 async function incrementMessageCount(source = "web") {
   const sql = getSQL();
-  await sql`INSERT INTO messages (source) VALUES (${source})`;
+  await sql`INSERT INTO deliveries (source) VALUES (${source})`;
   return getMessageCount();
 }
 
 /**
- * Get credit balance for a team or enterprise.
+ * Get stamp balance for a team or enterprise.
  * @param {Object} params
- * @param {string | undefined} params.teamId
- * @param {string | undefined} params.enterpriseId
+ * @param {string} [params.teamId]
+ * @param {string} [params.enterpriseId]
  * @returns {Promise<number>}
  */
 async function getBalance({ teamId, enterpriseId }) {
   const sql = getSQL();
   const result = enterpriseId
-    ? await sql`SELECT COALESCE(SUM(amount), 0) as balance FROM transactions WHERE enterprise_id = ${enterpriseId}`
-    : await sql`SELECT COALESCE(SUM(amount), 0) as balance FROM transactions WHERE team_id = ${teamId} AND enterprise_id IS NULL`;
+    ? await sql`SELECT COALESCE(SUM(amount), 0) as balance FROM stamps WHERE enterprise_id = ${enterpriseId}`
+    : await sql`SELECT COALESCE(SUM(amount), 0) as balance FROM stamps WHERE team_id = ${teamId} AND enterprise_id IS NULL`;
   return parseInt(result[0]?.balance ?? "0", 10);
 }
 
 /**
- * Grant starter credits on install.
+ * Grant starter stamps on install.
  * @param {Object} params
- * @param {string | undefined} params.teamId
- * @param {string | undefined} params.enterpriseId
+ * @param {string} [params.teamId]
+ * @param {string} [params.enterpriseId]
  * @param {number} [params.amount]
  */
-async function grantStarterCredits({ teamId, enterpriseId, amount = 50 }) {
+async function grantStarterStamps({ teamId, enterpriseId, amount = 50 }) {
   const sql = getSQL();
   await sql`
-    INSERT INTO transactions (team_id, enterprise_id, type, amount)
+    INSERT INTO stamps (team_id, enterprise_id, type, amount)
     SELECT ${teamId}, ${enterpriseId ?? null}, 'starter', ${amount}
     WHERE NOT EXISTS (
-      SELECT 1 FROM transactions
+      SELECT 1 FROM stamps
       WHERE (enterprise_id = ${enterpriseId} OR (team_id = ${teamId} AND enterprise_id IS NULL))
       AND type = 'starter'
     )
@@ -189,31 +210,32 @@ async function grantStarterCredits({ teamId, enterpriseId, amount = 50 }) {
 /**
  * Get usage count for a team or enterprise.
  * @param {Object} params
- * @param {string | undefined} params.teamId
- * @param {string | undefined} params.enterpriseId
+ * @param {string} [params.teamId]
+ * @param {string} [params.enterpriseId]
  * @returns {Promise<number>}
  */
 async function getUsageCount({ teamId, enterpriseId }) {
   const sql = getSQL();
   if (enterpriseId) {
     const result = await sql`
-      SELECT COUNT(*) as count FROM transactions
+      SELECT COUNT(*) as count FROM stamps
       WHERE enterprise_id = ${enterpriseId} AND type = 'usage'
     `;
     return parseInt(result[0]?.count ?? "0", 10);
   }
   const result = await sql`
-    SELECT COUNT(*) as count FROM transactions
+    SELECT COUNT(*) as count FROM stamps
     WHERE team_id = ${teamId} AND enterprise_id IS NULL AND type = 'usage'
   `;
   return parseInt(result[0]?.count ?? "0", 10);
 }
 
 /**
- * Deduct a credit and log usage transaction.
+ * Deduct a stamp and log usage transaction.
  * @param {Object} params
- * @param {string | undefined} params.teamId
- * @param {string | undefined} params.enterpriseId
+ * @param {string} [params.teamId]
+ * @param {string} [params.enterpriseId]
+ * @param {string} [params.userId]
  * @param {string} params.model
  * @param {number} params.inputTokens
  * @param {number} params.outputTokens
@@ -221,9 +243,10 @@ async function getUsageCount({ teamId, enterpriseId }) {
  * @param {string} params.referenceId
  * @returns {Promise<boolean>} true if deducted, false if insufficient balance
  */
-async function deductCredit({
+async function deductStamp({
   teamId,
   enterpriseId,
+  userId,
   model,
   inputTokens,
   outputTokens,
@@ -236,26 +259,102 @@ async function deductCredit({
   }
   const sql = getSQL();
   await sql`
-    INSERT INTO transactions (team_id, enterprise_id, type, amount, input_tokens, output_tokens, total_tokens, model, reference_id)
-    VALUES (${teamId}, ${enterpriseId ?? null}, 'usage', -1, ${inputTokens}, ${outputTokens}, ${totalTokens}, ${model}, ${referenceId})
+    INSERT INTO stamps (team_id, enterprise_id, user_id, type, amount, input_tokens, output_tokens, total_tokens, model, reference_id)
+    VALUES (${teamId}, ${enterpriseId ?? null}, ${userId ?? null}, 'usage', -1, ${inputTokens}, ${outputTokens}, ${totalTokens}, ${model}, ${referenceId})
   `;
   return true;
 }
 
 /**
- * Grant a bonus credit.
+ * Log a retry attempt without deducting a stamp.
  * @param {Object} params
- * @param {string | undefined} params.teamId
- * @param {string | undefined} params.enterpriseId
- * @returns {Promise<number>} new balance
+ * @param {string} [params.teamId]
+ * @param {string} [params.enterpriseId]
+ * @param {string} [params.userId]
+ * @param {string} params.model
+ * @param {number} params.inputTokens
+ * @param {number} params.outputTokens
+ * @param {number} params.totalTokens
+ * @param {string} params.referenceId
  */
-async function grantBonusCredit({ teamId, enterpriseId }) {
+async function logRetryUsage({
+  teamId,
+  enterpriseId,
+  userId,
+  model,
+  inputTokens,
+  outputTokens,
+  totalTokens,
+  referenceId,
+}) {
   const sql = getSQL();
   await sql`
-    INSERT INTO transactions (team_id, enterprise_id, type, amount)
-    VALUES (${teamId}, ${enterpriseId ?? null}, 'bonus', 1)
+    INSERT INTO stamps (team_id, enterprise_id, user_id, type, amount, input_tokens, output_tokens, total_tokens, model, reference_id)
+    VALUES (${teamId}, ${enterpriseId ?? null}, ${userId ?? null}, 'resend', 0, ${inputTokens}, ${outputTokens}, ${totalTokens}, ${model}, ${referenceId})
+  `;
+}
+
+/**
+ * Grant a bonus stamp.
+ * @param {Object} params
+ * @param {string} [params.teamId]
+ * @param {string} [params.enterpriseId]
+ * @param {string} [params.userId]
+ * @returns {Promise<number>} new balance
+ */
+async function grantBonusStamp({ teamId, enterpriseId, userId }) {
+  const sql = getSQL();
+  await sql`
+    INSERT INTO stamps (team_id, enterprise_id, user_id, type, amount)
+    VALUES (${teamId}, ${enterpriseId ?? null}, ${userId ?? null}, 'bonus', 1)
   `;
   return getBalance({ teamId, enterpriseId });
+}
+
+/**
+ * Save delivery feedback.
+ * @param {Object} params
+ * @param {string} [params.teamId]
+ * @param {string} [params.enterpriseId]
+ * @param {string} params.userId
+ * @param {string} params.fileId
+ * @param {string} params.rating
+ * @param {string} [params.details]
+ */
+async function saveFeedback({
+  teamId,
+  enterpriseId,
+  userId,
+  fileId,
+  rating,
+  details,
+}) {
+  const sql = getSQL();
+  const result = await sql`
+    INSERT INTO feedback (team_id, enterprise_id, user_id, file_id, rating, details)
+    VALUES (${teamId}, ${enterpriseId ?? null}, ${userId}, ${fileId}, ${rating}, ${details ?? null})
+    RETURNING id
+  `;
+  return result[0]?.id;
+}
+
+/**
+ * Update feedback details and options.
+ * @param {number} id
+ * @param {Object} fields
+ * @param {?string} fields.details
+ * @param {boolean} fields.resend
+ * @param {boolean} fields.consentToReview
+ */
+async function updateFeedbackDetails(id, { details, resend, consentToReview }) {
+  const sql = getSQL();
+  await sql`
+    UPDATE feedback
+    SET details = ${details},
+        resend = ${resend ?? false},
+        consent_to_review = ${consentToReview ?? false}
+    WHERE id = ${id}
+  `;
 }
 
 /** @type {Database} */
@@ -267,7 +366,10 @@ export const db = {
   incrementMessageCount,
   getBalance,
   getUsageCount,
-  grantStarterCredits,
-  grantBonusCredit,
-  deductCredit,
+  grantStarterStamps,
+  grantBonusStamp,
+  deductStamp,
+  logRetryUsage,
+  saveFeedback,
+  updateFeedbackDetails,
 };

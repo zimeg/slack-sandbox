@@ -1,0 +1,31 @@
+{
+  "body": {
+    "user": {
+      "id": "U0123456789"
+    }
+  },
+  "view": {
+    "callback_id": "delivery_feedback_modal",
+    "private_metadata": "{\"feedbackId\":42,\"channelId\":\"C0123456789\",\"threadTs\":\"1709300000.000100\",\"fileId\":\"F0123456789\",\"teamId\":\"T0123456789\"}",
+    "state": {
+      "values": {
+        "feedback_details": {
+          "details": {
+            "type": "plain_text_input",
+            "value": "The formatting was great"
+          }
+        },
+        "feedback_options": {
+          "options": {
+            "type": "checkboxes",
+            "selected_options": [
+              {
+                "value": "consent_to_review"
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "event": {
+    "type": "file_shared",
+    "file_id": "F0AJ6L3DVUZ",
+    "user_id": "U02APLEMRPS",
+    "channel_id": "C0123456789",
+    "event_ts": "1772349715.000100"
+  },
+  "context": {
+    "teamId": "T02A074M3U3",
+    "isEnterpriseInstall": false
+  },
+  "file": {
+    "id": "F0AJ6L3DVUZ",
+    "name": "Joy & Curiosity #76",
+    "title": "Joy & Curiosity #76",
+    "filetype": "email",
+    "size": 161776,
+    "mode": "email",
+    "subject": "Joy & Curiosity #76",
+    "to": [
+      {
+        "address": "zim@o526.net",
+        "name": "",
+        "original": "zim@o526.net"
+      }
+    ],
+    "from": [
+      {
+        "address": "thorstenball@substack.com",
+        "name": "Thorsten Ball",
+        "original": "Thorsten Ball <thorstenball@substack.com>"
+      }
+    ],
+    "headers": {
+      "date": "Sun, 1 Mar 2026 07:21:44 +0000",
+      "in_reply_to": "<post-189361377@substack.com>"
+    },
+    "has_more": true,
+    "preview": "<img src=\"https://slack-imgs.com/?url=https%3A%2F%2Feotrx.substackcdn.com%2Fopen%3Ftoken%3Dtracking\" alt=\"\" width=\"1\" height=\"1\" border=\"0\" style=\"\">  <table role=\"presentation\" width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"><tbody> <tr> <td></td> <td width=\"550\"></td> <td></td> </tr></tbody></table>",
+    "preview_plain_text": "View this post on the web at \r\n\r\nThis week I found myself writing code by hand again.\r\nNot a lot, maybe ten, twenty lines in total, which is far less than what I had Amp produce, but still: actual typing out of code.",
+    "plain_text": "View this post on the web at https://registerspill.thorstenball.com/p/joy-and-curiosity-76\r\n\r\nThis week I found myself writing code by hand again.\r\nNot a lot, maybe ten, twenty lines in total, which is far less than what I had Amp produce, but still: actual typing out of code. Miracle I didn't get any blisters.\r\nAt our Amp meetup in Singapore I mentioned this on stage and someone in the audience cheekily asked: \"You just told us that these agents can now work well when you give them a longer leash and yet you wrote code by hand, how come?\"\r\nThe answer can probably be boiled down to something that sounds very trite: to build software means to learn.",
+    "shares": {
+      "public": {
+        "C0123456789": [
+          {
+            "ts": "1772349715.000100"
+          }
+        ]
+      }
+    }
+  }
+}

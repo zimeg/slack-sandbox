@@ -23,6 +23,7 @@ versioned with [semantic versioning][semver].
 
 ### Maintenance
 
+- build: nest the schema and metadata into app manifest for the flock
 - ci: use the production manifest when making change on merge
 - chore: rename server script to todos-server
 - ci: use short branch names for downstream sample repositories
