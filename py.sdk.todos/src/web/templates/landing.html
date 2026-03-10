@@ -90,9 +90,8 @@
             font-size: 0.9rem;
             line-height: 1.5;
         }
-        .terminal-body .prompt { color: #888; }
-        .terminal-body .prompt::after { content: "$ "; }
         .terminal-body .cmd { color: #fff; }
+        .terminal-body .cmd::before { content: "$ "; color: #888; }
         .terminal-body .comment { color: #666; }
         .terminal-body .section { color: #fff; font-weight: bold; margin-top: 12px; }
         .terminal-body .section.overdue { color: #ff6b6b; }
@@ -156,7 +155,7 @@
                     <div class="terminal-dot green"></div>
                 </div>
                 <div class="terminal-body">
-                    <div><span class="prompt"></span><span class="cmd">todos</span></div>
+                    <div><span class="cmd">todos</span></div>
                     <div class="section overdue">Overdue</div>
                     <div class="item"><span class="prefix bang">!</span> <span class="id">Rec0ADN3PKWMB</span> Review the docs <span class="due">due: 3 days ago</span></div>
                     <div class="section">Todo</div>
@@ -176,10 +175,10 @@
                     <div class="terminal-dot green"></div>
                 </div>
                 <div class="terminal-body">
-                    <div><span class="prompt"></span><span class="cmd">todos</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># Show todos</span></div>
-                    <div><span class="prompt"></span><span class="cmd">todos add &lt;title&gt;</span>&nbsp;&nbsp;<span class="comment"># Add a todo (-d YYYY-MM-DD)</span></div>
-                    <div><span class="prompt"></span><span class="cmd">todos done &lt;id&gt;</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># Mark todo as complete</span></div>
-                    <div><span class="prompt"></span><span class="cmd">todos init</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># Authenticate with Slack</span></div>
+                    <div><span class="cmd">todos</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># Show todos</span></div>
+                    <div><span class="cmd">todos add &lt;title&gt;</span>&nbsp;&nbsp;<span class="comment"># Add a todo (-d YYYY-MM-DD)</span></div>
+                    <div><span class="cmd">todos done &lt;id&gt;</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># Mark todo as complete</span></div>
+                    <div><span class="cmd">todos init</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># Authenticate with Slack</span></div>
                 </div>
             </div>
         </section>
@@ -215,8 +214,8 @@
                     <div class="terminal-dot green"></div>
                 </div>
                 <div class="terminal-body">
-                    <div><span class="prompt"></span><span class="cmd">uv tool install git+https://github.com/zimeg/slacks@todos</span></div>
-                    <div style="margin-top: 12px;"><span class="prompt"></span><span class="cmd">todos init</span></div>
+                    <div><span class="cmd">uv tool install git+https://github.com/zimeg/slacks@todos</span></div>
+                    <div style="margin-top: 12px;"><span class="cmd">todos init</span></div>
                     <div style="margin-top: 8px; color: #444;">Opening browser for Slack authorization...</div>
                     <div style="color: #444;">Credentials saved to ~/.config/slack/extensions/todos/credentials.json</div>
                     <div style="margin-top: 8px;"><span class="success">✓</span> Connected to Acme Corp</div>
