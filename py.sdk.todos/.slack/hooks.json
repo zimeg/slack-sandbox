@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "deploy": "systemctl restart todos",
+    "get-manifest": "cat manifest.$SLACK_ENVIRONMENT_TAG.json #",
+    "start": "sops exec-env secrets.development.yaml 'nix run .#server'"
+  },
+  "config": {
+    "sdk-managed-connection-enabled": true,
+    "watch": {
+      "manifest": {
+        "paths": ["manifest.development.json"]
+      }
+    }
+  }
+}

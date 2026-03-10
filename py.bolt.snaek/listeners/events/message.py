@@ -5,7 +5,7 @@ from slack_bolt import BoltContext
 from slack_sdk import WebClient
 
 from database.manager import Database
-from models.respond import response_generate
+from agent.respond import response_generate
 from shared.types import ChatEvent
 
 from .app_mention import app_mention_check

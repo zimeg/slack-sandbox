@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:docs.slack.dev)",
+      "Bash(wc:*)",
+      "WebSearch",
+      "WebFetch(domain:api.slack.com)",
+      "WebFetch(domain:github.com)",
+      "Bash(python3 -m py_compile:*)",
+      "Bash(nix flake check:*)",
+      "Bash(git add:*)",
+      "Bash(git rm:*)",
+      "Bash(nix run:*)",
+      "Bash(nix develop:*)",
+      "Bash(nix-prefetch-url:*)",
+      "Bash(nix hash convert:*)",
+      "Bash(git mv:*)"
+    ]
+  }
+}

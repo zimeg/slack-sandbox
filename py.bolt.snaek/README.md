@@ -61,7 +61,7 @@ Development with the [Slack CLI][cli] is encouraged for simple app management.
 Clone the application code and download additional packages:
 
 ```sh
-$ slack create snaek -t zimeg/slacks -b py.bolt.snaek
+$ slack create snaek -t zimeg/slacks -b snaek
 $ cd snaek
 $ python3 -m venv .venv
 $ source .venv/bin/activate

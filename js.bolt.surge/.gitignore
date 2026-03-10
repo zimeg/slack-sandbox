@@ -2,10 +2,7 @@
 .direnv
 node_modules
 
-# Secrets and similar things
-.env*
-!.env.example
-store
-
-# Testing tooling
-coverage
+# Build output
+.output
+.nitro
+.vercel

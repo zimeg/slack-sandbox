@@ -1,0 +1,9 @@
+keys:
+  - &puma age1exgt6neyetzrg9wgf4vxqmc93sjwqmqm3283hp5zx4m9hy9dpunqh3q4xj
+  - &tom age1dujf55uzev2nnpq6c2drn0e8pmpxay22qqfsavwaxqakwn9se5hsputgx4
+creation_rules:
+  - path_regex: secrets\..+\.yaml$
+    key_groups:
+      - age:
+          - *puma
+          - *tom
