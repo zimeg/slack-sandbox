@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- build: set manifest schema a version for editor checks 2026-03-09
 - feat: collect feedback after email deliveries arriving 2026-03-04
 - docs: add development icon for testing in multiple app 2026-02-23
 - ci: remove install update script command from automtic 2026-02-20
@@ -14,7 +15,6 @@ versioned with [calendar versioning][calver].
 - chore: move spec file to scripts folder for colocation 2026-02-12
 - build: teach flake be without training utilities wheels 2026-02-07
 - test: replace test runner with node defaults for coverage 2026-02-07
-- build: set the manifest schema to version one with editor checks 2026-02-05
 - refactor: simplify manifests into per environment files 2026-02-07
 - fix: revert to minimal workspace for smaller heroku slugs 2026-02-06
 - build: remove workspaces from app packaging commandsets 2026-02-06
