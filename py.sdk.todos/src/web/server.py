@@ -43,6 +43,15 @@ class Handler(BaseHTTPRequestHandler):
 
         if path == "/":
             self._send_html(LANDING_PAGE)
+        elif path == "/robots.txt":
+            self._send_text("User-agent: *\nAllow: /\nSitemap: https://todos.guide/sitemap.xml\n")
+        elif path == "/sitemap.xml":
+            self._send_xml(
+                '<?xml version="1.0" encoding="UTF-8"?>\n'
+                '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+                "  <url><loc>https://todos.guide</loc></url>\n"
+                "</urlset>\n"
+            )
         elif path == "/login":
             self._handle_oauth_start(parsed.query)
         elif path == "/callback":
@@ -180,6 +189,22 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("Content-Length", str(len(body)))
         self.end_headers()
         self.wfile.write(body.encode())
+
+    def _send_text(self, text: str, status: int = 200) -> None:
+        """Send plain text response."""
+        self.send_response(status)
+        self.send_header("Content-Type", "text/plain; charset=utf-8")
+        self.send_header("Content-Length", str(len(text.encode())))
+        self.end_headers()
+        self.wfile.write(text.encode())
+
+    def _send_xml(self, xml: str, status: int = 200) -> None:
+        """Send XML response."""
+        self.send_response(status)
+        self.send_header("Content-Type", "application/xml; charset=utf-8")
+        self.send_header("Content-Length", str(len(xml.encode())))
+        self.end_headers()
+        self.wfile.write(xml.encode())
 
 
 def main() -> None:

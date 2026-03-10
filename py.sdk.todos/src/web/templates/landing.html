@@ -3,9 +3,19 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="The endangered task management CLI for collaboration and orchestration using Slack Lists">
+    <meta name="theme-color" content="#0d0d0d">
+    <meta name="slack-app-id" content="A0AE6GE2CBB">
+    <link rel="canonical" href="https://todos.guide">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://todos.guide">
+    <meta property="og:title" content="Todo's Guide">
+    <meta property="og:description" content="The endangered task management CLI for collaboration and orchestration using Slack Lists">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦤</text></svg>">
     <title>Todo's Guide</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        ::selection { background: #c4a77d33; }
         body {
             font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
             line-height: 1.6;
@@ -80,8 +90,8 @@
             font-size: 0.9rem;
             line-height: 1.5;
         }
-        .terminal-body .prompt { color: #888; }
         .terminal-body .cmd { color: #fff; }
+        .terminal-body .cmd::before { content: "$ "; color: #888; }
         .terminal-body .comment { color: #666; }
         .terminal-body .section { color: #fff; font-weight: bold; margin-top: 12px; }
         .terminal-body .section.overdue { color: #ff6b6b; }
@@ -119,10 +129,15 @@
             .features { grid-template-columns: 1fr; }
         }
     </style>
+    <script async src="https://plausible.io/js/pa-76sdVoybLrlb8s3gKqWJD.js"></script>
+    <script>
+      window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+      plausible.init()
+    </script>
 </head>
 <body>
     <header>
-        <span class="logo">🦤</span>
+        <span class="logo" role="img" aria-label="Todo the Dodo">🦤</span>
         <div class="text">
             <h1>Todo's Guide</h1>
             <p>The endangered task management CLI for collaboration and orchestration using <a href="https://slack.com/help/articles/27452748828179-Use-lists-in-Slack" target="_blank">Slack Lists</a></p>
@@ -140,7 +155,7 @@
                     <div class="terminal-dot green"></div>
                 </div>
                 <div class="terminal-body">
-                    <div><span class="prompt">$</span> <span class="cmd">todos</span></div>
+                    <div><span class="cmd">todos</span></div>
                     <div class="section overdue">Overdue</div>
                     <div class="item"><span class="prefix bang">!</span> <span class="id">Rec0ADN3PKWMB</span> Review the docs <span class="due">due: 3 days ago</span></div>
                     <div class="section">Todo</div>
@@ -160,10 +175,10 @@
                     <div class="terminal-dot green"></div>
                 </div>
                 <div class="terminal-body">
-                    <div><span class="prompt">$</span> <span class="cmd">todos</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># Show todos</span></div>
-                    <div><span class="prompt">$</span> <span class="cmd">todos add &lt;title&gt;</span>&nbsp;&nbsp;<span class="comment"># Add a todo (-d YYYY-MM-DD)</span></div>
-                    <div><span class="prompt">$</span> <span class="cmd">todos done &lt;id&gt;</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># Mark todo as complete</span></div>
-                    <div><span class="prompt">$</span> <span class="cmd">todos init</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># Authenticate with Slack</span></div>
+                    <div><span class="cmd">todos</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># Show todos</span></div>
+                    <div><span class="cmd">todos add &lt;title&gt;</span>&nbsp;&nbsp;<span class="comment"># Add a todo (-d YYYY-MM-DD)</span></div>
+                    <div><span class="cmd">todos done &lt;id&gt;</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># Mark todo as complete</span></div>
+                    <div><span class="cmd">todos init</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># Authenticate with Slack</span></div>
                 </div>
             </div>
         </section>
@@ -199,8 +214,8 @@
                     <div class="terminal-dot green"></div>
                 </div>
                 <div class="terminal-body">
-                    <div><span class="prompt">$</span> <span class="cmd">uv tool install git+https://github.com/zimeg/slacks@todos</span></div>
-                    <div style="margin-top: 12px;"><span class="prompt">$</span> <span class="cmd">todos init</span></div>
+                    <div><span class="cmd">uv tool install git+https://github.com/zimeg/slacks@todos</span></div>
+                    <div style="margin-top: 12px;"><span class="cmd">todos init</span></div>
                     <div style="margin-top: 8px; color: #444;">Opening browser for Slack authorization...</div>
                     <div style="color: #444;">Credentials saved to ~/.config/slack/extensions/todos/credentials.json</div>
                     <div style="margin-top: 8px;"><span class="success">✓</span> Connected to Acme Corp</div>

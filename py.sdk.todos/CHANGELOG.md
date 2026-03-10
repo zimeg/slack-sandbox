@@ -19,6 +19,7 @@ versioned with [semantic versioning][semver].
 
 - docs: add uv tool install instructions to the landing page and readme
 - docs: remove particular package in running default nix run program
+- docs: serve metadata and links for robots toward better finds online
 
 ### Maintenance
 
