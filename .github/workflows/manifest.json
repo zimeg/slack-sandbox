@@ -17,7 +17,7 @@
   },
   "oauth_config": {
     "scopes": {
-      "bot": ["reactions:write", "chat:write"]
+      "bot": ["chat:write", "reactions:write"]
     }
   },
   "settings": {
