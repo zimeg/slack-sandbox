@@ -106,7 +106,7 @@ jobs:
             --label "dependencies" || true
           gh pr merge update --auto --squash
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.SANDBOX_ACCESS_TOKEN }}
       - name: Message the happened errors
         if: failure()
         uses: slackapi/slack-github-action@91efab103c0de0a537f72a35f6b8cda0ee76bf0a # v2.1.1
