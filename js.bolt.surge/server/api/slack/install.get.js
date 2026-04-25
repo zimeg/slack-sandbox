@@ -1,4 +1,4 @@
-import { installer } from "../../app.js";
+import { receiver } from "../../app.js";
 
 /**
  * Redirect to Slack OAuth authorization page.
@@ -9,6 +9,8 @@ export default defineEventHandler(async (event) => {
 
   /** @type {string | undefined} */
   let redirectUrl;
+
+  const installer = /** @type {any} */ (receiver).installer;
 
   await installer.handleInstallPath(
     /** @type {import("http").IncomingMessage} */ ({
