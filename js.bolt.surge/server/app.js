@@ -1,5 +1,4 @@
 import boltPkg from "@slack/bolt";
-import oauthPkg from "@slack/oauth";
 import { VercelReceiver } from "@vercel/slack-bolt";
 import { generateText } from "ai";
 import { db } from "./lib/database/index.js";
@@ -8,7 +7,6 @@ import { DatabaseStateStore } from "./lib/oauth/state-store.js";
 import { registerListeners } from "./listeners/index.js";
 
 const { App, LogLevel, SocketModeReceiver } = boltPkg;
-const { InstallProvider } = oauthPkg;
 
 const isProduction = process.env.SLACK_ENVIRONMENT_TAG === "production";
 const isVercel = Boolean(process.env.VERCEL);
@@ -16,6 +14,8 @@ const defaultLogLevel = isProduction ? LogLevel.INFO : LogLevel.DEBUG;
 const logLevel =
   /** @type {boltPkg.LogLevel | undefined} */ (process.env.LOG_LEVEL) ||
   defaultLogLevel;
+
+const installProvider = createInstallProvider(db);
 
 /**
  * Receiver for handling Slack events.
@@ -25,27 +25,39 @@ const logLevel =
 export const receiver = isVercel
   ? new VercelReceiver({
       logLevel,
+      installationStore: installProvider.installationStore,
+      installerOptions: {
+        stateStore: new DatabaseStateStore(),
+        directInstall: true,
+        callbackOptions: {
+          successAsync: async (installation, _installOptions, _req, res) => {
+            const teamId = installation.team?.id;
+            const appId = installation.appId;
+            if (teamId && appId) {
+              const deeplink = encodeURIComponent(
+                `slack://app?team=${teamId}&id=${appId}&tab=home`,
+              );
+              res.writeHead(302, {
+                Location: `/?success=true&redirect=${deeplink}`,
+              });
+            } else {
+              res.writeHead(302, { Location: "/?success=true" });
+            }
+            res.end();
+          },
+          failureAsync: async (error, _installOptions, _req, res) => {
+            res.writeHead(302, {
+              Location: `/?error=${encodeURIComponent(error.message)}`,
+            });
+            res.end();
+          },
+        },
+      },
     })
   : new SocketModeReceiver({
       appToken: /** @type {string} */ (process.env.SLACK_APP_TOKEN),
       logLevel,
     });
-
-/**
- * OAuth install provider for multi-workspace support.
- */
-const installProvider = createInstallProvider(db);
-
-/**
- * Shared OAuth installer for install/callback handlers.
- */
-export const installer = new InstallProvider({
-  clientId: /** @type {string} */ (process.env.SLACK_CLIENT_ID),
-  clientSecret: /** @type {string} */ (process.env.SLACK_CLIENT_SECRET),
-  stateStore: new DatabaseStateStore(),
-  installationStore: installProvider.installationStore,
-  directInstall: true,
-});
 
 /**
  * The Bolt Slack application.
@@ -56,21 +68,6 @@ export const installer = new InstallProvider({
 export const app = new App(
   isVercel
     ? {
-        authorize: async ({ teamId, enterpriseId, isEnterpriseInstall }) => {
-          const installation =
-            await installProvider.installationStore.fetchInstallation({
-              teamId,
-              enterpriseId,
-              isEnterpriseInstall: isEnterpriseInstall ?? false,
-            });
-          return {
-            botToken: installation.bot?.token,
-            botId: installation.bot?.id,
-            botUserId: installation.bot?.userId,
-            teamId: installation.team?.id,
-            enterpriseId: installation.enterprise?.id,
-          };
-        },
         signingSecret: process.env.SLACK_SIGNING_SECRET,
         receiver,
         deferInitialization: true,
