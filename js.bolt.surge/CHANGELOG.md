@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- refactor: authorize vercel receiver oauth installation 2026-04-25
 - build: set manifest schema a version for editor checks 2026-03-09
 - feat: collect feedback after email deliveries arriving 2026-03-04
 - docs: add development icon for testing in multiple app 2026-02-23
