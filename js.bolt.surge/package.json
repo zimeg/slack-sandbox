@@ -30,7 +30,7 @@
     "node": "24.x"
   },
   "dependencies": {
-    "@neondatabase/serverless": "^1.0.2",
+    "@neondatabase/serverless": "^1.1.0",
     "@slack/bolt": "^4.7.0",
     "@slack/logger": "^4.0.0",
     "@slack/oauth": "^3.0.5",
