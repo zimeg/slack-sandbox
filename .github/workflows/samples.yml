@@ -112,7 +112,7 @@ jobs:
       - name: Create project
         uses: slackapi/slack-github-action/cli@v3.0.2
         with:
-          command: "create ${{ matrix.app }} --template zimeg/slacks --branch ${{ matrix.branch }}"
+          command: "create ${{ matrix.app }} --template zimeg/slacks --branch ${{ matrix.branch }} --force"
       - name: Configure project
         run: |
           cp -a "${{ matrix.app }}/." .
