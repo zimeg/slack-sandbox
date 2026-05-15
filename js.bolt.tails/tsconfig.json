@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "target": "es6",
+        "target": "es2022",
         "module": "commonjs",
         "moduleResolution": "node",
         "esModuleInterop": true,
@@ -10,8 +10,7 @@
         "allowJs": true,
         "sourceMap": true,
         "rootDir": "src",
-        "outDir": "dist",
-        "skipLibCheck": true
+        "outDir": "dist"
     },
     "include": [
         "src/**/*"
