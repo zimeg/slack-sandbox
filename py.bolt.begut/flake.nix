@@ -74,6 +74,18 @@
         ]);
     in
     {
+      apps = each (
+        pkgs:
+        {
+          default = {
+            type = "app";
+            program = "${pkgs.writeShellScript "begut" ''
+              cd ${./.}
+              exec ${(pythonEnv pkgs)}/bin/python3 -m src.app
+            ''}";
+          };
+        }
+      );
       devShells = each (
         pkgs:
         let
