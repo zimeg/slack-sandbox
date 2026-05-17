@@ -31,15 +31,20 @@
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
-    "@slack/bolt": "^4.7.2",
-    "@slack/logger": "^4.0.0",
-    "@slack/oauth": "^3.0.5",
+    "@slack/bolt": "5.0.0-rc.1",
+    "@slack/logger": "5.0.0-rc.1",
+    "@slack/oauth": "4.0.0-rc.1",
     "@vercel/slack-bolt": "^1.4.3",
-    "ai": "^6.0.174",
+    "ai": "^6.0.177",
     "prettier": "^3.8.3"
   },
   "devDependencies": {
     "@slack/cli-hooks": "1.3.2",
     "nitropack": "^2.13.4"
+  },
+  "overrides": {
+    "@slack/bolt": "$@slack/bolt",
+    "@slack/oauth": "$@slack/oauth",
+    "@slack/logger": "$@slack/logger"
   }
 }
