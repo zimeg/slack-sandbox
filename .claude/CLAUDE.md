@@ -10,11 +10,11 @@ A polyglot monorepo for experimenting with Slack APIs. Contains independent proj
 
 | Directory | Stack | Purpose |
 |-----------|-------|---------|
-| `deno.sdk.begut` | Deno Slack SDK | Budget/expense tracking |
 | `deno.sdk.chanl` | Deno Slack SDK | Ephemeral channel creation |
 | `java.sdk.gibra` | Java Slack SDK + Gradle + JDK 21 | API method testing |
 | `js.bolt.surge` | Bolt JS + Node 22 + PostgreSQL + Heroku | Email organizer |
 | `js.bolt.tails` | Bolt JS + TypeScript + yt-dlp | Video archival |
+| `py.bolt.begut` | Bolt Python + go-task | Budget tracking |
 | `py.bolt.snaek` | Bolt Python + Ollama | LLM chat bot |
 | `py.sdk.sdkai` | Python Slack SDK | SDK snippet testing |
 
@@ -70,6 +70,13 @@ npm run lint          # Check with Biome
 npm run lint:fix      # Fix linting issues
 npm run watch         # Dev mode with nodemon
 npm run logs          # Tail Heroku logs (surge only)
+```
+
+### Python (py.bolt.begut)
+```sh
+task test             # Format check + lint + type check
+task lint             # Format and lint with ruff
+slack run src/app.py  # Run the app
 ```
 
 ### Python (py.bolt.snaek)
