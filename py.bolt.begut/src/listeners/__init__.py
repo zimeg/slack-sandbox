@@ -19,5 +19,5 @@ def handle_message(client, event: dict, repos: Repos) -> None:
 
     if subtype is None:
         handle_edit(client, event, repos)
-    elif subtype == "message_changed":
+    elif subtype == "file_share":
         handle_forward(client, event, repos)

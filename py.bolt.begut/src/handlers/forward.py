@@ -24,11 +24,14 @@ logger = logging.getLogger(__name__)
 
 
 def handle_forward(client: WebClient, event: dict, repos: Repos) -> None:
-    """Forward a file share from the inbox to the project channel."""
+    """Forward a file share from the inbox to the project channel.
+
+    https://docs.slack.dev/changelog/2018-05-file-threads-soon-tread#file_share
+    """
     if event.get("channel") != SLACK_CHANNEL_ID_INCOMING:
         return
 
-    msg = event.get("message", {})
+    msg = event
     if msg.get("user") != SLACK_USER_ID_MESSENGER:
         return
 
@@ -37,7 +40,7 @@ def handle_forward(client: WebClient, event: dict, repos: Repos) -> None:
         channel=SLACK_CHANNEL_ID_INCOMING,
         timestamp=msg_ts,
     )
-    for reaction in reactions.get("message", {}).get("reactions", []):
+    for reaction in reactions.get("message", {}).get("reactions", []):  # type: ignore[call-overload]
         if reaction.get("name") == "zap":
             if SLACK_USER_ID_BOT in reaction.get("users", []):
                 return
