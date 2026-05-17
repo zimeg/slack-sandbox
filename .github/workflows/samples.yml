@@ -18,8 +18,6 @@ jobs:
       max-parallel: 3
       matrix:
         include:
-          - app: deno.sdk.begut
-            branch: begut
           - app: deno.sdk.chanl
             branch: chanl
           - app: java.sdk.gibra
@@ -28,6 +26,8 @@ jobs:
             branch: surge
           - app: js.bolt.tails
             branch: tails
+          - app: py.bolt.begut
+            branch: begut
           - app: py.bolt.snaek
             branch: snaek
           - app: py.sdk.todos
@@ -80,10 +80,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - app: deno.sdk.begut
-            deploy: |
-              slack deploy --app $SLACK_APP_ID --token $SLACK_CLI_TOKEN
-            test: deno task test
           - app: deno.sdk.chanl
             deploy: |
               slack deploy --app $SLACK_APP_ID --token $SLACK_CLI_TOKEN
@@ -105,6 +101,10 @@ jobs:
               slack deploy --app $SLACK_APP_ID --token $SLACK_CLI_TOKEN --force
             deps: npm ci --verbose
             test: npm run test:ci
+          - app: py.bolt.begut
+            deploy: |
+              slack deploy --app $SLACK_APP_ID --token $SLACK_CLI_TOKEN --force
+            test: task test
           - app: py.bolt.snaek
             deploy: |
               slack deploy --app $SLACK_APP_ID --token $SLACK_CLI_TOKEN --force

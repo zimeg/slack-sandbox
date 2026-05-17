@@ -1,0 +1,9 @@
+# Development artifacts
+__pycache__
+*.egg-info
+.direnv
+.venv
+
+# Environment variables
+.env
+.env.production
