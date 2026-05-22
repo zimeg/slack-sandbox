@@ -97,9 +97,11 @@ jobs:
               java -jar build/libs/java.sdk.gibra-all.jar -mode api -method api.test
           - app: js.bolt.surge
             branch: surge
+            deps: npm ci --verbose
             test: npm run test
           - app: js.bolt.tails
             branch: tails
+            deps: npm ci --verbose
             test: npm run test:ci
           - app: py.bolt.snaek
             branch: snaek

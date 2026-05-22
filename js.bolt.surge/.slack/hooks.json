@@ -1,8 +1,8 @@
 {
   "hooks": {
-    "get-hooks": "npx -p @slack/bolt slack-cli-get-hooks",
+    "get-hooks": "nix develop -c npx -p @slack/bolt slack-cli-get-hooks",
     "get-manifest": "cat manifest.$SLACK_ENVIRONMENT_TAG.json #",
-    "start": "sops exec-env secrets.development.yaml 'npm run dev'",
+    "start": "nix develop -c sops exec-env secrets.development.yaml 'npm run dev'",
     "deploy": "echo https://vercel.com/zimeg/surgemail"
   },
   "config": {
