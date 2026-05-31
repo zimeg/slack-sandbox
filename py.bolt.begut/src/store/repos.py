@@ -5,8 +5,8 @@ from src.store.git import (
     commit,
     delete_remote_branch,
     fetch,
-    merge_squash,
     push,
+    read_file,
 )
 
 
@@ -26,7 +26,7 @@ class Repos:
         push(self.repo, "origin", branch)
 
     def publish(self, ts: str, title: str, date: str) -> str:
-        """Squash merge review branch to master, push to both remotes.
+        """Publish a review draft to master, then push to both remotes.
 
         Returns the full title with date appended.
         """
@@ -36,12 +36,10 @@ class Repos:
 
         full_title = f"{title} {date}" if date else title
         slug = full_title.replace(" ", "-")
+        content = read_file(self.repo, f"origin/{branch}", f"Announcements/{ts}.md")
 
-        merge_squash(self.repo, branch)
-
-        src = self.repo / "Announcements" / f"{ts}.md"
         dst = self.repo / "Announcements" / f"{slug}.md"
-        src.rename(dst)
+        dst.write_text(content)
 
         announcements = self._update_announcements(title, slug, date)
 
@@ -52,12 +50,12 @@ class Repos:
 
         return full_title
 
-    def _update_announcements(self, title: str, slug: str, date: str):
+    def _update_announcements(self, title: str, slug: str, date: str) -> str:
         """Prepend an entry to Announcements.md and return its path."""
         entry = f"- [{title}]({slug}) {date}" if date else f"- [{title}]({slug})"
         announcements = self.repo / "Announcements.md"
         if not announcements.exists():
-            return announcements
+            return str(announcements)
         lines = announcements.read_text().splitlines()
         for i, line in enumerate(lines):
             if line.startswith("- ["):
@@ -66,4 +64,4 @@ class Repos:
         else:
             lines.append(entry)
         announcements.write_text("\n".join(lines) + "\n")
-        return announcements
+        return str(announcements)

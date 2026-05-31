@@ -57,16 +57,16 @@ def checkout(repo: Path, branch: str) -> None:
     subprocess.run(["git", "checkout", "-b", branch], cwd=repo, check=True)
 
 
-def merge_squash(repo: Path, branch: str) -> None:
-    """Squash merge a remote branch into the current branch."""
-    subprocess.run(
-        ["git", "merge", "--squash", f"origin/{branch}"],
+def read_file(repo: Path, ref: str, path: Path | str) -> str:
+    """Read a file's contents from a git ref."""
+    result = subprocess.run(
+        ["git", "show", f"{ref}:{path}"],
         cwd=repo,
+        capture_output=True,
+        text=True,
         check=True,
     )
-
-
-# Committing
+    return result.stdout
 
 
 def commit(repo: Path, message: str, paths: Iterable[Path | str]) -> bool:
