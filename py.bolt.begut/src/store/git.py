@@ -30,17 +30,28 @@ def fetch(repo: Path) -> None:
 
 
 def checkout(repo: Path, branch: str) -> None:
-    """Checkout a branch, creating it if it doesn't exist remotely."""
-    result = subprocess.run(
-        ["git", "branch", "-r", "--list", f"origin/{branch}"],
+    """Checkout a branch, preferring local, then remote, then a new branch."""
+    local_result = subprocess.run(
+        ["git", "show-ref", "--verify", "--quiet", f"refs/heads/{branch}"],
         cwd=repo,
-        capture_output=True,
-        text=True,
     )
-    if result.stdout.strip():
+    if local_result.returncode == 0:
         subprocess.run(["git", "checkout", branch], cwd=repo, check=True)
-    else:
-        subprocess.run(["git", "checkout", "-b", branch], cwd=repo, check=True)
+        return
+
+    remote_result = subprocess.run(
+        ["git", "show-ref", "--verify", "--quiet", f"refs/remotes/origin/{branch}"],
+        cwd=repo,
+    )
+    if remote_result.returncode == 0:
+        subprocess.run(
+            ["git", "checkout", "-b", branch, "--track", f"origin/{branch}"],
+            cwd=repo,
+            check=True,
+        )
+        return
+
+    subprocess.run(["git", "checkout", "-b", branch], cwd=repo, check=True)
 
 
 def merge_squash(repo: Path, branch: str) -> None:
