@@ -24,12 +24,6 @@ def handle_publish(ack, body, client, repos: Repos):
                 )
                 return
 
-    client.reactions_add(
-        channel=SLACK_CHANNEL_ID_OUTGOING,
-        timestamp=thread_ts,
-        name="truck",
-    )
-
     value = body["actions"][0]["value"]
     ts, created_str = value.split("|", 1)
     date = datetime.fromtimestamp(int(created_str), tz=timezone.utc).strftime(
@@ -40,6 +34,12 @@ def handle_publish(ack, body, client, repos: Repos):
     full_title = repos.publish(ts, title, date)
     slug = full_title.replace(" ", "-")
     wiki_url = f"{WIKI_BASE}/{slug}"
+
+    client.reactions_add(
+        channel=SLACK_CHANNEL_ID_OUTGOING,
+        timestamp=thread_ts,
+        name="truck",
+    )
 
     client.chat_postMessage(
         channel=SLACK_CHANNEL_ID_OUTGOING,

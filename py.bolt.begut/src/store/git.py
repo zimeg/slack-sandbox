@@ -1,6 +1,7 @@
 import logging
 import subprocess
 import tempfile
+from collections.abc import Iterable
 from pathlib import Path
 
 logger = logging.getLogger(__name__)
@@ -25,7 +26,9 @@ def add_remote(repo: Path, name: str, url: str) -> None:
 
 
 def fetch(repo: Path) -> None:
-    """Fetch all remotes."""
+    """Reset local state and fetch all remotes."""
+    subprocess.run(["git", "reset", "--hard", "HEAD"], cwd=repo, check=True)
+    subprocess.run(["git", "clean", "-fd"], cwd=repo, check=True)
     subprocess.run(["git", "fetch", "--all"], cwd=repo, check=True)
 
 
@@ -66,9 +69,13 @@ def merge_squash(repo: Path, branch: str) -> None:
 # Committing
 
 
-def commit(repo: Path, message: str) -> bool:
-    """Stage and commit all changes. Returns False if nothing to commit."""
-    subprocess.run(["git", "add", "-A"], cwd=repo, check=True)
+def commit(repo: Path, message: str, paths: Iterable[Path | str]) -> bool:
+    """Stage and commit the given paths. Returns False if nothing to commit."""
+    subprocess.run(
+        ["git", "add", "-A", *(str(path) for path in paths)],
+        cwd=repo,
+        check=True,
+    )
     result = subprocess.run(["git", "diff", "--cached", "--quiet"], cwd=repo)
     if result.returncode == 0:
         return False
