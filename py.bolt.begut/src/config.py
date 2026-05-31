@@ -4,6 +4,11 @@ SLACK_CHANNEL_ID_INCOMING = os.environ["SLACK_CHANNEL_ID_INCOMING"]
 SLACK_CHANNEL_ID_OUTGOING = os.environ["SLACK_CHANNEL_ID_OUTGOING"]
 SLACK_USER_ID_BOT = os.environ["SLACK_USER_ID_BOT"]
 SLACK_USER_ID_MESSENGER = os.environ["SLACK_USER_ID_MESSENGER"]
+EMAIL_FORWARDING_ALLOWLIST = frozenset(
+    email.strip().lower()
+    for email in os.environ.get("EMAIL_FORWARDING_ALLOWLIST", "").split(",")
+    if email.strip()
+)
 WIKI_BASE = os.environ["WIKI_BASE"]
 WIKI_REMOTE_PRODUCTION = os.environ["WIKI_REMOTE_PRODUCTION"]
 WIKI_REMOTE_STAGING = os.environ["WIKI_REMOTE_STAGING"]
