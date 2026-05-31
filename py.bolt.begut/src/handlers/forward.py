@@ -41,14 +41,14 @@ def extract_sender_email(text: str) -> str | None:
 
 
 def handle_forward(client: WebClient, event: dict, repos: Repos) -> None:
-    """Forward a file share from the inbox to the project channel."""
+    """Forward a file share from the inbox to the project channel.
+
+    https://docs.slack.dev/changelog/2018-05-file-threads-soon-tread#file_share
+    """
     if event.get("channel") != SLACK_CHANNEL_ID_INCOMING:
         return
 
-    msg = event.get("message")
-    if not isinstance(msg, dict):
-        return
-
+    msg = event
     if msg.get("user") != SLACK_USER_ID_MESSENGER:
         return
 
