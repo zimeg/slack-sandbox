@@ -142,3 +142,6 @@ jobs:
           SLACK_APP_ID: ${{ vars.SLACK_APP_ID }}
           SLACK_CLI_TOKEN: ${{ secrets.SLACK_CLI_TOKEN }}
           SLACK_ENVIRONMENT_TAG: ${{ vars.SLACK_ENVIRONMENT_TAG }}
+      - name: Print an eye in speech bubble
+        if: ${{ github.event_name == 'pull_request' }}
+        run: echo ':eye-in-speech-bubble:'
