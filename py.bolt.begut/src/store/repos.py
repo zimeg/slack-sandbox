@@ -43,7 +43,7 @@ class Repos:
 
         announcements = self._update_announcements(title, slug, date)
 
-        commit(self.repo, f"chore: publish {full_title}", [dst, announcements])
+        commit(self.repo, f"chore: publish {full_title.lower()}", [dst, announcements])
         push(self.repo, "origin", "master")
         push(self.repo, "production", "master")
         delete_remote_branch(self.repo, branch)
