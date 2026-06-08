@@ -23,7 +23,7 @@ dependencies {
     implementation("commons-cli:commons-cli:1.11.0")
     implementation("javax.websocket:javax.websocket-api:1.1")
     implementation("org.glassfish.tyrus.bundles:tyrus-standalone-client:1.22")
-    implementation("org.slf4j:slf4j-simple:2.0.17")
+    implementation("org.slf4j:slf4j-simple:2.0.18")
 }
 application {
     mainClass = "gibra.Gibra"
