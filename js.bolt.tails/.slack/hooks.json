@@ -1,6 +1,8 @@
 {
   "hooks": {
     "deploy": "systemctl restart tails.service",
-    "get-hooks": "npx -q --no-install -p @slack/bolt slack-cli-get-hooks"
+    "get-hooks": "nix develop -c npx -q --no-install -p @slack/bolt slack-cli-get-hooks",
+    "get-manifest": "nix develop -c npx -q --no-install -p @slack/cli-hooks slack-cli-get-manifest",
+    "start": "nix develop -c npx -q --no-install -p @slack/cli-hooks slack-cli-start"
   }
 }
