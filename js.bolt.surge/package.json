@@ -35,7 +35,7 @@
     "@slack/logger": "5.0.0-rc.1",
     "@slack/oauth": "4.0.0-rc.1",
     "@vercel/slack-bolt": "^1.5.1",
-    "ai": "^6.0.208",
+    "ai": "^7.0.9",
     "prettier": "^3.9.1"
   },
   "devDependencies": {
