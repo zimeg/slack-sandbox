@@ -140,6 +140,17 @@ jobs:
           payload: |
             channel: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
             text: "${{ matrix.app }}(chore): checking the proxied release candidate"
+      - name: Surface a web api error through the proxy
+        continue-on-error: true
+        uses: zimeg/slack-github-action@v3.0.6-rc.1
+        with:
+          errors: true
+          method: chat.postMessage
+          proxy: "http://127.0.0.1:3128"
+          token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
+          payload: |
+            channel: nonexistent-channel-xyz
+            text: "${{ matrix.app }}(chore): this send should fail with channel_not_found"
       - name: Test ${{ matrix.app }}
         if: ${{ matrix.test }}
         run: |
