@@ -131,6 +131,15 @@ jobs:
         if: ${{ matrix.build }}
         run: |
           nix develop --command bash -c "${{ matrix.build }}"
+      - name: Send a notification through the proxy
+        uses: zimeg/slack-github-action@v3.0.6-rc.1
+        with:
+          method: chat.postMessage
+          proxy: "http://127.0.0.1:3128"
+          token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
+          payload: |
+            channel: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
+            text: "${{ matrix.app }}(chore): checking the proxied release candidate"
       - name: Test ${{ matrix.app }}
         if: ${{ matrix.test }}
         run: |
