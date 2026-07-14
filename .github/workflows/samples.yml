@@ -62,7 +62,7 @@ jobs:
           git commit -m "chore(sync): update sample with the latest upstream changes"
           git push -u origin ${{ matrix.branch }} --force
       - name: Send a notification of completion
-        uses: slackapi/slack-github-action@45a88b9581bfab2566dc881e2cd66d334e621e2c # v3.0.3
+        uses: zimeg/slack-github-action@v3.0.6-rc.1
         with:
           method: chat.postMessage
           proxy: "http://127.0.0.1:3128"
@@ -151,7 +151,7 @@ jobs:
       contents: read
     steps:
       - name: Send a message to channel
-        uses: slackapi/slack-github-action@45a88b9581bfab2566dc881e2cd66d334e621e2c # v3.0.3
+        uses: zimeg/slack-github-action@v3.0.6-rc.1
         with:
           method: chat.postMessage
           proxy: "http://127.0.0.1:3128"
