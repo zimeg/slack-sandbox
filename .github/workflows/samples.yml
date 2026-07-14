@@ -132,6 +132,7 @@ jobs:
         run: |
           nix develop --command bash -c "${{ matrix.build }}"
       - name: Send a notification through the proxy
+        id: proxied
         uses: zimeg/slack-github-action@v3.0.6-rc.1
         with:
           method: chat.postMessage
@@ -141,6 +142,7 @@ jobs:
             channel: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
             text: "${{ matrix.app }}(chore): checking the proxied release candidate"
       - name: Surface a web api error through the proxy
+        id: errored
         continue-on-error: true
         uses: zimeg/slack-github-action@v3.0.6-rc.1
         with:
@@ -151,6 +153,22 @@ jobs:
           payload: |
             channel: nonexistent-channel-xyz
             text: "${{ matrix.app }}(chore): this send should fail with channel_not_found"
+      - name: Echo the release candidate outputs
+        env:
+          PROXIED_RESPONSE: ${{ steps.proxied.outputs.response }}
+          ERRORED_RESPONSE: ${{ steps.errored.outputs.response }}
+        run: |
+          echo "--- success path (proxied) ---"
+          echo "ok=${{ steps.proxied.outputs.ok }}"
+          echo "time=${{ steps.proxied.outputs.time }}"
+          echo "channel_id=${{ steps.proxied.outputs.channel_id }}"
+          echo "thread_ts=${{ steps.proxied.outputs.thread_ts }}"
+          echo "ts=${{ steps.proxied.outputs.ts }}"
+          echo "response=$PROXIED_RESPONSE"
+          echo "--- error path (errored) ---"
+          echo "ok=${{ steps.errored.outputs.ok }}"
+          echo "time=${{ steps.errored.outputs.time }}"
+          echo "response=$ERRORED_RESPONSE"
       - name: Test ${{ matrix.app }}
         if: ${{ matrix.test }}
         run: |
