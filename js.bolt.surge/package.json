@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
-    "@slack/bolt": "5.0.0-rc.1",
+    "@slack/bolt": "5.0.0-rc.2",
     "@slack/logger": "5.0.0",
     "@slack/oauth": "4.0.0",
     "@vercel/slack-bolt": "^1.6.0",
