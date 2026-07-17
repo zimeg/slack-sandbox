@@ -36,7 +36,7 @@
     "@slack/oauth": "4.0.0",
     "@vercel/slack-bolt": "^1.6.0",
     "ai": "^6.0.208",
-    "prettier": "^3.9.4"
+    "prettier": "^3.9.5"
   },
   "devDependencies": {
     "@slack/cli-hooks": "2.0.0",
