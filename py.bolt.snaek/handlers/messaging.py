@@ -1,5 +1,4 @@
 from logging import Logger
-from typing import List
 
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
@@ -13,7 +12,7 @@ def get_message_thread(
     message_text: str,
     thread_ts: str,
     logger: Logger,
-) -> List[ModelMessage]:
+) -> list[ModelMessage]:
     try:
         return [
             {
