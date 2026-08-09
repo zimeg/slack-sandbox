@@ -17,13 +17,13 @@ repositories {
     mavenCentral()
 }
 dependencies {
-    implementation("ch.qos.logback:logback-classic:1.5.32")
-    implementation("com.slack.api:bolt-socket-mode:1.48.1")
-    implementation("com.slack.api:slack-api-client:1.48.1")
+    implementation("ch.qos.logback:logback-classic:1.6.1")
+    implementation("com.slack.api:bolt-socket-mode:1.50.0")
+    implementation("com.slack.api:slack-api-client:1.50.0")
     implementation("commons-cli:commons-cli:1.11.0")
     implementation("javax.websocket:javax.websocket-api:1.1")
     implementation("org.glassfish.tyrus.bundles:tyrus-standalone-client:1.22")
-    implementation("org.slf4j:slf4j-simple:2.0.17")
+    implementation("org.slf4j:slf4j-simple:2.0.18")
 }
 application {
     mainClass = "gibra.Gibra"

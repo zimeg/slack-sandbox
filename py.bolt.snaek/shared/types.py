@@ -1,10 +1,10 @@
-from typing import Literal, Optional, TypedDict
+from typing import Literal, TypedDict
 
 
 class AssistantThreadContext(TypedDict):
     channel_id: str
     team_id: str
-    enterprise_id: Optional[str]
+    enterprise_id: str | None
     force_search: bool
 
 
@@ -23,11 +23,11 @@ class AssistantThreadStartedEvent(TypedDict):
 
 class ChatEvent(TypedDict):
     channel: str
-    channel_type: Optional[Literal["channel", "group", "im", "mpim"]]  # Message events
+    channel_type: Literal["channel", "group", "im", "mpim"] | None  # Message events
     event_ts: str
     team: str
     text: str
-    thread_ts: Optional[str]
+    thread_ts: str | None
     ts: str
     type: Literal["message", "app_mention"]
     user: str
