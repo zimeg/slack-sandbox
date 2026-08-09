@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- fix: prefer the west coast america time zone in date computations 2026-08-08
 - build: coil the schema and metadata into the manifest for slithers 2026-03-09
 - feat: gather time from various calendars using tools and thinking 2026-02-11
 - build: shed flake utilies skin for a sleeker serpentine derivation 2026-02-07
