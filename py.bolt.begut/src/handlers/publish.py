@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from src.config import SLACK_CHANNEL_ID_OUTGOING, SLACK_USER_ID_BOT, WIKI_BASE
 from src.store.repos import Repos
@@ -26,7 +26,7 @@ def handle_publish(ack, body, client, repos: Repos):
 
     value = body["actions"][0]["value"]
     ts, created_str = value.split("|", 1)
-    date = datetime.fromtimestamp(int(created_str), tz=timezone.utc).strftime(
+    date = datetime.fromtimestamp(int(created_str), tz=UTC).strftime(
         "%Y.%m.%d"
     )
     title = body["state"]["values"]["title_block"]["title"]["value"] or ""
