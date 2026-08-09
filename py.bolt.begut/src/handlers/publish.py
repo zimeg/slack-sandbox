@@ -26,9 +26,7 @@ def handle_publish(ack, body, client, repos: Repos):
 
     value = body["actions"][0]["value"]
     ts, created_str = value.split("|", 1)
-    date = datetime.fromtimestamp(int(created_str), tz=UTC).strftime(
-        "%Y.%m.%d"
-    )
+    date = datetime.fromtimestamp(int(created_str), tz=UTC).strftime("%Y.%m.%d")
     title = body["state"]["values"]["title_block"]["title"]["value"] or ""
 
     full_title = repos.publish(ts, title, date)
