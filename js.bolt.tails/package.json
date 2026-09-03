@@ -30,7 +30,7 @@
     "url": "https://github.com/zimeg/slack-sandbox/issues"
   },
   "dependencies": {
-    "@slack/bolt": "5.0.0"
+    "@slack/bolt": "5.1.0"
   },
   "devDependencies": {
     "@slack/cli-hooks": "^2.0.0",
