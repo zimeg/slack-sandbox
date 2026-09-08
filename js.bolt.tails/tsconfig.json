@@ -1,13 +1,9 @@
 {
     "compilerOptions": {
-        "target": "es2022",
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "esModuleInterop": true,
-        "resolveJsonModule": true,
-        "allowSyntheticDefaultImports": true,
+        "target": "ESNext",
+        "module": "NodeNext",
+        "moduleResolution": "nodenext",
         "strict": true,
-        "allowJs": true,
         "sourceMap": true,
         "rootDir": "src",
         "outDir": "dist"

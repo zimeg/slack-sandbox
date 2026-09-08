@@ -5,7 +5,7 @@
   "main": "dist/app.js",
   "scripts": {
     "build": "tsc",
-    "build:check": "tsc --noemit --module commonjs --project ./tsconfig.json",
+    "build:check": "tsc --noemit --project ./tsconfig.json",
     "build:clean": "rm -rf dist",
     "build:watch": "tsc --watch",
     "lint": "biome check --verbose",
