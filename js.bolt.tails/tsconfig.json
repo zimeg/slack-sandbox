@@ -1,8 +1,8 @@
 {
     "compilerOptions": {
         "target": "es2022",
-        "module": "commonjs",
-        "moduleResolution": "node",
+        "module": "Node16",
+        "moduleResolution": "node16",
         "esModuleInterop": true,
         "resolveJsonModule": true,
         "allowSyntheticDefaultImports": true,
