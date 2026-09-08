@@ -3,11 +3,7 @@
         "target": "es2022",
         "module": "NodeNext",
         "moduleResolution": "nodenext",
-        "esModuleInterop": true,
-        "resolveJsonModule": true,
-        "allowSyntheticDefaultImports": true,
         "strict": true,
-        "allowJs": true,
         "sourceMap": true,
         "rootDir": "src",
         "outDir": "dist"
