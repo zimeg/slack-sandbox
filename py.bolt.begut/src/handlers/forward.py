@@ -66,9 +66,7 @@ def handle_forward(client: WebClient, event: dict, repos: Repos) -> None:
             if SLACK_USER_ID_BOT in reaction.get("users", []):
                 return
 
-    sender_email = extract_sender_email(msg.get("text", "")) or extract_sender_email(
-        reaction_message.get("text", "")
-    )
+    sender_email = extract_sender_email(reaction_message.get("text", ""))
     if sender_email not in EMAIL_FORWARDING_ALLOWLIST:
         logger.info("Skipping forward for sender %r", sender_email)
         return
