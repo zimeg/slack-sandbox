@@ -57,6 +57,11 @@ def checkout(repo: Path, branch: str) -> None:
     subprocess.run(["git", "checkout", "-b", branch], cwd=repo, check=True)
 
 
+def merge(repo: Path, ref: str) -> None:
+    """Merge a fetched remote ref into the current branch."""
+    subprocess.run(["git", "merge", "--no-edit", ref], cwd=repo, check=True)
+
+
 def read_file(repo: Path, ref: str, path: Path | str) -> str:
     """Read a file's contents from a git ref."""
     result = subprocess.run(

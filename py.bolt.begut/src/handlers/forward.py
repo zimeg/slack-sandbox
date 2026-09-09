@@ -1,4 +1,6 @@
+import html
 import logging
+import re
 
 import requests
 from slack_sdk import WebClient
@@ -22,18 +24,21 @@ from src.config import (
 from src.store.repos import Repos
 
 logger = logging.getLogger(__name__)
-FROM_PREFIX = ":outbox_tray: From: "
+FROM_PATTERN = re.compile(r"^:outbox_tray: \*?From:\*? (?P<sender>.+)$")
 
 
 def extract_sender_email(text: str) -> str | None:
     """Return the sender email from a forwarded message body."""
     for line in text.splitlines():
-        if not line.startswith(FROM_PREFIX):
+        match = FROM_PATTERN.match(line)
+        if not match:
             continue
 
-        sender = line.removeprefix(FROM_PREFIX).strip()
+        sender = html.unescape(match["sender"]).strip()
         if sender.endswith(">") and "<" in sender:
             sender = sender.rsplit("<", 1)[1][:-1].strip()
+        if sender.startswith("mailto:"):
+            sender = sender.removeprefix("mailto:").split("|", 1)[0]
 
         return sender.lower() or None
 
@@ -66,7 +71,7 @@ def handle_forward(client: WebClient, event: dict, repos: Repos) -> None:
             if SLACK_USER_ID_BOT in reaction.get("users", []):
                 return
 
-    sender_email = extract_sender_email(msg.get("text", ""))
+    sender_email = extract_sender_email(reaction_message.get("text", ""))
     if sender_email not in EMAIL_FORWARDING_ALLOWLIST:
         logger.info("Skipping forward for sender %r", sender_email)
         return
