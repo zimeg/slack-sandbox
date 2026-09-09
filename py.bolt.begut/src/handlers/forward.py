@@ -40,16 +40,6 @@ def extract_sender_email(text: str) -> str | None:
     return None
 
 
-def extract_sender_email_from_messages(
-    event: dict,
-    reaction_message: dict,
-) -> str | None:
-    """Return the sender email from an event or its fetched message."""
-    return extract_sender_email(event.get("text", "")) or extract_sender_email(
-        reaction_message.get("text", "")
-    )
-
-
 def handle_forward(client: WebClient, event: dict, repos: Repos) -> None:
     """Forward a file share from the inbox to the project channel.
 
@@ -76,7 +66,9 @@ def handle_forward(client: WebClient, event: dict, repos: Repos) -> None:
             if SLACK_USER_ID_BOT in reaction.get("users", []):
                 return
 
-    sender_email = extract_sender_email_from_messages(msg, reaction_message)
+    sender_email = extract_sender_email(msg.get("text", "")) or extract_sender_email(
+        reaction_message.get("text", "")
+    )
     if sender_email not in EMAIL_FORWARDING_ALLOWLIST:
         logger.info("Skipping forward for sender %r", sender_email)
         return
