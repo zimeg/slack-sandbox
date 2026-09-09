@@ -72,7 +72,6 @@ def handle_forward(client: WebClient, event: dict, repos: Repos) -> None:
                 return
 
     sender_email = extract_sender_email(reaction_message.get("text", ""))
-    logger.debug("Parsed forwarded-email sender %r", sender_email)
     if sender_email not in EMAIL_FORWARDING_ALLOWLIST:
         logger.info("Skipping forward for sender %r", sender_email)
         return
