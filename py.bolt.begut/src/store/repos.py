@@ -5,6 +5,7 @@ from src.store.git import (
     commit,
     delete_remote_branch,
     fetch,
+    merge,
     push,
     read_file,
 )
@@ -33,6 +34,7 @@ class Repos:
         branch = f"review/{ts}"
         fetch(self.repo)
         checkout(self.repo, "master")
+        merge(self.repo, "production/master")
 
         full_title = f"{title} {date}" if date else title
         slug = full_title.replace(" ", "-")
