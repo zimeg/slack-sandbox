@@ -38,8 +38,10 @@ export default function fileSharedCallback(options) {
         ? context.enterpriseId
         : undefined;
 
-      await options.db.grantMonthlyStamps({ teamId, enterpriseId });
-      const balance = await options.db.getBalance({ teamId, enterpriseId });
+      const balance = await options.db.getMonthBalance({
+        teamId,
+        enterpriseId,
+      });
       if (balance <= 0) {
         logger.info("No stamps available", { teamId, enterpriseId });
         if (event.channel_id) {

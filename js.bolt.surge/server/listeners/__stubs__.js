@@ -105,7 +105,7 @@ export function createClient(returns = {}) {
 /**
  * @typedef {Object} StubDbReturns
  * @property {number} [feedbackId] - Value returned from saveFeedback
- * @property {number} [balance] - Value returned from getBalance
+ * @property {number} [balance] - Value returned from getMonthBalance
  * @property {number} [usageCount] - Value returned from getUsageCount
  */
 
@@ -137,8 +137,8 @@ export function createDb(returns = {}) {
       return 0;
     },
     /** @param {{ teamId?: string, enterpriseId?: string }} params */
-    getBalance: async (params) => {
-      calls.push({ method: "getBalance", args: [params] });
+    getMonthBalance: async (params) => {
+      calls.push({ method: "getMonthBalance", args: [params] });
       return balance;
     },
     /** @param {{ teamId?: string, enterpriseId?: string }} params */

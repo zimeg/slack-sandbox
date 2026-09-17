@@ -36,7 +36,7 @@ HTTP event handler that receives Slack events via the Events API.
 
 ### `server/lib/database/index.js`
 
-Database operations using Neon Postgres for installations and monthly stamp usage tracking.
+Database operations using Neon Postgres for installations and tracking usage stamps.
 
 ### `server/lib/logger.js`
 

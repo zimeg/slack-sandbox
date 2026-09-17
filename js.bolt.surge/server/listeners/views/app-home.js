@@ -40,7 +40,7 @@ export function buildAppHomeBlocks({ botUserId, balance, delivered }) {
       type: "section",
       text: {
         type: "mrkdwn",
-        text: `*Stamps remaining:* ${balance.toLocaleString()}\n*Stamps sent this month:* ${delivered.toLocaleString()}`,
+        text: `*Messages delivered:* ${delivered.toLocaleString()}\n*Stamps remaining this month:* ${balance.toLocaleString()}`,
       },
     },
     {
@@ -48,7 +48,11 @@ export function buildAppHomeBlocks({ botUserId, balance, delivered }) {
       elements: [
         {
           type: "button",
-          text: { type: "plain_text", text: "Order more stamps", emoji: true },
+          text: {
+            type: "plain_text",
+            text: "Order more stamps",
+            emoji: true,
+          },
           action_id: "order_stamps",
         },
       ],
