@@ -21,7 +21,7 @@ export default function appHomeOpenedCallback(options) {
         ? context.enterpriseId
         : undefined;
 
-      const balance = await options.db.getMonthBalance({
+      const balance = await options.db.getBalance({
         teamId,
         enterpriseId,
       });

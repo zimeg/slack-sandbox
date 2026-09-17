@@ -16,7 +16,7 @@ function getSQL() {
  * @property {Function} getMessageCount - Get total message count
  * @property {Function} getMessageCountBySource - Get message counts by source
  * @property {Function} incrementMessageCount - Increment message counter
- * @property {Function} getMonthBalance - Get this month's stamp balance
+ * @property {Function} getBalance - Get stamp balance for team/enterprise
  * @property {Function} grantMonthlyStamps - Grant this month's stamp allowance
  * @property {Function} getUsageCount - Get this month's stamps sent
  * @property {Function} deductStamp - Deduct a stamp and log delivery usage
@@ -179,7 +179,7 @@ async function incrementMessageCount(source = "web") {
  * @param {string} [params.enterpriseId]
  * @returns {Promise<number>}
  */
-async function getMonthBalance({ teamId, enterpriseId }) {
+async function getBalance({ teamId, enterpriseId }) {
   const sql = getSQL();
   await grantMonthlyStamps({ teamId, enterpriseId });
   const result = enterpriseId
@@ -295,7 +295,7 @@ async function grantBonusStamp({ teamId, enterpriseId, userId }) {
     INSERT INTO stamps (team_id, enterprise_id, user_id, type, amount)
     VALUES (${teamId}, ${enterpriseId ?? null}, ${userId ?? null}, 'bonus', 1)
   `;
-  return getMonthBalance({ teamId, enterpriseId });
+  return getBalance({ teamId, enterpriseId });
 }
 
 /**
@@ -349,7 +349,7 @@ export const db = {
   deductStamp,
   getMessageCount,
   getMessageCountBySource,
-  getMonthBalance,
+  getBalance,
   getUsageCount,
   grantBonusStamp,
   grantMonthlyStamps,

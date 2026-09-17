@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
   if (success) {
     status = `
       <div class="status">
-        <p><strong>installed.</strong> 1,000 stamps were sent over for the month.</p>
+        <p><strong>installed.</strong> 1000 stamps were sent over for the month.</p>
         ${redirect ? `<a href="${redirect}" class="btn">open in slack</a>` : ""}
       </div>
     `;

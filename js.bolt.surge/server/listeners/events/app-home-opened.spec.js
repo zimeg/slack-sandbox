@@ -36,7 +36,7 @@ describe("appHomeOpenedCallback", () => {
     assert.equal(blocks[6].elements[0].action_id, "order_stamps");
   });
 
-  it("queries the monthly balance and usage for the team", async () => {
+  it("queries balance and usage for the team", async () => {
     const fixture = await loadFixture("event-app-home-opened.json");
     const client = createClient();
     const db = createDb({ usageCount: 12 });
@@ -53,8 +53,8 @@ describe("appHomeOpenedCallback", () => {
     const usageCall = db.calls.find((c) => c.method === "getUsageCount");
     assert.ok(usageCall, "getUsageCount was called");
     assert.equal(usageCall.args[0].teamId, "T0123456789");
-    const balanceCall = db.calls.find((c) => c.method === "getMonthBalance");
-    assert.ok(balanceCall, "getMonthBalance was called");
+    const balanceCall = db.calls.find((c) => c.method === "getBalance");
+    assert.ok(balanceCall, "getBalance was called");
   });
 
   it("skips when tab is not home", async () => {

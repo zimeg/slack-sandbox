@@ -26,7 +26,7 @@ export default function orderStampsCallback(options) {
         enterpriseId,
         userId: body.user.id,
       });
-      const balance = await options.db.getMonthBalance({
+      const balance = await options.db.getBalance({
         teamId,
         enterpriseId,
       });
