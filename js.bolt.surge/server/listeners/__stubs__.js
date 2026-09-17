@@ -105,7 +105,6 @@ export function createClient(returns = {}) {
 /**
  * @typedef {Object} StubDbReturns
  * @property {number} [feedbackId] - Value returned from saveFeedback
- * @property {number} [balance] - Value returned from getBalance and grantBonusStamp
  * @property {number} [usageCount] - Value returned from getUsageCount
  */
 
@@ -115,7 +114,7 @@ export function createClient(returns = {}) {
  * @returns {{ calls: StubCall[] } & import("../../lib/database/index.js").Database}
  */
 export function createDb(returns = {}) {
-  const { feedbackId = 42, balance = 10, usageCount = 5 } = returns;
+  const { feedbackId = 42, usageCount = 5 } = returns;
   /** @type {StubCall[]} */
   const calls = [];
   return {
@@ -136,29 +135,16 @@ export function createDb(returns = {}) {
       calls.push({ method: "incrementMessageCount", args: [source] });
       return 0;
     },
-    /** @param {{ teamId?: string, enterpriseId?: string }} params */
-    getBalance: async (params) => {
-      calls.push({ method: "getBalance", args: [params] });
-      return balance;
-    },
+
     /** @param {{ teamId?: string, enterpriseId?: string }} params */
     getUsageCount: async (params) => {
       calls.push({ method: "getUsageCount", args: [params] });
       return usageCount;
     },
-    /** @param {{ teamId?: string, enterpriseId?: string, amount?: number }} params */
-    grantStarterStamps: async (params) => {
-      calls.push({ method: "grantStarterStamps", args: [params] });
-    },
-    /** @param {{ teamId?: string, enterpriseId?: string }} params */
-    grantBonusStamp: async (params) => {
-      calls.push({ method: "grantBonusStamp", args: [params] });
-      return balance;
-    },
+
     /** @param {{ teamId?: string, enterpriseId?: string, userId?: string, model: string, inputTokens: number, outputTokens: number, totalTokens: number, referenceId: string }} params */
-    deductStamp: async (params) => {
-      calls.push({ method: "deductStamp", args: [params] });
-      return true;
+    recordStampSent: async (params) => {
+      calls.push({ method: "recordStampSent", args: [params] });
     },
     /** @param {{ teamId?: string, enterpriseId?: string, userId?: string, model: string, inputTokens: number, outputTokens: number, totalTokens: number, referenceId: string }} params */
     logRetryUsage: async (params) => {

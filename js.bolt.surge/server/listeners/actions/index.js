@@ -2,7 +2,6 @@ import {
   deliveryFeedbackCallback,
   deliveryFeedbackDetailsCallback,
 } from "./delivery-feedback.js";
-import orderStampsCallback from "./order-stamps.js";
 
 /**
  * @typedef {Object} ActionOptions
@@ -17,5 +16,4 @@ import orderStampsCallback from "./order-stamps.js";
 export function registerActions(app, options) {
   app.action("email_delivery_feedback", deliveryFeedbackCallback(options));
   app.action("delivery_feedback_details", deliveryFeedbackDetailsCallback());
-  app.action("order_stamps", orderStampsCallback(options));
 }

@@ -98,12 +98,6 @@ export default class Store {
         ${installation.bot?.id ?? null}
       )
     `;
-    await this.db.grantStarterStamps({
-      teamId: installation.team?.id,
-      enterpriseId: installation.isEnterpriseInstall
-        ? installation.enterprise?.id
-        : undefined,
-    });
   }
 
   /**

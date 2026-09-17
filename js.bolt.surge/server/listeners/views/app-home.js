@@ -2,11 +2,10 @@
  * Build the App Home view blocks.
  * @param {Object} params
  * @param {string} params.botUserId
- * @param {number} params.balance
  * @param {number} params.delivered
  * @returns {import("@slack/types").KnownBlock[]}
  */
-export function buildAppHomeBlocks({ botUserId, balance, delivered }) {
+export function buildAppHomeBlocks({ botUserId, delivered }) {
   return [
     {
       type: "header",
@@ -40,22 +39,8 @@ export function buildAppHomeBlocks({ botUserId, balance, delivered }) {
       type: "section",
       text: {
         type: "mrkdwn",
-        text: `*Messages delivered:* ${delivered}\n*Stamps remaining:* ${balance}`,
+        text: `*Stamps sent this month:* ${delivered.toLocaleString()} / 1,000`,
       },
-    },
-    {
-      type: "actions",
-      elements: [
-        {
-          type: "button",
-          text: {
-            type: "plain_text",
-            text: "Order more stamps",
-            emoji: true,
-          },
-          action_id: "order_stamps",
-        },
-      ],
     },
   ];
 }

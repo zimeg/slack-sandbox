@@ -21,7 +21,6 @@ export default function appHomeOpenedCallback(options) {
         ? context.enterpriseId
         : undefined;
 
-      const balance = await options.db.getBalance({ teamId, enterpriseId });
       const delivered = await options.db.getUsageCount({
         teamId,
         enterpriseId,
@@ -33,7 +32,6 @@ export default function appHomeOpenedCallback(options) {
           type: "home",
           blocks: buildAppHomeBlocks({
             botUserId: context.botUserId,
-            balance,
             delivered,
           }),
         },

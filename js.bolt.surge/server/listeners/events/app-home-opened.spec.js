@@ -9,10 +9,10 @@ import {
 import appHomeOpenedCallback from "./app-home-opened.js";
 
 describe("appHomeOpenedCallback", () => {
-  it("publishes home view with balance and usage", async () => {
+  it("publishes home view with this month's stamps sent", async () => {
     const fixture = await loadFixture("event-app-home-opened.json");
     const client = createClient();
-    const db = createDb({ balance: 10, usageCount: 3 });
+    const db = createDb({ usageCount: 3 });
     const logger = createLogger();
 
     const handler = appHomeOpenedCallback({ db });
@@ -31,15 +31,13 @@ describe("appHomeOpenedCallback", () => {
     const blocks = publish.args.view.blocks;
     assert.equal(blocks[0].type, "header");
     assert.match(blocks[1].text.text, /U0101010101/);
-    assert.match(blocks[5].text.text, /\*Messages delivered:\* 3/);
-    assert.match(blocks[5].text.text, /\*Stamps remaining:\* 10/);
-    assert.equal(blocks[6].elements[0].action_id, "order_stamps");
+    assert.match(blocks[5].text.text, /\*Stamps sent this month:\* 3 \/ 1,000/);
   });
 
-  it("queries balance and usage for the team", async () => {
+  it("queries this month's usage for the team", async () => {
     const fixture = await loadFixture("event-app-home-opened.json");
     const client = createClient();
-    const db = createDb({ balance: 50, usageCount: 12 });
+    const db = createDb({ usageCount: 12 });
     const logger = createLogger();
 
     const handler = appHomeOpenedCallback({ db });
@@ -49,10 +47,6 @@ describe("appHomeOpenedCallback", () => {
       context: fixture.context,
       logger,
     });
-
-    const balanceCall = db.calls.find((c) => c.method === "getBalance");
-    assert.ok(balanceCall, "getBalance was called");
-    assert.equal(balanceCall.args[0].teamId, "T0123456789");
 
     const usageCall = db.calls.find((c) => c.method === "getUsageCount");
     assert.ok(usageCall, "getUsageCount was called");
