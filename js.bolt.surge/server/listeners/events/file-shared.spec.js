@@ -29,10 +29,10 @@ describe("fileSharedCallback", () => {
       logger,
     });
 
-    const stamp = db.calls.find((c) => c.method === "deductStamp");
-    assert.ok(stamp, "deductStamp was called");
-    assert.equal(stamp.args[0].teamId, "T02A074M3U3");
-    assert.equal(stamp.args[0].referenceId, "F0AJ6L3DVUZ");
+    const deduct = db.calls.find((c) => c.method === "deductStamp");
+    assert.ok(deduct, "deductStamp was called");
+    assert.equal(deduct.args[0].teamId, "T02A074M3U3");
+    assert.equal(deduct.args[0].referenceId, "F0AJ6L3DVUZ");
 
     const upload = client.calls.find((c) => c.method === "filesUploadV2");
     assert.ok(upload, "filesUploadV2 was called");
@@ -59,8 +59,8 @@ describe("fileSharedCallback", () => {
       logger,
     });
 
-    const stamp = db.calls.find((c) => c.method === "deductStamp");
-    assert.equal(stamp, undefined, "no stamp deducted");
+    const deduct = db.calls.find((c) => c.method === "deductStamp");
+    assert.equal(deduct, undefined, "no stamp deducted");
     const upload = client.calls.find((c) => c.method === "filesUploadV2");
     assert.equal(upload, undefined, "no upload attempted");
   });
