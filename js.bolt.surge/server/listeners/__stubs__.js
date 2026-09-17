@@ -156,6 +156,11 @@ export function createDb(returns = {}) {
     deductStamp: async (params) => {
       calls.push({ method: "deductStamp", args: [params] });
     },
+    /** @param {{ teamId?: string, enterpriseId?: string, userId?: string }} params */
+    grantBonusStamp: async (params) => {
+      calls.push({ method: "grantBonusStamp", args: [params] });
+      return balance;
+    },
     /** @param {{ teamId?: string, enterpriseId?: string, userId?: string, model: string, inputTokens: number, outputTokens: number, totalTokens: number, referenceId: string }} params */
     logRetryUsage: async (params) => {
       calls.push({ method: "logRetryUsage", args: [params] });

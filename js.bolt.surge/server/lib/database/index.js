@@ -20,6 +20,7 @@ function getSQL() {
  * @property {Function} grantMonthlyStamps - Grant this month's stamp allowance
  * @property {Function} getUsageCount - Get this month's stamps sent
  * @property {Function} deductStamp - Deduct a stamp and log delivery usage
+ * @property {Function} grantBonusStamp - Grant a bonus stamp
  * @property {Function} logRetryUsage - Log a retry attempt without deducting
  * @property {Function} saveFeedback - Save delivery feedback
  * @property {Function} updateFeedbackDetails - Update feedback details and options
@@ -181,8 +182,8 @@ async function incrementMessageCount(source = "web") {
 async function getBalance({ teamId, enterpriseId }) {
   const sql = getSQL();
   const result = enterpriseId
-    ? await sql`SELECT COALESCE(SUM(amount), 0) as balance FROM stamps WHERE enterprise_id = ${enterpriseId} AND type IN ('monthly', 'usage') AND created_at >= date_trunc('month', CURRENT_TIMESTAMP AT TIME ZONE 'UTC') AT TIME ZONE 'UTC'`
-    : await sql`SELECT COALESCE(SUM(amount), 0) as balance FROM stamps WHERE team_id = ${teamId} AND enterprise_id IS NULL AND type IN ('monthly', 'usage') AND created_at >= date_trunc('month', CURRENT_TIMESTAMP AT TIME ZONE 'UTC') AT TIME ZONE 'UTC'`;
+    ? await sql`SELECT COALESCE(SUM(amount), 0) as balance FROM stamps WHERE enterprise_id = ${enterpriseId} AND type IN ('monthly', 'usage', 'bonus') AND created_at >= date_trunc('month', CURRENT_TIMESTAMP AT TIME ZONE 'UTC') AT TIME ZONE 'UTC'`
+    : await sql`SELECT COALESCE(SUM(amount), 0) as balance FROM stamps WHERE team_id = ${teamId} AND enterprise_id IS NULL AND type IN ('monthly', 'usage', 'bonus') AND created_at >= date_trunc('month', CURRENT_TIMESTAMP AT TIME ZONE 'UTC') AT TIME ZONE 'UTC'`;
   return parseInt(result[0]?.balance ?? "0", 10);
 }
 
@@ -280,6 +281,23 @@ async function logRetryUsage({
 }
 
 /**
+ * Grant a bonus stamp.
+ * @param {Object} params
+ * @param {string} [params.teamId]
+ * @param {string} [params.enterpriseId]
+ * @param {string} [params.userId]
+ * @returns {Promise<number>} new balance
+ */
+async function grantBonusStamp({ teamId, enterpriseId, userId }) {
+  const sql = getSQL();
+  await sql`
+    INSERT INTO stamps (team_id, enterprise_id, user_id, type, amount)
+    VALUES (${teamId}, ${enterpriseId ?? null}, ${userId ?? null}, 'bonus', 1)
+  `;
+  return getBalance({ teamId, enterpriseId });
+}
+
+/**
  * Save delivery feedback.
  * @param {Object} params
  * @param {string} [params.teamId]
@@ -336,6 +354,7 @@ export const db = {
   grantMonthlyStamps,
   getUsageCount,
   deductStamp,
+  grantBonusStamp,
   logRetryUsage,
   saveFeedback,
   updateFeedbackDetails,

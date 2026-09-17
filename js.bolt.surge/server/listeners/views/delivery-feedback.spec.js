@@ -90,8 +90,8 @@ describe("deliveryFeedbackViewCallback", () => {
     assert.ok(upload, "filesUploadV2 was called");
     assert.equal(upload.args.title, ":recycle: Test Email");
 
-    const recorded = db.calls.find((c) => c.method === "recordStampSent");
-    assert.equal(recorded, undefined, "no stamp recorded for resend");
+    const deduct = db.calls.find((c) => c.method === "deductStamp");
+    assert.equal(deduct, undefined, "no stamp deducted for resend");
 
     const retry = db.calls.find((c) => c.method === "logRetryUsage");
     assert.ok(retry, "logRetryUsage was called");
