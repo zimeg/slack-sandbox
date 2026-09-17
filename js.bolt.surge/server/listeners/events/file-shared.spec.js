@@ -14,7 +14,7 @@ describe("fileSharedCallback", () => {
     const client = createClient({
       fileInfo: { ok: true, file: fixture.file },
     });
-    const db = createDb({ stampSent: true });
+    const db = createDb({ balance: 5 });
     const logger = createLogger();
     const generate = async () => ({
       text: "# Converted email",
@@ -29,8 +29,8 @@ describe("fileSharedCallback", () => {
       logger,
     });
 
-    const stamp = db.calls.find((c) => c.method === "recordStampSent");
-    assert.ok(stamp, "recordStampSent was called");
+    const stamp = db.calls.find((c) => c.method === "deductStamp");
+    assert.ok(stamp, "deductStamp was called");
     assert.equal(stamp.args[0].teamId, "T02A074M3U3");
     assert.equal(stamp.args[0].referenceId, "F0AJ6L3DVUZ");
 
@@ -59,18 +59,18 @@ describe("fileSharedCallback", () => {
       logger,
     });
 
-    const stamp = db.calls.find((c) => c.method === "recordStampSent");
-    assert.equal(stamp, undefined, "no stamp recorded");
+    const stamp = db.calls.find((c) => c.method === "deductStamp");
+    assert.equal(stamp, undefined, "no stamp deducted");
     const upload = client.calls.find((c) => c.method === "filesUploadV2");
     assert.equal(upload, undefined, "no upload attempted");
   });
 
-  it("posts a message when the monthly stamp limit is reached", async () => {
+  it("posts a message when no stamps remain", async () => {
     const fixture = await loadFixture("event-file-shared-substack.json");
     const client = createClient({
       fileInfo: { ok: true, file: fixture.file },
     });
-    const db = createDb({ usageCount: 1000 });
+    const db = createDb({ balance: 0 });
     const logger = createLogger();
     const generate = async () => ({ text: "", usage: {} });
 
@@ -84,7 +84,7 @@ describe("fileSharedCallback", () => {
 
     const msg = client.calls.find((c) => c.method === "chat.postMessage");
     assert.ok(msg, "chat.postMessage was called");
-    assert.match(msg.args.text, /monthly stamp limit/);
+    assert.match(msg.args.text, /No stamps remaining/);
 
     const upload = client.calls.find((c) => c.method === "filesUploadV2");
     assert.equal(upload, undefined, "no upload attempted");

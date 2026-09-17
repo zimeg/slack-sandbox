@@ -4,8 +4,6 @@ import {
 } from "../../lib/email/convert.js";
 import { buildEmailHeader, decodeEntities } from "../../lib/email/format.js";
 
-const MONTHLY_STAMP_LIMIT = 1000;
-
 /**
  * @typedef {Object} FileSharedOptions
  * @property {import("../../lib/database/index.js").Database} db
@@ -40,17 +38,15 @@ export default function fileSharedCallback(options) {
         ? context.enterpriseId
         : undefined;
 
-      const stampsSent = await options.db.getUsageCount({
-        teamId,
-        enterpriseId,
-      });
-      if (stampsSent >= MONTHLY_STAMP_LIMIT) {
-        logger.info("Monthly stamp limit reached", { teamId, enterpriseId });
+      await options.db.grantMonthlyStamps({ teamId, enterpriseId });
+      const balance = await options.db.getBalance({ teamId, enterpriseId });
+      if (balance <= 0) {
+        logger.info("No stamps available", { teamId, enterpriseId });
         if (event.channel_id) {
           await client.chat.postMessage({
             channel: event.channel_id,
             thread_ts: info.file.shares?.public?.[event.channel_id]?.[0]?.ts,
-            text: "This workspace has reached its monthly stamp limit. Stamps reset at the start of next month.",
+            text: "No stamps remaining! Visit the App Home to order more stamps.",
           });
         }
         return;
@@ -67,7 +63,7 @@ export default function fileSharedCallback(options) {
 
       const header = buildEmailHeader(file);
 
-      await options.db.recordStampSent({
+      await options.db.deductStamp({
         teamId,
         enterpriseId,
         userId: file.user,

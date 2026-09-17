@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
   if (success) {
     status = `
       <div class="status">
-        <p><strong>installed.</strong> Send up to 1,000 stamps each month.</p>
+        <p><strong>installed.</strong> 1,000 stamps are ready for this month.</p>
         ${redirect ? `<a href="${redirect}" class="btn">open in slack</a>` : ""}
       </div>
     `;
@@ -65,7 +65,7 @@ export default defineEventHandler(async (event) => {
 
       <section>
         <h2>stamps</h2>
-        <p>Each delivered email sends one stamp. Workspaces can send up to 1,000 stamps per UTC calendar month.</p>
+        <p>Each delivered email uses one stamp. Workspaces receive 1,000 stamps per UTC calendar month; unused stamps reset each month.</p>
       </section>
 
       <a href="/api/slack/install" class="btn btn-primary">add to slack</a>

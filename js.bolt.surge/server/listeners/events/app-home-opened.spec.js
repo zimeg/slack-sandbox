@@ -9,10 +9,10 @@ import {
 import appHomeOpenedCallback from "./app-home-opened.js";
 
 describe("appHomeOpenedCallback", () => {
-  it("publishes home view with this month's stamps sent", async () => {
+  it("publishes home view with balance and monthly usage", async () => {
     const fixture = await loadFixture("event-app-home-opened.json");
     const client = createClient();
-    const db = createDb({ usageCount: 3 });
+    const db = createDb({ balance: 997, usageCount: 3 });
     const logger = createLogger();
 
     const handler = appHomeOpenedCallback({ db });
@@ -31,10 +31,12 @@ describe("appHomeOpenedCallback", () => {
     const blocks = publish.args.view.blocks;
     assert.equal(blocks[0].type, "header");
     assert.match(blocks[1].text.text, /U0101010101/);
-    assert.match(blocks[5].text.text, /\*Stamps sent this month:\* 3 \/ 1,000/);
+    assert.match(blocks[5].text.text, /\*Stamps remaining:\* 997/);
+    assert.match(blocks[5].text.text, /\*Stamps sent this month:\* 3/);
+    assert.equal(blocks[6].elements[0].action_id, "order_stamps");
   });
 
-  it("queries this month's usage for the team", async () => {
+  it("refreshes the monthly allowance and usage for the team", async () => {
     const fixture = await loadFixture("event-app-home-opened.json");
     const client = createClient();
     const db = createDb({ usageCount: 12 });
@@ -51,6 +53,8 @@ describe("appHomeOpenedCallback", () => {
     const usageCall = db.calls.find((c) => c.method === "getUsageCount");
     assert.ok(usageCall, "getUsageCount was called");
     assert.equal(usageCall.args[0].teamId, "T0123456789");
+    const grantCall = db.calls.find((c) => c.method === "grantMonthlyStamps");
+    assert.ok(grantCall, "grantMonthlyStamps was called");
   });
 
   it("skips when tab is not home", async () => {
