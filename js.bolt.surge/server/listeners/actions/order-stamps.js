@@ -21,19 +21,19 @@ export default function orderStampsCallback(options) {
       const enterpriseId = context.isEnterpriseInstall
         ? context.enterpriseId
         : undefined;
-
       await options.db.grantBonusStamp({
         teamId,
         enterpriseId,
         userId: body.user.id,
       });
-
-      const balance = await options.db.getBalance({ teamId, enterpriseId });
+      const balance = await options.db.getBalance({
+        teamId,
+        enterpriseId,
+      });
       const delivered = await options.db.getUsageCount({
         teamId,
         enterpriseId,
       });
-
       await client.views.publish({
         user_id: body.user.id,
         view: {
