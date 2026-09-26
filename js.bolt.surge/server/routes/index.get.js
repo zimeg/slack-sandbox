@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
   if (success) {
     status = `
       <div class="status">
-        <p><strong>installed.</strong> 50 stamps added.</p>
+        <p><strong>installed.</strong> 1000 stamps were sent over for the month.</p>
         ${redirect ? `<a href="${redirect}" class="btn">open in slack</a>` : ""}
       </div>
     `;
@@ -65,7 +65,7 @@ export default defineEventHandler(async (event) => {
 
       <section>
         <h2>pricing</h2>
-        <p>get 50 stamps on install. each email costs 1 stamp. more packs coming soon.</p>
+        <p>get 1000 stamps each month. each email costs 1 stamp. more packs coming soon.</p>
       </section>
 
       <a href="/api/slack/install" class="btn btn-primary">add to slack</a>

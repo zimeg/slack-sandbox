@@ -17,10 +17,10 @@ function getSQL() {
  * @property {Function} getMessageCountBySource - Get message counts by source
  * @property {Function} incrementMessageCount - Increment message counter
  * @property {Function} getBalance - Get stamp balance for team/enterprise
- * @property {Function} getUsageCount - Get usage count for team/enterprise
- * @property {Function} grantStarterStamps - Grant initial stamps on install
+ * @property {Function} grantMonthlyStamps - Grant this month's stamp allowance
+ * @property {Function} getUsageCount - Get this month's stamps sent
+ * @property {Function} deductStamp - Deduct a stamp and log delivery usage
  * @property {Function} grantBonusStamp - Grant a bonus stamp
- * @property {Function} deductStamp - Deduct a stamp and log usage
  * @property {Function} logRetryUsage - Log a retry attempt without deducting
  * @property {Function} saveFeedback - Save delivery feedback
  * @property {Function} updateFeedbackDetails - Update feedback details and options
@@ -173,7 +173,7 @@ async function incrementMessageCount(source = "web") {
 }
 
 /**
- * Get stamp balance for a team or enterprise.
+ * Get this UTC calendar month's stamp balance for a team or enterprise.
  * @param {Object} params
  * @param {string} [params.teamId]
  * @param {string} [params.enterpriseId]
@@ -181,28 +181,29 @@ async function incrementMessageCount(source = "web") {
  */
 async function getBalance({ teamId, enterpriseId }) {
   const sql = getSQL();
+  await grantMonthlyStamps({ teamId, enterpriseId });
   const result = enterpriseId
-    ? await sql`SELECT COALESCE(SUM(amount), 0) as balance FROM stamps WHERE enterprise_id = ${enterpriseId}`
-    : await sql`SELECT COALESCE(SUM(amount), 0) as balance FROM stamps WHERE team_id = ${teamId} AND enterprise_id IS NULL`;
+    ? await sql`SELECT COALESCE(SUM(amount), 0) as balance FROM stamps WHERE enterprise_id = ${enterpriseId} AND type IN ('monthly', 'usage', 'bonus') AND created_at >= date_trunc('month', CURRENT_TIMESTAMP AT TIME ZONE 'UTC') AT TIME ZONE 'UTC'`
+    : await sql`SELECT COALESCE(SUM(amount), 0) as balance FROM stamps WHERE team_id = ${teamId} AND enterprise_id IS NULL AND type IN ('monthly', 'usage', 'bonus') AND created_at >= date_trunc('month', CURRENT_TIMESTAMP AT TIME ZONE 'UTC') AT TIME ZONE 'UTC'`;
   return parseInt(result[0]?.balance ?? "0", 10);
 }
 
 /**
- * Grant starter stamps on install.
+ * Grant a 1,000-stamp allowance once for the current UTC calendar month.
  * @param {Object} params
  * @param {string} [params.teamId]
  * @param {string} [params.enterpriseId]
- * @param {number} [params.amount]
  */
-async function grantStarterStamps({ teamId, enterpriseId, amount = 50 }) {
+async function grantMonthlyStamps({ teamId, enterpriseId }) {
   const sql = getSQL();
   await sql`
     INSERT INTO stamps (team_id, enterprise_id, type, amount)
-    SELECT ${teamId}, ${enterpriseId ?? null}, 'starter', ${amount}
+    SELECT ${teamId}, ${enterpriseId ?? null}, 'monthly', 1000
     WHERE NOT EXISTS (
       SELECT 1 FROM stamps
       WHERE (enterprise_id = ${enterpriseId} OR (team_id = ${teamId} AND enterprise_id IS NULL))
-      AND type = 'starter'
+        AND type = 'monthly'
+        AND created_at >= date_trunc('month', CURRENT_TIMESTAMP AT TIME ZONE 'UTC') AT TIME ZONE 'UTC'
     )
   `;
 }
@@ -216,22 +217,14 @@ async function grantStarterStamps({ teamId, enterpriseId, amount = 50 }) {
  */
 async function getUsageCount({ teamId, enterpriseId }) {
   const sql = getSQL();
-  if (enterpriseId) {
-    const result = await sql`
-      SELECT COUNT(*) as count FROM stamps
-      WHERE enterprise_id = ${enterpriseId} AND type = 'usage'
-    `;
-    return parseInt(result[0]?.count ?? "0", 10);
-  }
-  const result = await sql`
-    SELECT COUNT(*) as count FROM stamps
-    WHERE team_id = ${teamId} AND enterprise_id IS NULL AND type = 'usage'
-  `;
+  const result = enterpriseId
+    ? await sql`SELECT COUNT(*) as count FROM stamps WHERE enterprise_id = ${enterpriseId} AND type = 'usage'`
+    : await sql`SELECT COUNT(*) as count FROM stamps WHERE team_id = ${teamId} AND enterprise_id IS NULL AND type = 'usage'`;
   return parseInt(result[0]?.count ?? "0", 10);
 }
 
 /**
- * Deduct a stamp and log usage transaction.
+ * Deduct a stamp after an email is delivered.
  * @param {Object} params
  * @param {string} [params.teamId]
  * @param {string} [params.enterpriseId]
@@ -241,7 +234,6 @@ async function getUsageCount({ teamId, enterpriseId }) {
  * @param {number} params.outputTokens
  * @param {number} params.totalTokens
  * @param {string} params.referenceId
- * @returns {Promise<boolean>} true if deducted, false if insufficient balance
  */
 async function deductStamp({
   teamId,
@@ -253,16 +245,11 @@ async function deductStamp({
   totalTokens,
   referenceId,
 }) {
-  const balance = await getBalance({ teamId, enterpriseId });
-  if (balance <= 0) {
-    return false;
-  }
   const sql = getSQL();
   await sql`
     INSERT INTO stamps (team_id, enterprise_id, user_id, type, amount, input_tokens, output_tokens, total_tokens, model, reference_id)
     VALUES (${teamId}, ${enterpriseId ?? null}, ${userId ?? null}, 'usage', -1, ${inputTokens}, ${outputTokens}, ${totalTokens}, ${model}, ${referenceId})
   `;
-  return true;
 }
 
 /**
@@ -359,17 +346,17 @@ async function updateFeedbackDetails(id, { details, resend, consentToReview }) {
 
 /** @type {Database} */
 export const db = {
-  load,
-  query,
+  deductStamp,
   getMessageCount,
   getMessageCountBySource,
-  incrementMessageCount,
   getBalance,
   getUsageCount,
-  grantStarterStamps,
   grantBonusStamp,
-  deductStamp,
+  grantMonthlyStamps,
+  incrementMessageCount,
   logRetryUsage,
+  load,
+  query,
   saveFeedback,
   updateFeedbackDetails,
 };
