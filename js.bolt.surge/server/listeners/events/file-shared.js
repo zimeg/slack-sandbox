@@ -38,7 +38,10 @@ export default function fileSharedCallback(options) {
         ? context.enterpriseId
         : undefined;
 
-      const balance = await options.db.getBalance({ teamId, enterpriseId });
+      const balance = await options.db.getBalance({
+        teamId,
+        enterpriseId,
+      });
       if (balance <= 0) {
         logger.info("No stamps available", { teamId, enterpriseId });
         if (event.channel_id) {

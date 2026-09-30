@@ -40,7 +40,7 @@ export function buildAppHomeBlocks({ botUserId, balance, delivered }) {
       type: "section",
       text: {
         type: "mrkdwn",
-        text: `*Messages delivered:* ${delivered}\n*Stamps remaining:* ${balance}`,
+        text: `*Messages delivered:* ${delivered.toLocaleString()}\n*Stamps remaining:* ${balance.toLocaleString()}`,
       },
     },
     {

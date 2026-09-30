@@ -146,9 +146,9 @@ export function createDb(returns = {}) {
       calls.push({ method: "getUsageCount", args: [params] });
       return usageCount;
     },
-    /** @param {{ teamId?: string, enterpriseId?: string, amount?: number }} params */
-    grantStarterStamps: async (params) => {
-      calls.push({ method: "grantStarterStamps", args: [params] });
+    /** @param {{ teamId?: string, enterpriseId?: string }} params */
+    grantMonthlyStamps: async (params) => {
+      calls.push({ method: "grantMonthlyStamps", args: [params] });
     },
     /** @param {{ teamId?: string, enterpriseId?: string }} params */
     grantBonusStamp: async (params) => {
