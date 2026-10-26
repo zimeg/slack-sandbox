@@ -7,6 +7,7 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
+- build: use host platform checks for Darwin in nix development shells 2026-10-25
 - feat: prefer unlimited usage instead of a capping stop 2026-09-30
 - refactor: authorize vercel receiver oauth installation 2026-04-25
 - build: set manifest schema a version for editor checks 2026-03-09
