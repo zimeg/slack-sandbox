@@ -35,12 +35,12 @@
     "@slack/logger": "5.0.0",
     "@slack/oauth": "4.0.0",
     "@vercel/slack-bolt": "^1.7.3",
-    "ai": "^7.0.143",
+    "ai": "^7.0.145",
     "prettier": "^3.9.10"
   },
   "devDependencies": {
     "@slack/cli-hooks": "2.0.0",
-    "nitropack": "^2.13.4"
+    "nitropack": "^2.13.5"
   },
   "overrides": {
     "@slack/bolt": "$@slack/bolt",
