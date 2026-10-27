@@ -7,7 +7,6 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
-- build: use host platform checks for Darwin in nix development shells 2026-10-25
 - build: compile to latest or next node standards code version 2026-09-08
 - build: zap the schema and metadata versioning into manifests 2026-03-09
 - build: let flake spread free and drop the utilities crutches 2026-02-07

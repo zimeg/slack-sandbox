@@ -7,7 +7,6 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
-- build: use host platform checks for Darwin in nix development shells 2026-10-25
 - fix: merge latest production wiki branch changes before changes 2026-09-09
 - fix: gather and compare sender value from escaped outbox parsing 2026-09-09
 - feat: publish forwarded emails on energies with bolt for the bot 2026-05-17

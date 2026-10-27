@@ -7,7 +7,6 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
-- build: use host platform checks for Darwin in nix development shells 2026-10-25
 - build: channel pure nix energies unplugging of cable utilities 2026-02-07
 - build: update to the latest runtime version and developer tools 2025-07-26
 - feat: create ephemeral channels for quick testing and archival 2024-07-12

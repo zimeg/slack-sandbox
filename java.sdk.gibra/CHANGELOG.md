@@ -7,7 +7,6 @@ versioned with [calendar versioning][calver].
 
 ## Changes
 
-- build: use host platform checks for Darwin in nix development shells 2026-10-25
 - build: brew fresh schema and metadata into manifest for beans 2026-03-09
 - build: brew a purer nix blend without the flake utils grounds 2026-02-07
 - feat: add iconic of a giraffe caffeinating with steaming java 2026-02-05
