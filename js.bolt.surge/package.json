@@ -40,7 +40,7 @@
   },
   "devDependencies": {
     "@slack/cli-hooks": "2.0.0",
-    "nitropack": "^2.13.5"
+    "nitropack": "^2.13.6"
   },
   "overrides": {
     "@slack/bolt": "$@slack/bolt",
