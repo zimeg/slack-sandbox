@@ -25,7 +25,7 @@ jobs:
         uses: slackapi/slack-github-action@0bc3581177d9a0f8d555e07689384b376528e8fa # v4.1.0
         with:
           errors: true
-          webhook: ${{ secrets.SLACK_INCOMING_WEBHOOK_URL }}
+          webhook: ${{ secrets.SLACK_GITHUB_ACTION_INCOMING_WEBHOOK_URL }}
           webhook-type: webhook-trigger
           payload: |
             text: "webhook-trigger send for slackapi/slack-github-action#654 and #671 (run ${{ github.run_id }})"
@@ -35,7 +35,7 @@ jobs:
         uses: slackapi/slack-github-action@0bc3581177d9a0f8d555e07689384b376528e8fa # v4.1.0
         with:
           errors: true
-          webhook: ${{ secrets.SLACK_INCOMING_WEBHOOK_URL }}
+          webhook: ${{ secrets.SLACK_GITHUB_ACTION_INCOMING_WEBHOOK_URL }}
           webhook-type: incoming-webhook
           payload: |
             text: "incoming-webhook send for slackapi/slack-github-action#671 (run ${{ github.run_id }})"
