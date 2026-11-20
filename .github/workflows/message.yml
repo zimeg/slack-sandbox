@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Send a message to channel
         id: message
-        uses: zimeg/slack-github-action@v3.0.6-rc.1
+        uses: theorderingmachine/slack-github-action@ff352296119acda7eef6383436d915b96c999fda # upstream #675
         with:
           method: chat.postMessage
           proxy: "http://127.0.0.1:3128"
@@ -22,7 +22,7 @@ jobs:
             text: "chore(<!channel>): merge w the latest changes on main"
       - name: Respond with affection
         if: ${{ steps.message.outputs.ok }}
-        uses: zimeg/slack-github-action@v3.0.6-rc.1
+        uses: theorderingmachine/slack-github-action@ff352296119acda7eef6383436d915b96c999fda # upstream #675
         with:
           method: reactions.add
           proxy: "http://127.0.0.1:3128"

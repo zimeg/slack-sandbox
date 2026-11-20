@@ -1,0 +1,72 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: Verify Slack action proxy
+on:
+  pull_request:
+    paths:
+      - .github/workflows/proxy.yml
+  push:
+    branches:
+      - chore/slack-action-proxy
+    paths:
+      - .github/workflows/proxy.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  proxy:
+    name: Verify packaged action through tinyproxy
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: [self-hosted, Linux, X64]
+    timeout-minutes: 5
+    steps:
+      - name: Check the loopback proxy
+        run: curl --fail --silent --show-error --proxy http://127.0.0.1:3128 https://slack.com/api/api.test
+      - name: Call the Web API through the proxy
+        id: api
+        uses: theorderingmachine/slack-github-action@ff352296119acda7eef6383436d915b96c999fda # upstream #675
+        with:
+          errors: true
+          method: api.test
+          proxy: http://127.0.0.1:3128
+          token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
+      - name: Send a message through the proxy
+        id: message
+        continue-on-error: true
+        uses: theorderingmachine/slack-github-action@ff352296119acda7eef6383436d915b96c999fda # upstream #675
+        with:
+          errors: true
+          method: chat.postMessage
+          proxy: http://127.0.0.1:3128
+          token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
+          payload: |
+            channel: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
+            text: "Checking slackapi/slack-github-action#675 through TOM's loopback proxy."
+      - name: Surface the expected Web API error
+        id: errored
+        continue-on-error: true
+        uses: theorderingmachine/slack-github-action@ff352296119acda7eef6383436d915b96c999fda # upstream #675
+        with:
+          errors: true
+          method: chat.postMessage
+          proxy: http://127.0.0.1:3128
+          token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
+          payload: |
+            channel: nonexistent-channel-xyz
+            text: "This request must fail with channel_not_found."
+      - name: Assert success and expected error outputs
+        if: always()
+        env:
+          API_OK: ${{ steps.api.outputs.ok }}
+          MESSAGE_OK: ${{ steps.message.outputs.ok }}
+          MESSAGE_RESPONSE: ${{ steps.message.outputs.response }}
+          ERROR_OUTCOME: ${{ steps.errored.outcome }}
+          ERROR_RESPONSE: ${{ steps.errored.outputs.response }}
+        run: |
+          test "$API_OK" = true
+          test "$ERROR_OUTCOME" = failure
+          printf '%s' "$ERROR_RESPONSE" | nix shell nixpkgs#jq --command jq -e '.ok == false and .error == "channel_not_found"'
+          if [ "$MESSAGE_OK" != true ]; then
+            printf '%s' "$MESSAGE_RESPONSE" | nix shell nixpkgs#jq --command jq '{ok, error}'
+            exit 1
+          fi
+          echo 'Verified packaged action: api.test, chat.postMessage, and channel_not_found through tinyproxy.'
