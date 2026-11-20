@@ -1,0 +1,52 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: Verify Slack action webhooks
+on:
+  pull_request:
+    paths:
+      - .github/workflows/webhook.yml
+  push:
+    branches:
+      - chore/slack-action-proxy
+    paths:
+      - .github/workflows/webhook.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  webhook:
+    name: Verify webhook sends finish once
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: [self-hosted, Linux, X64]
+    timeout-minutes: 5
+    steps:
+      - name: Send a webhook trigger to an incoming webhook
+        id: trigger
+        timeout-minutes: 1
+        uses: slackapi/slack-github-action@0bc3581177d9a0f8d555e07689384b376528e8fa # v4.1.0
+        with:
+          errors: true
+          webhook: ${{ secrets.SLACK_GITHUB_ACTION_INCOMING_WEBHOOK_URL }}
+          webhook-type: webhook-trigger
+          payload: |
+            text: "webhook-trigger send for slackapi/slack-github-action#654 and #671 (run ${{ github.run_id }})"
+      - name: Send an incoming webhook
+        id: incoming
+        timeout-minutes: 1
+        uses: slackapi/slack-github-action@0bc3581177d9a0f8d555e07689384b376528e8fa # v4.1.0
+        with:
+          errors: true
+          webhook: ${{ secrets.SLACK_GITHUB_ACTION_INCOMING_WEBHOOK_URL }}
+          webhook-type: incoming-webhook
+          payload: |
+            text: "incoming-webhook send for slackapi/slack-github-action#671 (run ${{ github.run_id }})"
+      - name: Assert both sends returned ok
+        if: always()
+        env:
+          INCOMING_OK: ${{ steps.incoming.outputs.ok }}
+          INCOMING_RESPONSE: ${{ steps.incoming.outputs.response }}
+          TRIGGER_OK: ${{ steps.trigger.outputs.ok }}
+          TRIGGER_RESPONSE: ${{ steps.trigger.outputs.response }}
+        run: |
+          printf 'trigger: %s %s\nincoming: %s %s\n' "$TRIGGER_OK" "$TRIGGER_RESPONSE" "$INCOMING_OK" "$INCOMING_RESPONSE"
+          test "$TRIGGER_OK" = true
+          test "$INCOMING_OK" = true
