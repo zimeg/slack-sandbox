@@ -19,11 +19,15 @@ jobs:
     runs-on: [self-hosted, Linux, X64]
     timeout-minutes: 5
     steps:
+      - name: Checkout this repo
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - name: Check the loopback proxy
         run: curl --fail --silent --show-error --proxy http://127.0.0.1:3128 https://slack.com/api/api.test
       - name: Call the Web API through the proxy
         id: api
-        uses: theorderingmachine/slack-github-action@ff352296119acda7eef6383436d915b96c999fda # upstream #675
+        uses: theorderingmachine/slack-github-action@b59283ba2228e8cb5bd0b2ea42e98876a0bfe606 # slackapi/slack-github-action#675
         with:
           errors: true
           method: api.test
@@ -32,7 +36,7 @@ jobs:
       - name: Send a message through the proxy
         id: message
         continue-on-error: true
-        uses: theorderingmachine/slack-github-action@ff352296119acda7eef6383436d915b96c999fda # upstream #675
+        uses: theorderingmachine/slack-github-action@b59283ba2228e8cb5bd0b2ea42e98876a0bfe606 # slackapi/slack-github-action#675
         with:
           errors: true
           method: chat.postMessage
@@ -41,10 +45,24 @@ jobs:
           payload: |
             channel: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
             text: "Checking slackapi/slack-github-action#675 through TOM's loopback proxy."
+      - name: Upload a file through the proxy
+        id: upload
+        continue-on-error: true
+        uses: theorderingmachine/slack-github-action@b59283ba2228e8cb5bd0b2ea42e98876a0bfe606 # slackapi/slack-github-action#675
+        with:
+          errors: true
+          method: files.uploadV2
+          proxy: http://127.0.0.1:3128
+          token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
+          payload: |
+            channel_id: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
+            initial_comment: "Checking multipart uploads for slackapi/slack-github-action#675 through TOM's loopback proxy."
+            file: .github/workflows/proxy.yml
+            filename: proxy.yml
       - name: Surface the expected Web API error
         id: errored
         continue-on-error: true
-        uses: theorderingmachine/slack-github-action@ff352296119acda7eef6383436d915b96c999fda # upstream #675
+        uses: theorderingmachine/slack-github-action@b59283ba2228e8cb5bd0b2ea42e98876a0bfe606 # slackapi/slack-github-action#675
         with:
           errors: true
           method: chat.postMessage
@@ -59,6 +77,8 @@ jobs:
           API_OK: ${{ steps.api.outputs.ok }}
           MESSAGE_OK: ${{ steps.message.outputs.ok }}
           MESSAGE_RESPONSE: ${{ steps.message.outputs.response }}
+          UPLOAD_OK: ${{ steps.upload.outputs.ok }}
+          UPLOAD_RESPONSE: ${{ steps.upload.outputs.response }}
           ERROR_OUTCOME: ${{ steps.errored.outcome }}
           ERROR_RESPONSE: ${{ steps.errored.outputs.response }}
         run: |
@@ -69,4 +89,8 @@ jobs:
             printf '%s' "$MESSAGE_RESPONSE" | nix shell nixpkgs#jq --command jq '{ok, error}'
             exit 1
           fi
-          echo 'Verified packaged action: api.test, chat.postMessage, and channel_not_found through tinyproxy.'
+          if [ "$UPLOAD_OK" != true ]; then
+            printf '%s' "$UPLOAD_RESPONSE" | nix shell nixpkgs#jq --command jq '{ok, error}'
+            exit 1
+          fi
+          echo 'Verified packaged action: api.test, chat.postMessage, files.uploadV2, and channel_not_found through tinyproxy.'

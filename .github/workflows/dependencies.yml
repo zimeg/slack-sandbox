@@ -27,7 +27,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Send a notification of completion
         if: steps.metadata.outputs.update-type == 'version-update:semver-patch' || steps.metadata.outputs.update-type == 'version-update:semver-minor'
-        uses: theorderingmachine/slack-github-action@ff352296119acda7eef6383436d915b96c999fda # upstream #675
+        uses: theorderingmachine/slack-github-action@b59283ba2228e8cb5bd0b2ea42e98876a0bfe606 # slackapi/slack-github-action#675
         with:
           method: chat.postMessage
           proxy: "http://127.0.0.1:3128"
@@ -40,7 +40,7 @@ jobs:
           SLACK_CHANNEL_ID: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
       - name: Send a notification of pending
         if: steps.metadata.outputs.update-type != 'version-update:semver-patch' && steps.metadata.outputs.update-type != 'version-update:semver-minor'
-        uses: theorderingmachine/slack-github-action@ff352296119acda7eef6383436d915b96c999fda # upstream #675
+        uses: theorderingmachine/slack-github-action@b59283ba2228e8cb5bd0b2ea42e98876a0bfe606 # slackapi/slack-github-action#675
         with:
           method: chat.postMessage
           proxy: "http://127.0.0.1:3128"
@@ -50,7 +50,7 @@ jobs:
             text: "${{ steps.metadata.outputs.directory }}(chore): dependencies have a pending update"
       - name: Send a notification of failure
         if: failure()
-        uses: theorderingmachine/slack-github-action@ff352296119acda7eef6383436d915b96c999fda # upstream #675
+        uses: theorderingmachine/slack-github-action@b59283ba2228e8cb5bd0b2ea42e98876a0bfe606 # slackapi/slack-github-action#675
         with:
           method: chat.postMessage
           proxy: "http://127.0.0.1:3128"
@@ -112,7 +112,7 @@ jobs:
           GH_TOKEN: ${{ secrets.SANDBOX_ACCESS_TOKEN }}
       - name: Message the happened errors
         if: failure()
-        uses: theorderingmachine/slack-github-action@ff352296119acda7eef6383436d915b96c999fda # upstream #675
+        uses: theorderingmachine/slack-github-action@b59283ba2228e8cb5bd0b2ea42e98876a0bfe606 # slackapi/slack-github-action#675
         with:
           method: chat.postMessage
           proxy: "http://127.0.0.1:3128"
