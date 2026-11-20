@@ -1,0 +1,23 @@
+[project]
+name = "py.bolt.begut"
+description = "a public publisher of emails on energies"
+version = "2026.05.10"
+requires-python = ">=3.13.12"
+dependencies = [
+  "slack-bolt",
+  "slack-sdk",
+]
+readme = "README.md"
+license = "MIT"
+
+[project.optional-dependencies]
+tests = [
+  "mypy",
+]
+tools = [
+  "slack-cli-hooks",
+]
+
+[project.urls]
+Repository = "https://github.com/zimeg/slack-sandbox.git"
+Issues = "https://github.com/zimeg/slack-sandbox/issues"

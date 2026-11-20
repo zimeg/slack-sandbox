@@ -5,7 +5,7 @@
   "main": "dist/app.js",
   "scripts": {
     "build": "tsc",
-    "build:check": "tsc --noemit --module commonjs --project ./tsconfig.json",
+    "build:check": "tsc --noemit --project ./tsconfig.json",
     "build:clean": "rm -rf dist",
     "build:watch": "tsc --watch",
     "lint": "biome check --verbose",
@@ -30,10 +30,10 @@
     "url": "https://github.com/zimeg/slack-sandbox/issues"
   },
   "dependencies": {
-    "@slack/bolt": "5.0.0-rc.1"
+    "@slack/bolt": "5.1.0"
   },
   "devDependencies": {
-    "@slack/cli-hooks": "^1.3.2",
-    "@types/node": "^24.12.4"
+    "@slack/cli-hooks": "^2.0.0",
+    "@types/node": "^24.19.2"
   }
 }

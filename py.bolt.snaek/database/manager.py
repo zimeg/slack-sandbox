@@ -1,5 +1,4 @@
 import sqlite3
-from typing import Tuple
 
 from handlers import messaging
 from shared.types import ChatEvent
@@ -26,7 +25,7 @@ class Database:
         self.connection.commit()
 
     # Returns if the thread is currently being followed
-    def threads_following_check(self, event: ChatEvent) -> Tuple[bool, str]:
+    def threads_following_check(self, event: ChatEvent) -> tuple[bool, str]:
         thread_ts = messaging.get_event_thread_ts(event)
         channel_id = event["channel"]
         team_id = event["team"]

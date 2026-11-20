@@ -1,11 +1,11 @@
+from collections.abc import Callable
 from logging import Logger
-from typing import Callable
 
 from slack_bolt import BoltContext
 from slack_sdk import WebClient
 
-from database.manager import Database
 from agent.respond import response_generate
+from database.manager import Database
 from shared.types import ChatEvent
 
 

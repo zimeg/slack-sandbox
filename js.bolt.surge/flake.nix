@@ -28,7 +28,7 @@
           slackcli = pkgs.stdenv.mkDerivation {
             name = "slackcli";
             src =
-              if pkgs.stdenv.isDarwin then
+              if pkgs.stdenv.hostPlatform.isDarwin then
                 pkgs.fetchurl {
                   url = "https://downloads.slack-edge.com/slack-cli/slack_cli_4.0.1_macOS_64-bit.tar.gz";
                   hash = "sha256-oY7tZ/daAz58FsX5ZtV35eogr4oWxsqexrGPFTLXeB4=";

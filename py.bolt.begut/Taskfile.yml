@@ -1,0 +1,17 @@
+version: "3"
+
+silent: true
+
+tasks:
+  lint:
+    desc: Check the lintings
+    cmds:
+      - ruff format
+      - ruff check
+
+  test:
+    desc: Above with static type check
+    cmds:
+      - ruff format --diff
+      - ruff check --diff
+      - python3 -m mypy **/*.py

@@ -1,6 +1,0 @@
-# Secret tokens
-.env
-
-# Python environments
-.venv
-__pycache__
