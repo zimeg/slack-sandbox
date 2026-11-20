@@ -27,7 +27,7 @@ jobs:
         run: curl --fail --silent --show-error --proxy http://127.0.0.1:3128 https://slack.com/api/api.test
       - name: Call the Web API through the proxy
         id: api
-        uses: theorderingmachine/slack-github-action@b59283ba2228e8cb5bd0b2ea42e98876a0bfe606 # slackapi/slack-github-action#675
+        uses: slackapi/slack-github-action@0bc3581177d9a0f8d555e07689384b376528e8fa # v4.1.0
         with:
           errors: true
           method: api.test
@@ -36,7 +36,7 @@ jobs:
       - name: Send a message through the proxy
         id: message
         continue-on-error: true
-        uses: theorderingmachine/slack-github-action@b59283ba2228e8cb5bd0b2ea42e98876a0bfe606 # slackapi/slack-github-action#675
+        uses: slackapi/slack-github-action@0bc3581177d9a0f8d555e07689384b376528e8fa # v4.1.0
         with:
           errors: true
           method: chat.postMessage
@@ -48,7 +48,7 @@ jobs:
       - name: Upload a file through the proxy
         id: upload
         continue-on-error: true
-        uses: theorderingmachine/slack-github-action@b59283ba2228e8cb5bd0b2ea42e98876a0bfe606 # slackapi/slack-github-action#675
+        uses: slackapi/slack-github-action@0bc3581177d9a0f8d555e07689384b376528e8fa # v4.1.0
         with:
           errors: true
           method: files.uploadV2
@@ -62,7 +62,7 @@ jobs:
       - name: Surface the expected Web API error
         id: errored
         continue-on-error: true
-        uses: theorderingmachine/slack-github-action@b59283ba2228e8cb5bd0b2ea42e98876a0bfe606 # slackapi/slack-github-action#675
+        uses: slackapi/slack-github-action@0bc3581177d9a0f8d555e07689384b376528e8fa # v4.1.0
         with:
           errors: true
           method: chat.postMessage
