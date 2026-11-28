@@ -31,3 +31,11 @@ jobs:
             channel: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
             timestamp: "${{ steps.message.outputs.ts }}"
             name: heart
+      - name: Share with a webhook
+        uses: slackapi/slack-github-action@0bc3581177d9a0f8d555e07689384b376528e8fa # v4.1.0
+        with:
+          proxy: "http://127.0.0.1:3128"
+          webhook: ${{ secrets.SLACK_GITHUB_ACTION_INCOMING_WEBHOOK_URL }}
+          webhook-type: incoming-webhook
+          payload: |
+            text: "chore(webhook): merge w the latest changes on main"
