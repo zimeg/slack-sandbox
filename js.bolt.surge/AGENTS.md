@@ -1,6 +1,7 @@
-# CLAUDE.md — js.bolt.surge
+# AGENTS.md
 
-Project-specific learnings and patterns for the surge email app.
+Instructions for AI agents working on this project. Learnings and patterns for
+the surge email app.
 
 ## Architecture
 
@@ -15,3 +16,14 @@ Project-specific learnings and patterns for the surge email app.
 - **Database**: Neon Postgres serverless driver (`@neondatabase/serverless`). Tables are created in the database plugin on startup. Local dev drops and recreates tables.
 - **Manifests**: Per-environment files (`manifest.development.json`, `manifest.staging.json`, `manifest.production.json`). Staging uses `x-vercel-protection-bypass` params in request URLs.
 - **Logging**: Use `@slack/logger` via shared `server/lib/logger.js` for server-side code. In Bolt listener callbacks, use the `logger` argument provided to the handler.
+
+## Commands
+
+```sh
+npm install          # install dependencies
+npm run dev          # run the nitro dev server
+npm run build        # build with nitro
+npm test             # lint + run tests
+npm run lint         # check with Biome
+npm run lint:fix     # fix linting issues
+```

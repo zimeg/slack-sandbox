@@ -1,6 +1,7 @@
-# CLAUDE.md
+# AGENTS.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Instructions for AI agents working with code in this repository. Projects might
+include an `AGENTS.md` of their own with specific commands and patterns.
 
 ## Repository Overview
 
@@ -12,11 +13,11 @@ A polyglot monorepo for experimenting with Slack APIs. Contains independent proj
 |-----------|-------|---------|
 | `deno.sdk.chanl` | Deno Slack SDK | Ephemeral channel creation |
 | `java.sdk.gibra` | Java Slack SDK + Gradle + JDK 21 | API method testing |
-| `js.bolt.surge` | Bolt JS + Node 22 + PostgreSQL + Heroku | Email organizer |
+| `js.bolt.surge` | Bolt JS + Nitro + Vercel + Neon Postgres | Email organizer |
 | `js.bolt.tails` | Bolt JS + TypeScript + yt-dlp | Video archival |
-| `py.bolt.begut` | Bolt Python + go-task | Budget tracking |
+| `py.bolt.begut` | Bolt Python + go-task | Email digests to a git wiki |
 | `py.bolt.snaek` | Bolt Python + Ollama | LLM chat bot |
-| `py.sdk.sdkai` | Python Slack SDK | SDK snippet testing |
+| `py.sdk.todos` | Python Slack SDK + Slack Lists | Task management CLI |
 
 ## Git
 
@@ -31,7 +32,7 @@ A polyglot monorepo for experimenting with Slack APIs. Contains independent proj
 - PR title format: `project(tag): description` (e.g., `js.bolt.surge(feat): add login flow`)
 - When merging with `gh pr merge`, use `--auto` to wait for CI - never `--admin`
 - Never force push - if a branch needs to be reset, use `@dependabot recreate` comment instead
-- CLAUDE.md updates should be included in regular work PRs, not separate PRs - add notes for significant learnings, errors of understanding, or long-term decisions
+- AGENTS.md updates should be included in regular work PRs, not separate PRs - add notes for significant learnings, errors of understanding, or long-term decisions to the root or project AGENTS.md
 - If a CHANGELOG.md exists in the app directory, add an entry matching the existing format and line length
 - Changelog entries should avoid dashes within words (use "flake utils" not "flake-utils") and avoid the letter "y" unless dire
 
@@ -45,11 +46,11 @@ When Dependabot PRs need lockfile updates or other fixes:
 
 ## Architecture Patterns
 
-**Bolt Apps** (js.bolt.surge, js.bolt.tails, py.bolt.snaek): Use Socket Mode with listener/handler registration pattern. Entry point is `app.js` or `app.py`.
+**Bolt Apps** (js.bolt.surge, js.bolt.tails, py.bolt.begut, py.bolt.snaek): Use the listener/handler registration pattern.
 
-**Deno Apps** (deno.sdk.begut, deno.sdk.chanl): Manifest-driven with `manifest.ts`. Functions in `functions/`, workflows in `workflows/`, triggers in `triggers/`.
+**Deno Apps** (deno.sdk.chanl): Manifest-driven with `manifest.ts`.
 
-**SDK Direct** (java.sdk.gibra, py.sdk.sdkai): Direct API calls without Bolt framework.
+**SDK Direct** (java.sdk.gibra, py.sdk.todos): Direct API calls without Bolt framework.
 
 ## Development Commands
 
@@ -57,50 +58,8 @@ All apps use Nix flakes for reproducible dev environments. Enter a shell with `n
 
 ### Common Slack CLI Commands
 ```sh
-slack run      # Start local development server (Socket Mode)
+slack run      # Start local development server
 slack deploy   # Deploy to production
-```
-
-### JavaScript (js.bolt.surge, js.bolt.tails)
-```sh
-npm install           # Install dependencies
-npm start             # Run the app
-npm test              # Lint + type check + run tests
-npm run lint          # Check with Biome
-npm run lint:fix      # Fix linting issues
-npm run watch         # Dev mode with nodemon
-npm run logs          # Tail Heroku logs (surge only)
-```
-
-### Python (py.bolt.begut)
-```sh
-task test             # Format check + lint + type check
-task lint             # Format and lint with ruff
-slack run src/app.py  # Run the app
-```
-
-### Python (py.bolt.snaek)
-```sh
-make test             # Format check + lint + type check
-make lint             # Format and lint with ruff
-make schema           # Validate manifest against schema
-make clean            # Remove cache files
-python3 app.py        # Run the app
-```
-
-### Java (java.sdk.gibra)
-```sh
-./gradlew build       # Build the project
-./gradlew run         # Run the app
-./gradlew run -Pargs="--help"  # Run with arguments
-./gradlew shadowJar   # Build fat JAR
-```
-
-### Deno (deno.sdk.begut, deno.sdk.chanl)
-```sh
-deno task test        # Format check + lint + tests
-slack run             # Run locally with Slack CLI
-slack deploy          # Deploy to Slack
 ```
 
 ## Linting/Formatting
@@ -116,7 +75,7 @@ Some apps reference local Slack library clones from a sibling `../tools` directo
 ```
 sandbox/          # This repo
   py.bolt.snaek/
-  py.sdk.sdkai/
+  py.sdk.todos/
 tools/            # Sibling directory
   bolt-python/
   python-slack-sdk/
@@ -124,7 +83,7 @@ tools/            # Sibling directory
 
 ## Environment Configuration
 
-Apps use `.env` files for credentials (see `.env.example` in each project). Common variables:
+Apps use `.env` files or sops `secrets.*.yaml` files for credentials. Common variables:
 - `SLACK_BOT_TOKEN` - Bot user OAuth token
 - `SLACK_APP_TOKEN` - App-level token for Socket Mode
 - `SLACK_SIGNING_SECRET` - Request verification

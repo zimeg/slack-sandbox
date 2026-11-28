@@ -49,8 +49,9 @@ src/
 ## Commands
 
 ```sh
-task test    # format check + lint + type check
-task lint    # format and lint with ruff
+task test             # format check + lint + type check
+task lint             # format and lint with ruff
+slack run src/app.py  # run the app
 ```
 
 ## Environment
