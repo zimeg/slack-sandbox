@@ -65,6 +65,7 @@ jobs:
         uses: slackapi/slack-github-action@0bc3581177d9a0f8d555e07689384b376528e8fa # v4.1.0
         with:
           method: chat.postMessage
+          proxy: "http://127.0.0.1:3128"
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
           payload: |
             channel: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
@@ -141,3 +142,19 @@ jobs:
           SLACK_APP_ID: ${{ vars.SLACK_APP_ID }}
           SLACK_CLI_TOKEN: ${{ secrets.SLACK_CLI_TOKEN }}
           SLACK_ENVIRONMENT_TAG: ${{ vars.SLACK_ENVIRONMENT_TAG }}
+  trigger:
+    name: Start a workflow trigger
+    needs: publish
+    if: github.event_name != 'pull_request'
+    runs-on: self-hosted
+    permissions:
+      contents: none
+    steps:
+      - name: Send a webhook trigger
+        uses: slackapi/slack-github-action@0bc3581177d9a0f8d555e07689384b376528e8fa # v4.1.0
+        with:
+          proxy: "http://127.0.0.1:3128"
+          webhook: ${{ secrets.SLACK_GITHUB_ACTION_WEBHOOK_TRIGGER_URL }}
+          webhook-type: webhook-trigger
+          payload: |
+            text: "chore(<!here>): samples are packaged with the latest changes"

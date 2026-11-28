@@ -3,6 +3,9 @@ name: Share an update
 on:
   push:
     branches: [main]
+  pull_request:
+    paths:
+      - .github/workflows/message.yml
 jobs:
   upgrade:
     name: Suggest the latest changes
@@ -14,7 +17,9 @@ jobs:
         id: message
         uses: slackapi/slack-github-action@0bc3581177d9a0f8d555e07689384b376528e8fa # v4.1.0
         with:
+          errors: true
           method: chat.postMessage
+          proxy: "http://127.0.0.1:3128"
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
           payload: |
             channel: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
@@ -23,9 +28,41 @@ jobs:
         if: ${{ steps.message.outputs.ok }}
         uses: slackapi/slack-github-action@0bc3581177d9a0f8d555e07689384b376528e8fa # v4.1.0
         with:
+          errors: true
           method: reactions.add
+          proxy: "http://127.0.0.1:3128"
           token: ${{ secrets.SLACK_GITHUB_ACTION_BOT_TOKEN }}
           payload: |
             channel: ${{ secrets.SLACK_GITHUB_ACTION_CHANNEL_ID }}
             timestamp: "${{ steps.message.outputs.ts }}"
             name: heart
+      - name: Share with a webhook
+        id: webhook
+        uses: slackapi/slack-github-action@0bc3581177d9a0f8d555e07689384b376528e8fa # v4.1.0
+        with:
+          errors: true
+          proxy: "http://127.0.0.1:3128"
+          webhook: ${{ secrets.SLACK_GITHUB_ACTION_INCOMING_WEBHOOK_URL }}
+          webhook-type: incoming-webhook
+          payload: |
+            text: "chore(<!here>): also have a kind glass of water :potable_water:"
+      - name: Attempt a closed proxy
+        id: closed
+        uses: slackapi/slack-github-action@0bc3581177d9a0f8d555e07689384b376528e8fa # v4.1.0
+        with:
+          errors: true
+          proxy: "http://127.0.0.1:9"
+          retries: 0
+          webhook: ${{ secrets.SLACK_GITHUB_ACTION_INCOMING_WEBHOOK_URL }}
+          webhook-type: incoming-webhook
+          payload: |
+            text: "chore(proxy): this message should never arrive"
+      - name: Confirm sends use the proxy
+        env:
+          CLOSED_OUTCOME: ${{ steps.closed.outcome }}
+          MESSAGE_OK: ${{ steps.message.outputs.ok }}
+          WEBHOOK_OK: ${{ steps.webhook.outputs.ok }}
+        run: |
+          test "$MESSAGE_OK" = true
+          test "$WEBHOOK_OK" = true
+          test "$CLOSED_OUTCOME" = failure
