@@ -3,6 +3,9 @@ name: Share an update
 on:
   push:
     branches: [main]
+  pull_request:
+    paths:
+      - .github/workflows/message.yml
 jobs:
   upgrade:
     name: Suggest the latest changes
