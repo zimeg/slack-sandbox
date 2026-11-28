@@ -41,4 +41,4 @@ jobs:
           webhook: ${{ secrets.SLACK_GITHUB_ACTION_INCOMING_WEBHOOK_URL }}
           webhook-type: incoming-webhook
           payload: |
-            text: "chore(@here): also have a kind glass of water :potable_water:"
+            text: "chore(<!here>): also have a kind glass of water :potable_water:"
