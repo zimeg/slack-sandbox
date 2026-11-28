@@ -35,6 +35,7 @@ jobs:
             timestamp: "${{ steps.message.outputs.ts }}"
             name: heart
       - name: Share with a webhook
+        id: webhook
         uses: slackapi/slack-github-action@0bc3581177d9a0f8d555e07689384b376528e8fa # v4.1.0
         with:
           proxy: "http://127.0.0.1:3128"
@@ -42,3 +43,24 @@ jobs:
           webhook-type: incoming-webhook
           payload: |
             text: "chore(<!here>): also have a kind glass of water :potable_water:"
+      - name: Attempt a closed proxy
+        id: closed
+        continue-on-error: true
+        uses: slackapi/slack-github-action@0bc3581177d9a0f8d555e07689384b376528e8fa # v4.1.0
+        with:
+          errors: true
+          proxy: "http://127.0.0.1:9"
+          retries: 0
+          webhook: ${{ secrets.SLACK_GITHUB_ACTION_INCOMING_WEBHOOK_URL }}
+          webhook-type: incoming-webhook
+          payload: |
+            text: "chore(proxy): this message should never arrive"
+      - name: Confirm sends use the proxy
+        env:
+          CLOSED_OUTCOME: ${{ steps.closed.outcome }}
+          MESSAGE_OK: ${{ steps.message.outputs.ok }}
+          WEBHOOK_OK: ${{ steps.webhook.outputs.ok }}
+        run: |
+          test "$MESSAGE_OK" = true
+          test "$WEBHOOK_OK" = true
+          test "$CLOSED_OUTCOME" = failure
