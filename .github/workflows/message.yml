@@ -41,4 +41,4 @@ jobs:
           webhook: ${{ secrets.SLACK_GITHUB_ACTION_INCOMING_WEBHOOK_URL }}
           webhook-type: incoming-webhook
           payload: |
-            text: "chore(webhook): merge w the latest changes on main"
+            text: "chore(<!here>): also have a glass of water"
