@@ -4,7 +4,8 @@ Instructions for AI agents working on this project.
 
 ## Architecture
 
-A Deno Slack SDK app for ephemeral channel creation. Manifest-driven with `manifest.ts`. Workflows in `workflows/` and triggers in `triggers/`.
+A Deno Slack SDK app for ephemeral channel creation. Manifest-driven with
+`manifest.ts`. Workflows in `workflows/` and triggers in `triggers/`.
 
 ## Commands
 
